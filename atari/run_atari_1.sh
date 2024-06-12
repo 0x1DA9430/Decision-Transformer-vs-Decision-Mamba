@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DATA_DIR=./data/data_atari/
-OUT_DIR=./output/atari/
+OUT_DIR=./output/atari_1/
 
 
 EXP_B=dmamba_breakout
