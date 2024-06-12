@@ -1,0 +1,11 @@
+# ignore data
+data/
+HC ROMS/
+ROMS/
+
+# ignore python cache
+__pycache__/
+
+
+# ignore the checkpoint files
+*.cpt

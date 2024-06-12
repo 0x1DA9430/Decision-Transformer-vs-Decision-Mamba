@@ -1,0 +1,12 @@
+pyyaml
+opencv-python
+numpy
+tqdm
+absl-py
+blosc
+tensorflow==2.16.1
+atari-py==0.2.9
+ale-py
+einops
+git+https://github.com/google/dopamine.git
+wandb
