@@ -18,7 +18,7 @@
 module load anaconda
 
 conda activate ssm2
-
+python -m atari_py.import_roms ROMS
 
 # Run the executable
 ./run_atari_2.sh > run_atari_2.log 2>&1
