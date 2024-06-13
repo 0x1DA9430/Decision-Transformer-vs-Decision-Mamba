@@ -3,7 +3,7 @@ context_length: 30
 conv_proj: false
 conv_window_size: 6
 data_dir_prefix: ./data/data_atari/
-epochs: 10
+epochs: 5
 experiment: dmamba_breakout
 game: Breakout
 learning_rate: 0.0006
@@ -15,7 +15,7 @@ n_head: 8
 n_layer: 6
 num_buffers: 50
 num_steps: 500000
-output: ./output/atari/
+output: ./output/atari_1/
 seed: 123
 token_mixer: mamba
 trajectories_per_buffer: 10

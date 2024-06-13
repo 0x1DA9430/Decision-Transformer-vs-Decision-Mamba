@@ -192,7 +192,7 @@ class Trainer:
                 if self.config.game == 'Breakout':
                     eval_return = self.get_returns(90)
                 elif self.config.game == 'Qbert':
-                    eval_return = self.get_returns(14000)  #! if based on the DT paper it should be 2500
+                    eval_return = self.get_returns(2500)  #! if based on the DT paper it should be 2500 (DM: 14000)
                 elif self.config.game == 'Seaquest':
                     eval_return = self.get_returns(1150)  #! if based on the DT paper it should be 1450
                 elif self.config.game == 'Pong':
