@@ -98,7 +98,7 @@ python train_atari.py \
         --num_buffers 1 \
         --trajectories_per_buffer 5 \
         --output ./output/ \
-        --experiment dmamba_breakout \
+        --experiment dmamba_pong \
         --seed 123
 ```
 

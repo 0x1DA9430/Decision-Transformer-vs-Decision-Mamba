@@ -14,7 +14,7 @@
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
-# module load cuda/12.1.1
+module load cuda
 module load anaconda
 
 conda activate ssm2
