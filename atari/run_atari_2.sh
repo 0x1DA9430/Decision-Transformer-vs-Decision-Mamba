@@ -3,18 +3,18 @@
 DATA_DIR=./data/data_atari/
 OUT_DIR=./output/atari_2/
 
-EXP_P=dmamba_pong
-for seed in 123; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_P --seed $seed; done
-
-EXP_DTP=dtrans_pong
-for seed in 123; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTP --seed $seed; done
-
-
 # EXP_P=dmamba_pong
-# for seed in 123 321 213; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_P --seed $seed; done
+# for seed in 123; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_P --seed $seed; done
 
 # EXP_DTP=dtrans_pong
-# for seed in 123 321 213; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTP --seed $seed; done
+# for seed in 123; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTP --seed $seed; done
+
+
+EXP_P=dmamba_pong
+for seed in 123 321 213; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_P --seed $seed; done
+
+EXP_DTP=dtrans_pong
+for seed in 123 321 213; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTP --seed $seed; done
 
 
 # EXP_S=dmamba_seaquest

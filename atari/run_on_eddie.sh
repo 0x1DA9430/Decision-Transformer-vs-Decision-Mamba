@@ -3,7 +3,7 @@
 # Grid Engine options (lines prefixed with #$)
 #$ -N test_run
 #$ -cwd
-#$ -l h_rt=1:00:00
+#$ -l h_rt=12:00:00
 
 
 # Request one GPU in the gpu queue:
@@ -12,7 +12,7 @@
 #$ -l h_vmem=24G
 
 
-# Initialise the environment modules and load CUDA version 11.0.2
+# Initialise the environment
 . /etc/profile.d/modules.sh
 # module load cuda/12.1.1
 module load anaconda
