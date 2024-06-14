@@ -1,5 +1,5 @@
 python train_atari.py \
-        --game 'Breakout' \
+        --game 'Pong' \
         --data_dir_prefix ./data/data_atari/ \
         --context_length 5 \
         --n_layer 3 \
@@ -11,5 +11,5 @@ python train_atari.py \
         --num_buffers 1 \
         --trajectories_per_buffer 5 \
         --output ./output/ \
-        --experiment min_dmamba_breakout \
+        --experiment min_dmamba_pong \
         --seed 123
