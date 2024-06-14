@@ -150,7 +150,7 @@ def main():
         lr_decay=True,
         warmup_tokens=512*20,
         final_tokens=2*len(train_dataset)*args.context_length*3,
-        num_workers=2,
+        num_workers=1,
         seed=args.seed,
         max_timestep=max(timesteps),
         log_to_wandb=args.log_to_wandb,
