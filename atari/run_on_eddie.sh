@@ -23,4 +23,4 @@ conda activate ssm
 python -m atari_py.import_roms ROMS
 
 # Run the executable
-bash run_atari_2.sh
+bash min_experiments.sh
