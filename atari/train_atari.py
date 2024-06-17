@@ -51,8 +51,8 @@ parser.add_argument('--conv_proj', action='store_true',
                     help='An FC layer follows conv')
 
 # Training parameters
-parser.add_argument('--epochs', type=int, default=5,
-                    help='Number of epochs to train (default: 5)')
+parser.add_argument('--epochs', type=int, default=10,
+                    help='Number of epochs to train (default: 10)')
 parser.add_argument('--batch_size', type=int, default=256,
                     help='Input batch size for training (default: 256)')
 parser.add_argument('--learning_rate', '-lr', type=float, default=6e-4,

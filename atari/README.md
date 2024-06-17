@@ -22,8 +22,13 @@ pip install -r requirements.txt
 
 ### Install PyTorch 2.3.1 and CUDA 11.8
 
-```
+```bash
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+```
+
+#### Or PyTorch and CUDA 12.1
+```bash
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 ```
 
 ### Install mamba-ssm and causal-conv1d manually
