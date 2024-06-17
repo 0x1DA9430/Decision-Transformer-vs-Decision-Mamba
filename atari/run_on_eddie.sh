@@ -3,8 +3,7 @@
 # Grid Engine options (lines prefixed with #$)
 #$ -N attari_2
 #$ -cwd
-#$ -o my_output.log 
-#$ -e my_error.log
+
 #$ -l h_rt=12:00:00
 
 
@@ -23,4 +22,4 @@ conda activate ssm
 python -m atari_py.import_roms ROMS
 
 # Run the executable
-bash run_atari_1.sh
+bash min_experiments.sh

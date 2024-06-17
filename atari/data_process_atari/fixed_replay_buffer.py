@@ -21,6 +21,9 @@ from concurrent import futures
 import numpy as np
 import tensorflow.compat.v1 as tf
 from dopamine.replay_memory import circular_replay_buffer
+import logging
+
+logging.basicConfig(level=logging.ERROR)  # Set global logging level to ERROR
 
 gfile = tf.gfile
 
@@ -71,7 +74,7 @@ class FixedReplayBuffer(object):
       return replay_buffer
     except tf.errors.NotFoundError:
       return None
-
+    
   def _load_replay_buffers(self, num_buffers=None):
     """Loads multiple checkpoints into a list of replay buffers."""
     if not self._loaded_buffers:  # pytype: disable=attribute-error
