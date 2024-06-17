@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N attari_2
+#$ -N min_exp
 #$ -cwd
 
 #$ -l h_rt=12:00:00
