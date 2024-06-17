@@ -1,21 +1,32 @@
 #!/bin/bash
 
 DATA_DIR=./data/data_atari/
-OUT_DIR=./output/atari_1/
-
+# OUT_DIR=./output/atari_1/
+OUT_DIR=./output/atari_breakout_eddie/
 
 EXP_B=dmamba_breakout
-for seed in 321 213; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_B --seed $seed; done
+for seed in 123 132 213 231 312 321; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_B --seed $seed; done
 
 EXP_DTB=dtrans_breakout
-for seed in 123 321 213; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTB --seed $seed; done
+for seed in 123 132 213 231 312 321; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTB --seed $seed; done
+
+# EXP_Q=dmamba_qbert
+# for seed in 123 132 213 231 312 321; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
+
+# EXP_DTQ=dtrans_qbert
+# for seed in 123 132 213 231 312 321; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
 
 
-EXP_Q=dmamba_qbert
-for seed in 123 321 213; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
 
-EXP_DTQ=dtrans_qbert
-for seed in 123 321 213; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
+
+
+
+
+
+
+
+
+
 
 
 # EXP_P=dmamba_pong
