@@ -99,7 +99,7 @@ python train_atari.py \
         --token_mixer 'mamba' \
         --epochs 2 \
         --batch_size 64 \
-        --num_steps 500000 \
+        --num_steps 50000 \
         --num_buffers 50 \
         --trajectories_per_buffer 5 \
         --output ./output/ \

@@ -11,9 +11,9 @@
 #$ -pe gpu-a100 1
 #$ -l h_vmem=40G
 
-# Combine stdout and stderr into a single log file
-#$ -j y
-#$ -o output.log
+# Save log
+#$ -o output_min.log
+#$ -e error_min.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
@@ -21,10 +21,9 @@ module load cuda/12
 module load anaconda/2024
 
 conda activate ssm
-python -m atari_py.import_roms ROMS
+python -m atari_py.import_roms ROMS > /dev/null 2>&1
 
 # Run the executable
-
 # Define data and output directories
 DATA_DIR=./data/data_atari/
 OUT_DIR=./output/min_atari_breakout_eddie/

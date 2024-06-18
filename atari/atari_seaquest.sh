@@ -13,6 +13,9 @@
 #$ -pe gpu-a100 1
 #$ -l h_vmem=40G
 
+# Save log
+#$ -o output_seaquest.log
+#$ -e error_seaquest.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
@@ -20,7 +23,7 @@ module load cuda/12
 module load anaconda/2024
 
 conda activate ssm
-python -m atari_py.import_roms ROMS
+python -m atari_py.import_roms ROMS > /dev/null 2>&1
 
 # Run the executable
 DATA_DIR=./data/data_atari/

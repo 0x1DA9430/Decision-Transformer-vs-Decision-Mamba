@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 from data_process_atari.fixed_replay_buffer import FixedReplayBuffer
-
+from tqdm import tqdm
 
 def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_per_buffer):
     # -- load data from memory (make more efficient)
@@ -14,6 +14,9 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
 
     transitions_per_buffer = np.zeros(50, dtype=int)
     num_trajectories = 0
+
+    print('loading trajectories from buffers')
+    pbar = tqdm(total=num_steps)  # Initialize the progress bar
     while len(obss) < num_steps:
         buffer_num = np.random.choice(np.arange(50 - num_buffers, 50), 1)[0]
         i = transitions_per_buffer[buffer_num]
@@ -39,6 +42,13 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
                 obss += [states]
                 actions += [ac[0]]
                 stepwise_returns += [ret[0]]
+                
+                # Update progress bar
+                pbar.update(1)
+                if len(obss) >= num_steps:
+                    pbar.close()  # Close progress bar if step limit is reached
+                    break
+                
                 if terminal[0]:
                     done_idxs += [len(obss)]
                     returns += [0]
