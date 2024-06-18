@@ -3,10 +3,8 @@
 # Grid Engine options (lines prefixed with #$)
 #$ -N attari_seaquest
 #$ -cwd
-#$ -o attari_seaquest_output.log 
-#$ -e attari_seaquest_error.log
-#$ -l h_rt=24:00:00
 
+#$ -l h_rt=24:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
@@ -14,8 +12,8 @@
 #$ -l h_vmem=40G
 
 # Save log
-#$ -o output_seaquest.log
-#$ -e error_seaquest.log
+#$ -o attari_seaquest_output.log 
+#$ -e attari_seaquest_error.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh

@@ -3,10 +3,8 @@
 # Grid Engine options (lines prefixed with #$)
 #$ -N attari_breakout
 #$ -cwd
-#$ -o attari_breakout_output.log 
-#$ -e attari_breakout_error.log
-#$ -l h_rt=24:00:00
 
+#$ -l h_rt=24:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
@@ -14,8 +12,8 @@
 #$ -l h_vmem=40G
 
 # Save log
-#$ -o output_breakout.log 
-#$ -e error_breakout.log
+#$ -o attari_breakout_output.log 
+#$ -e attari_breakout_error.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
