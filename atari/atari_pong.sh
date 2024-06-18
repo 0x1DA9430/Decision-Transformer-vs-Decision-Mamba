@@ -4,7 +4,7 @@
 #$ -N attari_pong
 #$ -cwd
 
-#$ -l h_rt=24:00:00
+#$ -l h_rt=48:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
@@ -17,7 +17,7 @@
 
 # Save log
 #$ -j y
-#$ -o min_output.log
+#$ -o pong_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
@@ -32,7 +32,7 @@ DATA_DIR=./data/data_atari/
 OUT_DIR=./output/atari_pong_eddie/
 
 EXP_Q=dmamba_pong
-for seed in 123 132 213 231 312 321; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
+for seed in 123 132 213 231 312; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
 
 EXP_DTQ=dtrans_pong
-for seed in 123 132 213 231 312 321; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
+for seed in 123 132 213 231 312; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
