@@ -12,8 +12,8 @@
 #$ -l h_vmem=40G
 
 # Save log
-#$ -o attari_seaquest_output.log 
-#$ -e attari_seaquest_error.log
+#$ -j y
+#$ -o min_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh

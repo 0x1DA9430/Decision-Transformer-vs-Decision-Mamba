@@ -12,8 +12,8 @@
 #$ -l h_vmem=40G
 
 # Save log
-#$ -o output_min.log
-#$ -e error_min.log
+#$ -j y
+#$ -o min_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh

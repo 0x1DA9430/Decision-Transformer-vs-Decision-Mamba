@@ -12,8 +12,8 @@
 #$ -l h_vmem=40G
 
 # Save log
-#$ -o attari_breakout_output.log 
-#$ -e attari_breakout_error.log
+#$ -j y
+#$ -o min_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
