@@ -9,7 +9,7 @@
 # Request one GPU in the gpu queue:
 #$ -q gpu
 #$ -pe gpu-a100 1
-#$ -l h_vmem=40G
+#$ -l h_vmem=80G
 
 # Save log
 #$ -j y
