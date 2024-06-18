@@ -30,7 +30,7 @@ python -m atari_py.import_roms ROMS > /dev/null 2>&1
 # Run the executable
 # Define data and output directories
 DATA_DIR=./data/data_atari/
-OUT_DIR=./output/min_atari_breakout_eddie_2/
+OUT_DIR=./output/min_atari_breakout_eddie/
 
 # Run the min experiments for Breakout with dmamba
 EXP_Q=min_dmamba_breakout

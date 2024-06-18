@@ -11,6 +11,10 @@
 #$ -pe gpu-a100 1
 #$ -l h_vmem=80G
 
+# Send mail at beginning/end of job
+#$ -m be
+#$ -M s2524927@ed.ac.uk
+
 # Save log
 #$ -j y
 #$ -o min_output.log
