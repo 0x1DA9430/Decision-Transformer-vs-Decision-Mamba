@@ -187,38 +187,32 @@ class Trainer:
 
             # -- pass in target returns
             if self.config.model_type == 'naive':
-                eval_return = self.get_returns(0)
+                eval_return, eval_time = self.get_returns(0)
             elif self.config.model_type == 'reward_conditioned':
                 if self.config.game == 'Breakout':
-                    eval_return = self.get_returns(90)
+                    eval_return, eval_time = self.get_returns(90)
                 elif self.config.game == 'Qbert':
-                    eval_return = self.get_returns(2500)  #! if based on the DT paper it should be 2500 (DM: 14000)
+                    eval_return, eval_time = self.get_returns(2500)  #! if based on the DT paper it should be 2500 (DM: 14000)
                 elif self.config.game == 'Seaquest':
-                    eval_return = self.get_returns(1150)  #! if based on the DT paper it should be 1450
+                    eval_return, eval_time = self.get_returns(1150)  #! if based on the DT paper it should be 1450
                 elif self.config.game == 'Pong':
-                    eval_return = self.get_returns(20)    
+                    eval_return, eval_time = self.get_returns(20)    
                 elif self.config.game == 'MontezumaRevenge':
-                    eval_return = self.get_returns(500)  # Example initial target
+                    eval_return, eval_time = self.get_returns(500)  # Example initial target
                 elif self.config.game == 'Phoenix':
-                    eval_return = self.get_returns(3)  # Example initial target, reflecting basic proficiency
+                    eval_return, eval_time = self.get_returns(3)  # Example initial target, reflecting basic proficiency
                 elif self.config.game == 'Hero':
-                    eval_return = self.get_returns(1000)  # Example initial target, aiming for a modest win
+                    eval_return, eval_time = self.get_returns(1000)  # Example initial target, aiming for a modest win
                 elif self.config.game == 'SpaceInvaders':
-                    eval_return = self.get_returns(200) 
-                #elif self.config.game == 'Asterix':
-                #    eval_return = self.get_returns(520)
-                #elif self.config.game == 'Frostbite':
-                #    eval_return = self.get_returns(950)
-                #elif self.config.game == 'Assault':
-                #    eval_return = self.get_returns(780)
-                #elif self.config.game == 'Gopher':
-                #    eval_return = self.get_returns(2750)
+                    eval_return, eval_time = self.get_returns(200) 
+
                 else:
                     raise NotImplementedError()
 
                 logs = dict()
                 logs['training/train_loss_mean'] = loss
                 logs['evaluation/eval_return'] = eval_return
+                logs['evaluation/eval_time'] = eval_time  # log the evaluation time
                 logs['time/total'] = time.time() - self.start_time
                 if self.config.output_dir is not None:
                     update_summary(
@@ -235,6 +229,8 @@ class Trainer:
                 raise NotImplementedError()
 
     def get_returns(self, ret):
+        eval_start_time = time.time()  # Start time for evaluation
+
         self.model.train(False)
         args = Args(self.config.game.lower(), self.config.seed)
         env = Env(args)
@@ -296,8 +292,11 @@ class Trainer:
         env.close()
         eval_return = sum(T_rewards)/10.
         print("target return: %d, eval return: %d" % (ret, eval_return))
+
+        eval_time = time.time() - eval_start_time  # Calculate evaluation time
+
         self.model.train(True)
-        return eval_return
+        return eval_return, eval_time
 
 
 class Args:
