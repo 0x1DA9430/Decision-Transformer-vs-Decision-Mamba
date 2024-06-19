@@ -91,7 +91,7 @@ e.g.
 
 ```bash
 python train_atari.py \
-        --game 'Pong' \
+        --game 'MontezumaRevenge' \
         --data_dir_prefix ./data/data_atari/ \
         --context_length 5 \
         --n_layer 3 \
@@ -99,11 +99,11 @@ python train_atari.py \
         --token_mixer 'mamba' \
         --epochs 2 \
         --batch_size 64 \
-        --num_steps 50000 \
+        --num_steps 5000 \
         --num_buffers 50 \
         --trajectories_per_buffer 5 \
         --output ./output/ \
-        --experiment min_dmamba_pong \
+        --experiment min_dmamba \
         --seed 123
 ```
 or
