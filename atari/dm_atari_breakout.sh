@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dm_attari_breakout
+#$ -N dm_atari_breakout
 #$ -cwd
 
 #$ -l h_rt=24:00:00

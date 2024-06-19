@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N attari_seaquest
+#$ -N atari_seaquest
 #$ -cwd
 
 #$ -l h_rt=48:00:00
