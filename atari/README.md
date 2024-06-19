@@ -106,9 +106,21 @@ python train_atari.py \
         --experiment min_dmamba_pong \
         --seed 123
 ```
-
+or
 ```bash
 python train_atari.py --game 'Breakout' --data_dir_prefix ./data/data_atari/ --context_length 30 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 > ./output/test_experiment.log 2>&1
+```
+
+### Job submission to Eddie
+```bash
+qsub dm_atari_breakout.sh
+qsub dm_atari_pong.sh
+qsub dm_atari_qbert.sh
+qsub dm_atari_seaquest.sh
+qsub dt_atari_breakout.sh
+qsub dt_atari_pong.sh
+qsub dt_atari_qbert.sh
+qsub dt_atari_seaquest.sh
 ```
 
 
