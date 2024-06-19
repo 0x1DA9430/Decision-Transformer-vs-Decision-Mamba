@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dm_atari_pong
+#$ -N dt_atari_pong
 #$ -cwd
 
 #$ -l h_rt=24:00:00
