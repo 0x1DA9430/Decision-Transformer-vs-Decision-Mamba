@@ -107,6 +107,9 @@ python train_atari.py \
         --seed 123
 ```
 
+```bash
+python train_atari.py --game 'Breakout' --data_dir_prefix ./data/data_atari/ --context_length 30 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 > ./output/test_experiment.log 2>&1
+```
 
 
 > use single eGPU (reset after every boot)

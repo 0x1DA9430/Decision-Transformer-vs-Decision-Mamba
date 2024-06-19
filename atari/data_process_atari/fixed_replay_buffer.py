@@ -23,7 +23,10 @@ import tensorflow.compat.v1 as tf
 from dopamine.replay_memory import circular_replay_buffer
 import logging
 
-logging.basicConfig(level=logging.ERROR)  # Set global logging level to ERROR
+# logging.basicConfig(level=logging.ERROR)  # Set global logging level to ERROR
+
+# disable log for dopamine circular_replay_buffer
+logging.getLogger('absl').setLevel(logging.ERROR)
 
 gfile = tf.gfile
 

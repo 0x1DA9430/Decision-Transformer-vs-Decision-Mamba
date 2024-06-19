@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 
 class TrainerConfig:
     # optimization parameters
-    max_epochs = 10
+    max_epochs = 5
     batch_size = 64
     learning_rate = 3e-4
     betas = (0.9, 0.95)
@@ -118,7 +118,7 @@ class Trainer:
                                 )
 
             losses = []
-            pbar = tqdm(enumerate(loader), total=len(loader)) if is_train else enumerate(loader)
+            pbar = tqdm(enumerate(loader), total=len(loader), mininterval=30) if is_train else enumerate(loader)
             for it, (x, y, r, t) in pbar:
                 # place data on the correct device
                 x = x.to(self.device)
@@ -155,9 +155,12 @@ class Trainer:
                             param_group['lr'] = lr
                     else:
                         lr = config.learning_rate
+                    
 
                     # report progress
-                    pbar.set_description(f"epoch {epoch+1} iter {it}: train loss {loss.item():.5f}. lr {lr:e}")
+                    # pbar.set_description(f"epoch {epoch+1} iter {it}: train loss {loss.item():.5f}. lr {lr:e}")
+
+
 
             if is_train:
                 train_loss = float(np.mean(losses))
@@ -174,7 +177,7 @@ class Trainer:
 
         self.tokens = 0  # counter used for learning rate decay
         for epoch in range(config.max_epochs):
-
+            print(f"epoch {epoch}")
             loss = run_epoch('train', epoch_num=epoch)
             # if self.test_dataset is not None:
             #     test_loss = run_epoch('test')
