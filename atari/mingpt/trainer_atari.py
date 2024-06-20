@@ -318,9 +318,6 @@ class Env():
 
         # Get the correct ROM name using the dictionary or default to the game name
         rom_name = special_rom_names.get(args.game, args.game)
-        print('*'*50)
-        print('the game name is:', rom_name)
-        print('*'*50)
 
         # Load the ROM
         self.ale.loadROM(atari_py.get_game_path(rom_name))
