@@ -4,7 +4,7 @@
 #$ -N dt_atari_breakout
 #$ -cwd
 
-#$ -l h_rt=24:00:00
+#$ -l h_rt=28:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
