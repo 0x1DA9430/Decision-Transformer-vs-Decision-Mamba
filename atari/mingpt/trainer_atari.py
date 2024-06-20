@@ -202,6 +202,8 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(20)    
                 elif self.config.game == 'MontezumaRevenge':
                     eval_return, eval_time = self.get_returns(4753)  # human performance
+                elif self.config.game == 'KungFuMaster':
+                    eval_return, eval_time = self.get_returns(22736) # human performance
 
                 else:
                     raise NotImplementedError()
@@ -314,11 +316,24 @@ class Env():
         self.ale.setFloat('repeat_action_probability', 0)  # Disable sticky actions
         self.ale.setInt('frame_skip', 0)
         self.ale.setBool('color_averaging', False)
-        # print('the game name is:', args.game)   
-        if args.game == 'montezumarevenge':
-            self.ale.loadROM(atari_py.get_game_path('montezuma_revenge')) # deal with the name difference
-        else:
-            self.ale.loadROM(atari_py.get_game_path(args.game)) # ROM loading must be done after setting options
+
+        # self.ale.loadROM(atari_py.get_game_path(args.game)) # ROM loading must be done after setting options
+
+        # Define a dictionary for games with special ROM names
+        special_rom_names = {
+            'montezumarevenge': 'montezuma_revenge',
+            'kungfumaster': 'kung_fu_master',
+        }
+
+        # Get the correct ROM name using the dictionary or default to the game name
+        rom_name = special_rom_names.get(args.game, args.game)
+        print('*'*50)
+        print('the game name is:', rom_name)
+        print('*'*50)
+
+        # Load the ROM
+        self.ale.loadROM(atari_py.get_game_path(rom_name))
+
         actions = self.ale.getMinimalActionSet()
         self.actions = dict([i, e] for i, e in zip(range(len(actions)), actions))
         self.lives = 0  # Life counter (used in DeepMind training)
