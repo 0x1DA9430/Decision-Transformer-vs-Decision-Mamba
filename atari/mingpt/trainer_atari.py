@@ -298,15 +298,6 @@ class Trainer:
         return eval_return, eval_time
 
 
-class Args:
-    def __init__(self, game, seed):
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.seed = seed
-        self.max_episode_length = 108e3
-        self.game = game
-        self.history_length = 4
-
-
 class Env():
     def __init__(self, args):
         self.device = args.device
@@ -411,3 +402,12 @@ class Env():
 
     def close(self):
         cv2.destroyAllWindows()
+
+
+class Args:
+    def __init__(self, game, seed):
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.seed = seed
+        self.max_episode_length = 108e3
+        self.game = game
+        self.history_length = 4
