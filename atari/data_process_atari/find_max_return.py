@@ -42,9 +42,11 @@ def find_max_return(num_buffers, game, data_dir_prefix):
                     done = True
         
         pbar.update(1)  # Update progress bar after processing each buffer
+        # log the maximum return found so far
+        pbar.set_postfix({'current max return': max_return})
 
     pbar.close()
-    print('Maximum return found:', max_return)
+
     return max_return
 
 

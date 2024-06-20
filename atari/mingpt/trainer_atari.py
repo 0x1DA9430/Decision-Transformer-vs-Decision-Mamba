@@ -200,11 +200,10 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(1150)  #! if based on the DT paper it should be 1450
                 elif self.config.game == 'Pong':
                     eval_return, eval_time = self.get_returns(20)    
-                elif self.config.game == 'MontezumaRevenge':
-                    eval_return, eval_time = self.get_returns(4753)  # human performance
                 elif self.config.game == 'KungFuMaster':
-                    eval_return, eval_time = self.get_returns(22736) # human performance
-
+                    eval_return, eval_time = self.get_returns(1420) # 5*max return in training data
+                elif self.config.game == 'Hero':
+                    eval_return, eval_time = self.get_returns(1000) 
                 else:
                     raise NotImplementedError()
 
@@ -312,7 +311,7 @@ class Env():
 
         # Define a dictionary for games with special ROM names
         special_rom_names = {
-            'montezumarevenge': 'montezuma_revenge',
+            # 'montezumarevenge': 'montezuma_revenge',
             'kungfumaster': 'kung_fu_master',
         }
 
