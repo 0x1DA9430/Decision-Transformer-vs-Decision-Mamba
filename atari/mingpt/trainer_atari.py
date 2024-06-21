@@ -118,7 +118,7 @@ class Trainer:
                                 )
 
             losses = []
-            pbar = tqdm(enumerate(loader), total=len(loader), mininterval=30) if is_train else enumerate(loader)
+            pbar = tqdm(enumerate(loader), total=len(loader), mininterval=60) if is_train else enumerate(loader)
             for it, (x, y, r, t) in pbar:
                 # place data on the correct device
                 x = x.to(self.device)

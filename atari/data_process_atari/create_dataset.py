@@ -16,7 +16,7 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
     num_trajectories = 0
 
     print('loading trajectories from buffers')
-    # pbar = tqdm(total=num_steps)  # Initialize the progress bar
+    pbar = tqdm(total=num_steps, mininterval=60)  # Initialize the progress bar
     while len(obss) < num_steps:
         buffer_num = np.random.choice(np.arange(50 - num_buffers, 50), 1)[0]
         i = transitions_per_buffer[buffer_num]
@@ -43,11 +43,11 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
                 actions += [ac[0]]
                 stepwise_returns += [ret[0]]
                 
-                # # Update progress bar
-                # pbar.update(1)
-                # if len(obss) >= num_steps:
-                #     pbar.close()  # Close progress bar if step limit is reached
-                #     break
+                # Update progress bar
+                pbar.update(1)
+                if len(obss) >= num_steps:
+                    pbar.close()  # Close progress bar if step limit is reached
+                    break
                 
                 if terminal[0]:
                     done_idxs += [len(obss)]
