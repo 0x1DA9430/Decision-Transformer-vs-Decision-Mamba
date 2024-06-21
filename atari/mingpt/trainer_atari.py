@@ -193,17 +193,17 @@ class Trainer:
                 eval_return, eval_time = self.get_returns(0)
             elif self.config.model_type == 'reward_conditioned':
                 if self.config.game == 'Breakout':
-                    eval_return, eval_time = self.get_returns(90)
+                    eval_return, eval_time = self.get_returns(520)
                 elif self.config.game == 'Qbert':
-                    eval_return, eval_time = self.get_returns(2500)  #! if based on the DT paper it should be 2500 (DM: 14000)
-                elif self.config.game == 'Seaquest':
-                    eval_return, eval_time = self.get_returns(1150)  #! if based on the DT paper it should be 1450
+                    eval_return, eval_time = self.get_returns(3200)  
                 elif self.config.game == 'Pong':
-                    eval_return, eval_time = self.get_returns(20)    
-                elif self.config.game == 'KungFuMaster':
-                    eval_return, eval_time = self.get_returns(1420) # 5*max return in training data
+                    eval_return, eval_time = self.get_returns(105)   
+                elif self.config.game == 'Seaquest':
+                    eval_return, eval_time = self.get_returns(1570)  
                 elif self.config.game == 'Hero':
                     eval_return, eval_time = self.get_returns(950)  # 5*max return in training data
+                elif self.config.game == 'KungFuMaster':
+                    eval_return, eval_time = self.get_returns(1420) # 5*max return in training data
                 else:
                     raise NotImplementedError()
 
