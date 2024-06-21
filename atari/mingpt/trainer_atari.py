@@ -203,7 +203,7 @@ class Trainer:
                 elif self.config.game == 'KungFuMaster':
                     eval_return, eval_time = self.get_returns(1420) # 5*max return in training data
                 elif self.config.game == 'Hero':
-                    eval_return, eval_time = self.get_returns(1000) 
+                    eval_return, eval_time = self.get_returns(950)  # 5*max return in training data
                 else:
                     raise NotImplementedError()
 

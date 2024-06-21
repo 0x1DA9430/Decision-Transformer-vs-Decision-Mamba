@@ -91,7 +91,7 @@ e.g.
 
 ```bash
 python train_atari.py \
-        --game 'MontezumaRevenge' \
+        --game 'Hero' \
         --data_dir_prefix ./data/data_atari/ \
         --context_length 5 \
         --n_layer 3 \
