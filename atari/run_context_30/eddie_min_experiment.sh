@@ -45,7 +45,7 @@ for seed in 123 321; do
         --epochs 2 \
         --batch_size 64 \
         --num_steps 2 \
-        --num_buffers 1 \
+        --num_buffers 50 \
         --trajectories_per_buffer 5 \
         --output $OUT_DIR \
         --experiment $EXP_Q \
@@ -65,7 +65,7 @@ for seed in 123 321; do
         --epochs 2 \
         --batch_size 64 \
         --num_steps 2 \
-        --num_buffers 1 \
+        --num_buffers 50 \
         --trajectories_per_buffer 5 \
         --output $OUT_DIR \
         --experiment $EXP_DTQ \
