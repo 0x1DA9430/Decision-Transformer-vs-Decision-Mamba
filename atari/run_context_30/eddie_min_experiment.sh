@@ -35,16 +35,16 @@ OUT_DIR=./output/min_exp/atari_breakout_eddie/
 # Run the min experiments for Breakout with dmamba
 EXP_Q=min_dmamba_breakout
 for seed in 123 321; do 
-    python train_atari.py \
+    python ../train_atari.py \
         --game 'Breakout' \
         --data_dir_prefix $DATA_DIR \
-        --context_length 30 \
+        --context_length 5 \
         --n_layer 3 \
         --n_embd 8 \
         --token_mixer 'mamba' \
         --epochs 2 \
         --batch_size 64 \
-        --num_steps 2 \
+        --num_steps 50 \
         --num_buffers 50 \
         --trajectories_per_buffer 5 \
         --output $OUT_DIR \
@@ -55,16 +55,16 @@ done
 # Run the min experiments for Breakout with attn
 EXP_DTQ=min_dtrans_breakout
 for seed in 123 321; do 
-    python train_atari.py \
+    python ../train_atari.py \
         --game 'Breakout' \
         --data_dir_prefix $DATA_DIR \
-        --context_length 30 \
+        --context_length 5 \
         --n_layer 3 \
         --n_embd 8 \
         --token_mixer 'attn' \
         --epochs 2 \
         --batch_size 64 \
-        --num_steps 2 \
+        --num_steps 50 \
         --num_buffers 50 \
         --trajectories_per_buffer 5 \
         --output $OUT_DIR \
