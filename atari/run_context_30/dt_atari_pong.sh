@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dt_atari_qbert
+#$ -N dt_atari_pong
 #$ -cwd
 
 #$ -l h_rt=28:00:00
@@ -17,7 +17,7 @@
 
 # Save log
 #$ -j y
-#$ -o ./output/atari_qbert_eddie/dt_qbert_output.log
+#$ -o ../output/context_30/atari_pong_eddie/dt_pong_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
@@ -28,8 +28,8 @@ conda activate ssm
 python -m atari_py.import_roms ROMS > /dev/null 2>&1
 
 # Run the executable
-DATA_DIR=./data/data_atari/
-OUT_DIR=./output/atari_qbert_eddie/
+DATA_DIR=../data/data_atari/
+OUT_DIR=../output/context_30/atari_pong_eddie/
 
-EXP_DTQ=dtrans_qbert
-for seed in 123 132 213 231 312; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
+EXP_DTQ=dtrans_pong
+for seed in 123 132 213 231 312; do python train_atari.py --game 'Pong' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done

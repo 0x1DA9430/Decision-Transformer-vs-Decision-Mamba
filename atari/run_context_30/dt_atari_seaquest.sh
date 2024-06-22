@@ -17,7 +17,7 @@
 
 # Save log
 #$ -j y
-#$ -o ./output/atari_seaquest_eddie/dt_seaquest_output.log
+#$ -o ../output/context_30/atari_seaquest_eddie/dt_seaquest_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
@@ -28,8 +28,8 @@ conda activate ssm
 python -m atari_py.import_roms ROMS > /dev/null 2>&1
 
 # Run the executable
-DATA_DIR=./data/data_atari/
-OUT_DIR=./output/atari_seaquest_eddie/
+DATA_DIR=../data/data_atari/
+OUT_DIR=../output/context_30/atari_seaquest_eddie/
 
 EXP_DTQ=dtrans_seaquest
 for seed in 123 132 213 231 312; do python train_atari.py --game 'Seaquest' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
