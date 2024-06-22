@@ -4,12 +4,12 @@
 #$ -N dm_atari_qbert
 #$ -cwd
 
-#$ -l h_rt=28:00:00
+#$ -l h_rt=17:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
 #$ -pe gpu-a100 1
-#$ -l h_vmem=80G
+#$ -l h_vmem=90G
 
 # Send mail at beginning/end of job
 #$ -m be
