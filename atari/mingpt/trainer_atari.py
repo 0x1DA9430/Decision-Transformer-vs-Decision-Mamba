@@ -33,6 +33,8 @@ from torch.utils.data.dataloader import DataLoader
 
 from mingpt.utils import sample, update_summary
 
+import csv
+
 
 try:
     import wandb
@@ -85,9 +87,12 @@ class Trainer:
         self.train_dataset = train_dataset
         self.test_dataset = test_dataset
         self.config = config
+        self.losses_per_epoch = []  # List to store loss for each epoch
+        self.lrs_per_epoch = []  # List to store learning rate for each epoch
+        self.metrics_file = "training_metrics.csv"  # File to save the metrics
 
         # take over whatever gpus are on the system
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'  #? just need to specify 'cpu'?
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         if torch.cuda.is_available():
             self.device = torch.cuda.current_device()
             self.model = torch.nn.DataParallel(self.model).to(self.device)
@@ -100,13 +105,23 @@ class Trainer:
         logger.info("saving %s", self.config.ckpt_path)
         # torch.save(raw_model.state_dict(), self.config.ckpt_path)
 
+    def save_metrics_to_file(self, epoch, epoch_losses, epoch_lrs):
+        # Open file in append mode and write metrics
+        path = os.path.join(self.config.output_dir, self.metrics_file)
+        with open(path, 'a', newline='') as file:
+            writer = csv.writer(file)
+            if epoch == 0:
+                writer.writerow(['Epoch', 'Iteration', 'Loss', 'Learning Rate'])
+            for it, (loss, lr) in enumerate(zip(epoch_losses, epoch_lrs)):
+                writer.writerow([epoch + 1, it + 1, loss, lr])
+                
     def train(self):
         model, config = self.model, self.config
         raw_model = model.module if hasattr(self.model, "module") else model
         optimizer = raw_model.configure_optimizers(config)
-
+    
         #** train one epoch **
-        def run_epoch(split, epoch_num=0):
+        def run_epoch(split, epoch_num=0, epoch_losses=None, epoch_lrs=None):
             is_train = split == 'train'
             model.train(is_train)
             data = self.train_dataset if is_train else self.test_dataset
@@ -117,7 +132,7 @@ class Trainer:
                                 num_workers=config.num_workers,
                                 )
 
-            losses = []
+            # losses = []
             pbar = tqdm(enumerate(loader), total=len(loader), mininterval=60) if is_train else enumerate(loader)
             for it, (x, y, r, t) in pbar:
                 # place data on the correct device
@@ -131,7 +146,8 @@ class Trainer:
                     # logits, loss = model(x, y, r)
                     logits, loss = model(x, y, y, r, t)
                     loss = loss.mean()  # collapse all losses if they are scattered on multiple gpus
-                    losses.append(loss.item())
+                    # losses.append(loss.item())
+                    epoch_losses.append(loss.item())
 
                 if is_train:
                     # backprop and update the parameters
@@ -155,19 +171,17 @@ class Trainer:
                             param_group['lr'] = lr
                     else:
                         lr = config.learning_rate
+                    epoch_lrs.append(lr)
                     
-
                     # report progress
                     # pbar.set_description(f"epoch {epoch+1} iter {it}: train loss {loss.item():.5f}. lr {lr:e}")
 
-
-
             if is_train:
-                train_loss = float(np.mean(losses))
+                train_loss = float(np.mean(epoch_losses))
                 logger.info("train loss: %f", train_loss)
                 return train_loss
             if not is_train:
-                test_loss = float(np.mean(losses))
+                test_loss = float(np.mean(epoch_losses))
                 logger.info("test loss: %f", test_loss)
                 return test_loss
         #*****
@@ -177,8 +191,22 @@ class Trainer:
 
         self.tokens = 0  # counter used for learning rate decay
         for epoch in range(config.max_epochs):
+
+            epoch_losses = []
+            epoch_lrs = []
+
             print(f"epoch {epoch}")
-            loss = run_epoch('train', epoch_num=epoch)
+            loss = run_epoch('train', epoch_num=epoch, epoch_losses=epoch_losses, epoch_lrs=epoch_lrs)
+            
+            self.losses_per_epoch.append(epoch_losses)
+            self.lrs_per_epoch.append(epoch_lrs)
+
+            # Save metrics to file
+            self.save_metrics_to_file(epoch, epoch_losses, epoch_lrs)
+            
+            # print(f"epoch {epoch}")
+            # loss = run_epoch('train', epoch_num=epoch)
+
             # if self.test_dataset is not None:
             #     test_loss = run_epoch('test')
 
