@@ -1,3 +1,0 @@
-epoch,training/train_loss_mean,evaluation/eval_return,time/total
-0,1.3613879286724588,1.8,51.54381585121155
-1,1.1875570546025815,0.8,103.21028161048889
