@@ -32,4 +32,4 @@ DATA_DIR=../data/data_atari/
 OUT_DIR=../output/context_30/atari_breakout_eddie/
 
 EXP_DTQ=dtrans_breakout
-for seed in 123 132 213 231 312; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
+for seed in 123 132 321; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed; done
