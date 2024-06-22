@@ -2,7 +2,7 @@
 
 # Grid Engine options (lines prefixed with #$)
 #$ -N dm_atari_breakout
-#$ -wd /exports/eddie/scratch/s2524927/msc-project/atari
+#$ -cwd
 
 #$ -l h_rt=17:00:00
 

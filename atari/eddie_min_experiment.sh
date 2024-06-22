@@ -2,7 +2,7 @@
 
 # Grid Engine options (lines prefixed with #$)
 #$ -N min_exp
-#$ -wd /exports/eddie/scratch/s2524927/msc-project/atari
+#$ -cwd
 
 #$ -l h_rt=4:00:00
 
