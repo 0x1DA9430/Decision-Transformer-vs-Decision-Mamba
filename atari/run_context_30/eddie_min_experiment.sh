@@ -2,9 +2,9 @@
 
 # Grid Engine options (lines prefixed with #$)
 #$ -N min_exp
-#$ -wd ../
+#$ -cwd
 
-#$ -l h_rt=6:00:00
+#$ -l h_rt=4:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
