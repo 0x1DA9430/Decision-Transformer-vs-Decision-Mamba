@@ -2,7 +2,7 @@
 
 # Grid Engine options (lines prefixed with #$)
 #$ -N min_exp
-#$ -cwd
+#$ -wd ../
 
 #$ -l h_rt=4:00:00
 
@@ -17,7 +17,7 @@
 
 # Save log
 #$ -j y
-#$ -o ../output/min_exp/atari_breakout_eddie/min_output.log
+#$ -o ./output/min_exp/atari_breakout_eddie/min_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
@@ -29,8 +29,8 @@ python -m atari_py.import_roms ROMS > /dev/null 2>&1
 
 # Run the executable
 # Define data and output directories
-DATA_DIR=../data/data_atari/
-OUT_DIR=../output/min_exp/atari_breakout_eddie/
+DATA_DIR=./data/data_atari/
+OUT_DIR=./output/min_exp/atari_breakout_eddie/
 
 # Run the min experiments for Breakout with dmamba
 EXP_Q=min_dmamba_breakout
