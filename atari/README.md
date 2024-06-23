@@ -118,16 +118,53 @@ qsub dt_atari_breakout.sh
 qsub dm_atari_qbert.sh
 qsub dt_atari_qbert.sh
 
-qsub dm_atari_seaquest.sh
-qsub dt_atari_seaquest.sh
-qsub dm_atari_pong.sh
-qsub dt_atari_pong.sh
-
 qsub dm_atari_hero.sh
 qsub dt_atari_hero.sh
 qsub dm_atari_kungfumaster.sh
 qsub dt_atari_kungfumaster.sh
+
+qsub dm_atari_seaquest.sh
+qsub dt_atari_seaquest.sh
+qsub dm_atari_pong.sh
+qsub dt_atari_pong.sh
 ```
+Experiments for context length 10
+```bash
+qsub 10_dm_atari_breakout.sh
+qsub 10_dt_atari_breakout.sh
+qsub 10_dm_atari_qbert.sh
+qsub 10_dt_atari_qbert.sh
+
+qsub 10_dm_atari_hero.sh
+qsub 10_dt_atari_hero.sh
+qsub 10_dm_atari_kungfumaster.sh
+qsub 10_dt_atari_kungfumaster.sh
+
+qsub 10_dm_atari_seaquest.sh
+qsub 10_dt_atari_seaquest.sh
+qsub 10_dm_atari_pong.sh
+qsub 10_dt_atari_pong.sh
+```
+Experiments for context length 50
+```bash
+qsub 50_dm_atari_breakout.sh
+qsub 50_dt_atari_breakout.sh
+qsub 50_dm_atari_qbert.sh
+qsub 50_dt_atari_qbert.sh
+
+qsub 50_dm_atari_hero.sh
+qsub 50_dt_atari_hero.sh
+qsub 50_dm_atari_kungfumaster.sh
+qsub 50_dt_atari_kungfumaster.sh
+
+qsub 50_dm_atari_seaquest.sh
+qsub 50_dt_atari_seaquest.sh
+qsub 50_dm_atari_pong.sh
+qsub 50_dt_atari_pong.sh
+```
+
+
+
 
 
 > use single eGPU (reset after every boot)
