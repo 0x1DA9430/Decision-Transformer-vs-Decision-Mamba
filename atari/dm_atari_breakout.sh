@@ -9,7 +9,7 @@
 # Request one GPU in the gpu queue:
 #$ -q gpu
 #$ -pe gpu-a100 1
-#$ -l h_vmem=90G
+#$ -l h_vmem=150G
 
 # Send mail at beginning/end of job
 #$ -m be
