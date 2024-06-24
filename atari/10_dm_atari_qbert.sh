@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dm_atari_qbert
+#$ -N 10_dm_atari_qbert
 #$ -cwd
 
 #$ -l h_rt=17:00:00
