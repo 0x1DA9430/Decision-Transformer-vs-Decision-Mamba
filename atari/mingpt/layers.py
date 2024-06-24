@@ -7,6 +7,7 @@ from typing import Union
 from dataclasses import dataclass
 from einops import rearrange, repeat, einsum
 from mamba_ssm import Mamba
+from mamba_ssm import Mamba2
 
 
 #class GELU(nn.Module):
@@ -359,6 +360,7 @@ class Block(nn.Module):
         if 'attn' in self.token_mixer:
             self.ln1 = nn.LayerNorm(config.n_embd)
             self.attn = CausalSelfAttention(config, index)
+        
         if 'conv' in self.token_mixer:
             self.lnc = nn.LayerNorm(config.n_embd)
             self.conv = Convolution(config, index)
@@ -366,6 +368,11 @@ class Block(nn.Module):
         if self.token_mixer == 'mamba':
             self.norm_mamba = nn.LayerNorm(config.n_embd)
             self.mamba = Mamba(config.n_embd)
+        
+        if self.token_mixer == 'mamba2':
+            self.norm_mamba = nn.LayerNorm(config.n_embd)
+            self.mamba = Mamba2(config.n_embd)
+        
         if self.token_mixer == 'mamba-min':
             self.norm_mamba = RMSNorm(config.n_embd)
             self.mamba = MambaBlock(ModelArgs(d_model=config.n_embd))

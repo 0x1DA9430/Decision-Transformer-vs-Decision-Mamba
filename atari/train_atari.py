@@ -119,8 +119,9 @@ def main():
                                                                         args.data_dir_prefix,
                                                                         args.trajectories_per_buffer,
                                                                         )
+    
     train_dataset = StateActionReturnDataset(obss,
-                                            args.context_length*3,
+                                            args.context_length*3, # block_size
                                             actions,
                                             done_idxs,
                                             rtgs,
@@ -139,6 +140,7 @@ def main():
         conv_proj=args.conv_proj,
         max_timestep=max(timesteps),
         )
+    
     model = GPT(mconf)
 
     tconf = TrainerConfig(
@@ -158,6 +160,7 @@ def main():
         output_dir=output_dir,
         args_dir=args_dir,
         )
+    
     trainer = Trainer(model, train_dataset, None, tconf)
 
     try:
