@@ -396,7 +396,7 @@ class Block(nn.Module):
             else:
                 x = x + self.attn(self.ln1(x))
 
-        elif self.token_mixer == 'mamba' or self.token_mixer == 'mamba-min':
+        elif self.token_mixer == 'mamba' or self.token_mixer == 'mamba2' or self.token_mixer == 'mamba-min':
             x = x + self.mamba(self.norm_mamba(x))
         else:
             raise NotImplementedError
