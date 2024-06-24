@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N 10_dt_atari_hero
+#$ -N dt_10_atari_hero
 #$ -cwd
 
 #$ -l h_rt=17:00:00
