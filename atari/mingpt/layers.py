@@ -6,8 +6,7 @@ import math
 from typing import Union
 from dataclasses import dataclass
 from einops import rearrange, repeat, einsum
-from mamba_ssm import Mamba
-from mamba_ssm import Mamba2
+from mamba_ssm import Mamba, Mamba2
 
 
 #class GELU(nn.Module):

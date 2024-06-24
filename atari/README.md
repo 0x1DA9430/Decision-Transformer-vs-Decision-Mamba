@@ -108,7 +108,7 @@ python train_atari.py \
 ```
 or
 ```bash
-python train_atari.py --game 'Breakout' --data_dir_prefix ./data/data_atari/ --context_length 30 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 > ./output/test_experiment.log 2>&1
+python train_atari.py --game 'Breakout' --data_dir_prefix ./data/data_atari/ --context_length 30 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 --num_steps 5000 --trajectories_per_buffer 5 > ./output/test_experiment.log 2>&1
 ```
 
 ### Job submission to Eddie cluster
