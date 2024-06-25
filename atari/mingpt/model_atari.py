@@ -125,7 +125,7 @@ class GPT(nn.Module):
                 elif pn.endswith('weight') and isinstance(m, blacklist_weight_modules):
                     # weights of blacklist modules will NOT be weight decayed
                     no_decay.add(fpn)
-                elif pn.endswith('D') or pn.endswith('A_log') or fpn.endswith('norm_mamba.weight'):  #* added for SSM parameters
+                elif pn.endswith('mamba.D') or pn.endswith('mamba.A_log') or fpn.endswith('norm_mamba.weight') or fpn.endswith('mamba.norm.weight'):  #* added for SSM parameters 
                     no_decay.add(fpn)
 
         # special case the position embedding parameter in the root GPT module as not decayed

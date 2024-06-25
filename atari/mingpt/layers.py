@@ -370,7 +370,7 @@ class Block(nn.Module):
         
         if self.token_mixer == 'mamba2':
             self.norm_mamba = nn.LayerNorm(config.n_embd)
-            self.mamba = Mamba2(config.n_embd)
+            self.mamba = Mamba2(config.n_embd, expand=4)
         
         if self.token_mixer == 'mamba-min':
             self.norm_mamba = RMSNorm(config.n_embd)
