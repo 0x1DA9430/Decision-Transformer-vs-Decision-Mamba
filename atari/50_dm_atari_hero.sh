@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dm_atari_hero
+#$ -N 128_dm_atari_hero
 #$ -cwd
 
-#$ -l h_rt=28:00:00
+#$ -l h_rt=24:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
 #$ -pe gpu-a100 1
-#$ -l h_vmem=256G
+#$ -l h_vmem=128G
 
 # Send mail at beginning/end of job
 #$ -m be
