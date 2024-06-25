@@ -38,7 +38,9 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
             trajectories_to_load = trajectories_per_buffer
             while not done:
                 states, ac, ret, next_states, next_action, next_reward, terminal, indices = frb.sample_transition_batch(batch_size=1, indices=[i])
+
                 states = states.transpose((0, 3, 1, 2))[0] # (1, 84, 84, 4) --> (4, 84, 84)
+
                 obss += [states]
                 actions += [ac[0]]
                 stepwise_returns += [ret[0]]
