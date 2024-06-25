@@ -120,12 +120,12 @@ def main():
                                                                         args.trajectories_per_buffer,
                                                                         )
     
-    print('*'*50)
-    print('Dataset:')
-    print(obss[0].shape)
-    print(actions.shape, actions[0:10])
-    print(rtgs.shape)
-    print('*'*50)
+    # print('*'*50)
+    # print('Dataset:')
+    # print(obss[0].shape)
+    # print(actions.shape, actions[0:10])
+    # print(rtgs.shape)
+    # print('*'*50)
 
     train_dataset = StateActionReturnDataset(obss,
                                             args.context_length*3, # block_size
