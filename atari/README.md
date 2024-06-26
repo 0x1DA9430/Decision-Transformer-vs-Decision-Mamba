@@ -168,12 +168,13 @@ sumbit splited jobs
 qsub 50_dm_atari_hero_1.sh
 qsub 50_dm_atari_hero_2.sh
 qsub 50_dm_atari_hero_3.sh
-qsub 50_dm_atari_kungfumaster_1.sh
-qsub 50_dm_atari_kungfumaster_2.sh
-qsub 50_dm_atari_kungfumaster_3.sh
 qsub 50_dt_atari_hero_1.sh
 qsub 50_dt_atari_hero_2.sh
 qsub 50_dt_atari_hero_3.sh
+
+qsub 50_dm_atari_kungfumaster_1.sh
+qsub 50_dm_atari_kungfumaster_2.sh
+qsub 50_dm_atari_kungfumaster_3.sh
 qsub 50_dt_atari_kungfumaster_1.sh
 qsub 50_dt_atari_kungfumaster_2.sh
 qsub 50_dt_atari_kungfumaster_3.sh
