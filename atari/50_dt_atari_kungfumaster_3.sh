@@ -4,7 +4,7 @@
 #$ -N dt_128_kungfumaster_3
 #$ -cwd
 
-#$ -l h_rt=8:00:00
+#$ -l h_rt=12:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
