@@ -66,7 +66,7 @@ def visualize_state(state, game_name):
         axes[i].axis('off')
         axes[i].set_title(f'Frame {i+1}')
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze/{game_name}_state_example.png')
+    plt.savefig(f'dataset_analyze/{game_name}/state_example.png')
 
 def analyze_frame_differences(obss, game_name):
     # Randomly select 1000 consecutive pairs of states
@@ -81,7 +81,7 @@ def analyze_frame_differences(obss, game_name):
     plt.title("Distribution of Frame Differences")
     plt.xlabel("Average Absolute Difference")
     plt.ylabel("Frequency")
-    plt.savefig(f'dataset_analyze/{game_name}_frame_difference_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}/frame_difference_distribution.png')
 
     print(f"Average frame difference: {np.mean(differences):.4f}")
     print(f"Median frame difference: {np.median(differences):.4f}")
@@ -120,7 +120,7 @@ def analyze_action_space(actions, game_name):
         plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), f'{bar.get_height():.2f}%', ha='center', va='bottom')
 
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze/{game_name}_action_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}/action_distribution.png')
 
     # Print detailed breakdown
     print("\nAction frequency breakdown:")
@@ -169,7 +169,7 @@ def analyze_reward_sequence(rewards, done_idxs, game_name):
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}_reward_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}/reward_distribution.png')
 
     # Visualize cumulative reward distribution
     plt.figure(figsize=(10, 5))
@@ -182,7 +182,7 @@ def analyze_reward_sequence(rewards, done_idxs, game_name):
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}_cumulative_reward_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}/cumulative_reward_distribution.png')
 
 def main():
     parser = argparse.ArgumentParser(description="Analyze Atari game data")
