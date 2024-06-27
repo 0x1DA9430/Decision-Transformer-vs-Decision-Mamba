@@ -110,7 +110,7 @@ def main():
     parser.add_argument('--game', type=str, required=True, help='Name of the Atari game')
     parser.add_argument('--data_dir_prefix', type=str, default='./data/data_atari/', help='Path to dataset')
     parser.add_argument('--num_buffers', type=int, default=50, help='Number of buffers to sample from')
-    parser.add_argument('--num_steps', type=int, default=500000, help='Number of steps to analyze')
+    parser.add_argument('--num_steps', type=int, default=500, help='Number of steps to analyze')
     parser.add_argument('--trajectories_per_buffer', type=int, default=10, help='Number of trajectories to sample per buffer')
     args = parser.parse_args()
 
