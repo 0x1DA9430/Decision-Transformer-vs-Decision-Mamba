@@ -68,7 +68,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
 #     # save the image, don't display it
 #     plt.savefig('state.png')
 
-def visualize_state(state):
+def visualize_state(state, game_name):
     # Assuming state shape is (4, 84, 84)
     fig, axes = plt.subplots(1, 4, figsize=(20, 5))
     for i in range(4):
@@ -76,9 +76,9 @@ def visualize_state(state):
         axes[i].axis('off')
         axes[i].set_title(f'Frame {i+1}')
     plt.tight_layout()
-    plt.savefig('dataset_analyze/state_example.png')
+    plt.savefig(f'dataset_analyze/{game_name}_state_example.png')
 
-def analyze_frame_differences(obss):
+def analyze_frame_differences(obss, game_name):
     # Randomly select 1000 consecutive pairs of states
     indices = np.random.randint(0, len(obss) - 1, 1000)
     differences = []
@@ -91,7 +91,7 @@ def analyze_frame_differences(obss):
     plt.title("Distribution of Frame Differences")
     plt.xlabel("Average Absolute Difference")
     plt.ylabel("Frequency")
-    plt.savefig('dataset_analyze/frame_diffs.png')
+    plt.savefig(f'dataset_analyze/{game_name}_frame_difference_distribution.png')
 
     print(f"Average frame difference: {np.mean(differences):.4f}")
     print(f"Median frame difference: {np.median(differences):.4f}")
@@ -101,7 +101,7 @@ def analyze_frame_differences(obss):
 #     print(f"Unique actions: {sorted(unique_actions)}")
 #     print(f"Number of unique actions: {len(unique_actions)}")
 
-def analyze_action_space(actions):
+def analyze_action_space(actions, game_name):
     unique_actions = set(actions)
     print(f"Unique actions: {sorted(unique_actions)}")
     print(f"Number of unique actions: {len(unique_actions)}")
@@ -129,7 +129,7 @@ def analyze_action_space(actions):
     plt.ylabel("Percentage")
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('dataset_analyze/action_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}_action_distribution.png')
 
     # Print detailed breakdown
     print("\nAction frequency breakdown:")
@@ -168,7 +168,7 @@ def analyze_action_space(actions):
 #     plt.ylabel("Frequency")
 #     plt.show()
 
-def analyze_reward_sequence(rewards, done_idxs):
+def analyze_reward_sequence(rewards, done_idxs, game_name):
     trajectory_rewards = []
     start_idx = 0
     for end_idx in done_idxs:
@@ -204,7 +204,7 @@ def analyze_reward_sequence(rewards, done_idxs):
     plt.title("Reward Distribution")
     plt.xlabel("Reward")
     plt.ylabel("Frequency")
-    plt.savefig('dataset_analyze/reward_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}_reward_distribution.png')
 
     # Visualize cumulative reward distribution
     plt.figure(figsize=(10, 5))
@@ -212,7 +212,7 @@ def analyze_reward_sequence(rewards, done_idxs):
     plt.title("Cumulative Reward Distribution per Trajectory")
     plt.xlabel("Cumulative Reward")
     plt.ylabel("Frequency")
-    plt.savefig('dataset_analyze/cumulative_reward_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}_cumulative_reward_distribution.png')
 
 def main():
     parser = argparse.ArgumentParser(description="Analyze Atari game data")
@@ -245,13 +245,13 @@ def main():
     # Visualize a random state
     random_state_index = np.random.randint(len(obss))
     print("Visualizing a random game state:")
-    visualize_state(obss[random_state_index])
+    visualize_state(obss[random_state_index], args.game)
 
     print("\nAction space analysis:")
-    analyze_action_space(actions)
+    analyze_action_space(actions, args.game)
 
     print("\nReward sequence analysis:")
-    analyze_reward_sequence(rewards, done_idxs)
+    analyze_reward_sequence(rewards, done_idxs, args.game)
 
 if __name__ == "__main__":
     main()
