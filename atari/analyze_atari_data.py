@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from data_process_atari.fixed_replay_buffer import FixedReplayBuffer
 import argparse
 from tqdm import tqdm
+import os
+
 
 def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, trajectories_per_buffer=10):
     obss = []
@@ -200,6 +202,9 @@ def main():
         args.num_steps, 
         args.trajectories_per_buffer
     )
+
+    # Create directory for saving analysis results
+    os.makedirs(f'dataset_analyze/{args.game}', exist_ok=True)
 
     print(f"Analyzing data for game: {args.game}")
     print(f"Total steps analyzed: {len(obss)}")
