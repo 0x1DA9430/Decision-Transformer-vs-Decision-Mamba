@@ -57,16 +57,6 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
     pbar.close()
     return obss, actions, rewards, done_idxs
 
-# def visualize_state(state):
-#     # Assuming state shape is (84, 84, 4)
-#     fig, axes = plt.subplots(1, 4, figsize=(20, 5))
-#     for i in range(4):
-#         axes[i].imshow(state[:, :, i], cmap='gray')
-#         axes[i].axis('off')
-#         axes[i].set_title(f'Frame {i+1}')
-#     plt.tight_layout()
-#     # save the image, don't display it
-#     plt.savefig('state.png')
 
 def visualize_state(state, game_name):
     # Assuming state shape is (4, 84, 84)
@@ -96,10 +86,6 @@ def analyze_frame_differences(obss, game_name):
     print(f"Average frame difference: {np.mean(differences):.4f}")
     print(f"Median frame difference: {np.median(differences):.4f}")
 
-# def analyze_action_space(actions):
-#     unique_actions = set([action for trajectory in actions for action in trajectory])
-#     print(f"Unique actions: {sorted(unique_actions)}")
-#     print(f"Number of unique actions: {len(unique_actions)}")
 
 def analyze_action_space(actions, game_name):
     unique_actions = set(actions)
@@ -141,37 +127,6 @@ def analyze_action_space(actions, game_name):
     for action, percentage in sorted_actions:
         print(f"Action {action}: {percentage:.2f}%")
 
-# def analyze_reward_sequence(rewards):
-#     trajectory_lengths = [len(traj) for traj in rewards]
-#     avg_trajectory_length = np.mean(trajectory_lengths)
-#     print(f"Average trajectory length: {avg_trajectory_length:.2f}")
-
-#     total_rewards = [sum(traj) for traj in rewards]
-#     avg_total_reward = np.mean(total_rewards)
-#     print(f"Average total reward per trajectory: {avg_total_reward:.2f}")
-
-#     # Analyze reward delay
-#     first_nonzero_reward = []
-#     for traj in rewards:
-#         try:
-#             first_nonzero = next(i for i, r in enumerate(traj) if r != 0)
-#             first_nonzero_reward.append(first_nonzero)
-#         except StopIteration:
-#             pass
-    
-#     if first_nonzero_reward:
-#         avg_first_nonzero = np.mean(first_nonzero_reward)
-#         print(f"Average steps until first non-zero reward: {avg_first_nonzero:.2f}")
-#     else:
-#         print("No non-zero rewards found in the analyzed trajectories.")
-
-#     # Visualize reward distribution
-#     plt.figure(figsize=(10, 5))
-#     plt.hist([r for traj in rewards for r in traj], bins=50)
-#     plt.title("Reward Distribution")
-#     plt.xlabel("Reward")
-#     plt.ylabel("Frequency")
-#     plt.show()
 
 def analyze_reward_sequence(rewards, done_idxs, game_name):
     trajectory_rewards = []
@@ -249,13 +204,6 @@ def main():
     print(f"Analyzing data for game: {args.game}")
     print(f"Total steps analyzed: {len(obss)}")
     print(f"Number of trajectories: {len(done_idxs)}")
-
-    
-    # # Visualize a random state
-    # random_trajectory = np.random.choice(len(obss))
-    # random_state = np.random.choice(len(obss[random_trajectory]))
-    # print("Visualizing a random game state:")
-    # visualize_state(obss[random_trajectory][random_state])
 
     # Visualize a random state
     random_state_index = np.random.randint(len(obss))
