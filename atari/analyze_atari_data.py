@@ -65,7 +65,8 @@ def visualize_state(state):
         axes[i].axis('off')
         axes[i].set_title(f'Frame {i+1}')
     plt.tight_layout()
-    plt.show()
+    # save the image, don't display it
+    plt.savefig('state.png')
 
 def analyze_action_space(actions):
     unique_actions = set([action for trajectory in actions for action in trajectory])
