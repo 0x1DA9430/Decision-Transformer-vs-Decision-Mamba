@@ -251,7 +251,7 @@ def main():
     analyze_action_space(actions)
 
     print("\nReward sequence analysis:")
-    analyze_reward_sequence(rewards)
+    analyze_reward_sequence(rewards, done_idxs)
 
 if __name__ == "__main__":
     main()
