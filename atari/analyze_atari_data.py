@@ -57,16 +57,44 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
     pbar.close()
     return obss, actions, rewards, done_idxs
 
+# def visualize_state(state):
+#     # Assuming state shape is (84, 84, 4)
+#     fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+#     for i in range(4):
+#         axes[i].imshow(state[:, :, i], cmap='gray')
+#         axes[i].axis('off')
+#         axes[i].set_title(f'Frame {i+1}')
+#     plt.tight_layout()
+#     # save the image, don't display it
+#     plt.savefig('state.png')
+
 def visualize_state(state):
-    # Assuming state shape is (84, 84, 4)
+    # Assuming state shape is (4, 84, 84)
     fig, axes = plt.subplots(1, 4, figsize=(20, 5))
     for i in range(4):
-        axes[i].imshow(state[:, :, i], cmap='gray')
+        axes[i].imshow(state[i], cmap='gray')
         axes[i].axis('off')
         axes[i].set_title(f'Frame {i+1}')
     plt.tight_layout()
-    # save the image, don't display it
-    plt.savefig('state.png')
+    plt.savefig('state_example.png')
+
+def analyze_frame_differences(obss):
+    # Randomly select 1000 consecutive pairs of states
+    indices = np.random.randint(0, len(obss) - 1, 1000)
+    differences = []
+    for i in indices:
+        diff = np.mean(np.abs(obss[i+1] - obss[i]))
+        differences.append(diff)
+    
+    plt.figure(figsize=(10, 5))
+    plt.hist(differences, bins=50)
+    plt.title("Distribution of Frame Differences")
+    plt.xlabel("Average Absolute Difference")
+    plt.ylabel("Frequency")
+    plt.savefig('frame_diffs.png')
+
+    print(f"Average frame difference: {np.mean(differences):.4f}")
+    print(f"Median frame difference: {np.median(differences):.4f}")
 
 def analyze_action_space(actions):
     unique_actions = set([action for trajectory in actions for action in trajectory])
@@ -127,11 +155,16 @@ def main():
     print(f"Number of trajectories: {len(done_idxs)}")
 
     
+    # # Visualize a random state
+    # random_trajectory = np.random.choice(len(obss))
+    # random_state = np.random.choice(len(obss[random_trajectory]))
+    # print("Visualizing a random game state:")
+    # visualize_state(obss[random_trajectory][random_state])
+
     # Visualize a random state
-    random_trajectory = np.random.choice(len(obss))
-    random_state = np.random.choice(len(obss[random_trajectory]))
+    random_state_index = np.random.randint(len(obss))
     print("Visualizing a random game state:")
-    visualize_state(obss[random_trajectory][random_state])
+    visualize_state(obss[random_state_index])
 
     print("\nAction space analysis:")
     analyze_action_space(actions)
