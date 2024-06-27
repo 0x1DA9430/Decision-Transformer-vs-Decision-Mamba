@@ -123,11 +123,16 @@ def analyze_action_space(actions, game_name):
     
     # Plot action distribution
     plt.figure(figsize=(10, 6))
-    plt.bar([str(action) for action, _ in sorted_actions], [percentage for _, percentage in sorted_actions])
+    bars = plt.bar([str(action) for action, _ in sorted_actions], [percentage for _, percentage in sorted_actions])
     plt.title("Action Distribution")
     plt.xlabel("Action")
     plt.ylabel("Percentage")
     plt.xticks(rotation=45)
+
+    # Add text annotations
+    for bar in bars:
+        plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), f'{bar.get_height():.2f}%', ha='center', va='bottom')
+
     plt.tight_layout()
     plt.savefig(f'dataset_analyze/{game_name}_action_distribution.png')
 
@@ -200,18 +205,28 @@ def analyze_reward_sequence(rewards, done_idxs, game_name):
 
     # Visualize reward distribution
     plt.figure(figsize=(10, 5))
-    plt.hist(rewards, bins=50)
+    n, bins, patches = plt.hist(rewards, bins=50)
     plt.title("Reward Distribution")
     plt.xlabel("Reward")
     plt.ylabel("Frequency")
+
+    # Add text annotations
+    for i in range(len(patches)):
+        plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
+
     plt.savefig(f'dataset_analyze/{game_name}_reward_distribution.png')
 
     # Visualize cumulative reward distribution
     plt.figure(figsize=(10, 5))
-    plt.hist(total_rewards, bins=50)
+    n, bins, patches = plt.hist(total_rewards, bins=50)
     plt.title("Cumulative Reward Distribution per Trajectory")
     plt.xlabel("Cumulative Reward")
     plt.ylabel("Frequency")
+
+    # Add text annotations
+    for i in range(len(patches)):
+        plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
+
     plt.savefig(f'dataset_analyze/{game_name}_cumulative_reward_distribution.png')
 
 def main():
