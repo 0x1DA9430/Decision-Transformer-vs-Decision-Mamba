@@ -180,7 +180,9 @@ qsub 50_dt_atari_kungfumaster_2.sh
 qsub 50_dt_atari_kungfumaster_3.sh
 ```
 
-
+```
+zsh run_local_2.sh > ./output/kunfumaster_local.log 2>&1
+```
 
 
 
