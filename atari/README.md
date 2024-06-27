@@ -181,12 +181,17 @@ qsub 50_dt_atari_kungfumaster_3.sh
 ```
 
 ```
-python analyze_atari.py --game Breakout --num_steps 50000000
-python analyze_atari.py --game Qbert --num_steps 50000000
-python analyze_atari.py --game Hero --num_steps 50000000
-python analyze_atari.py --game KungFuMaster --num_steps 50000000
-python analyze_atari.py --game Seaquest --num_steps 50000000
-python analyze_atari.py --game Pong --num_steps 50000000
+python analyze_atari_data.py --game Breakout 
+
+python analyze_atari_data.py --game Qbert 
+
+python analyze_atari_data.py --game Hero 
+
+python analyze_atari_data.py --game KungFuMaster 
+
+python analyze_atari_data.py --game Seaquest 
+
+python analyze_atari_data.py --game Pong 
 ```
 
 
