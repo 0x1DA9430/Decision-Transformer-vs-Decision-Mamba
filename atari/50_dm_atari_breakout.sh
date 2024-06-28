@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dm_256_breakout
+#$ -N dm_50_breakout
 #$ -cwd
 
 #$ -l h_rt=24:00:00
@@ -9,7 +9,7 @@
 # Request one GPU in the gpu queue:
 #$ -q gpu
 #$ -pe gpu-a100 1
-#$ -l h_vmem=128G
+#$ -l h_vmem=150G
 
 # Send mail at beginning/end of job
 #$ -m be

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dt_128_qbert
+#$ -N dt_50_qbert
 #$ -cwd
 
 #$ -l h_rt=24:00:00
