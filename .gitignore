@@ -11,6 +11,3 @@ __pycache__/
 *.cpt
 
 test_experiment*/
-output/atari_10/
-output/atari_30/
-output/atari_50/
