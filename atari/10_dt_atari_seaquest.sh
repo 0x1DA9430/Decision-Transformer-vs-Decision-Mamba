@@ -4,7 +4,7 @@
 #$ -N dt_10_atari_seaquest
 #$ -cwd
 
-#$ -l h_rt=17:00:00
+#$ -l h_rt=07:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
