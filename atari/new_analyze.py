@@ -50,7 +50,8 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                 if len(obss_sample) < 1000:  # Keep a sample of observations for visualization
                     obss_sample.append(states)
                 
-                actions[ac[0]] += 1
+                # actions[ac[0]] += 1
+                actions[int(ac[0])] += 1
                 rewards.append(ret[0])
                 current_trajectory_reward += ret[0]
                 current_trajectory_length += 1
@@ -121,29 +122,61 @@ def analyze_frame_differences(obss, game_name):
     print(f"Median frame difference: {np.median(differences):.4f}")
 
 
+# def analyze_action_space(actions, game_name):
+#     unique_actions = set(actions)
+#     print(f"Unique actions: {sorted(unique_actions)}")
+#     print(f"Number of unique actions: {len(unique_actions)}")
+    
+#     # Count occurrences of each action
+#     action_counts = {}
+#     for action in actions:
+#         if action in action_counts:
+#             action_counts[action] += 1
+#         else:
+#             action_counts[action] = 1
+    
+#     # Calculate percentages
+#     total_actions = len(actions)
+#     action_percentages = {action: count / total_actions * 100 for action, count in action_counts.items()}
+    
+#     # Sort actions by frequency
+#     sorted_actions = sorted(action_percentages.items(), key=lambda x: x[1], reverse=True)
+    
+#     # Plot action distribution
+#     plt.figure(figsize=(10, 6))
+#     bars = plt.bar([str(action) for action, _ in sorted_actions], [percentage for _, percentage in sorted_actions])
+#     plt.title("Action Distribution")
+#     plt.xlabel("Action")
+#     plt.ylabel("Percentage")
+#     plt.xticks(rotation=45)
+
+#     # Add text annotations
+#     for bar in bars:
+#         plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), f'{bar.get_height():.2f}%', ha='center', va='bottom')
+
+#     plt.tight_layout()
+#     plt.savefig(f'new_dataset_analyze/{game_name}/action_distribution.png')
+
+#     # Print detailed breakdown
+#     print("\nAction frequency breakdown:")
+#     for action, percentage in sorted_actions:
+#         print(f"Action {action}: {percentage:.2f}%")
+
 def analyze_action_space(actions, game_name):
-    unique_actions = set(actions)
-    print(f"Unique actions: {sorted(unique_actions)}")
-    print(f"Number of unique actions: {len(unique_actions)}")
+    total_actions = sum(actions.values())
+    action_percentages = {action: (count / total_actions) * 100 for action, count in actions.items()}
     
-    # Count occurrences of each action
-    action_counts = {}
-    for action in actions:
-        if action in action_counts:
-            action_counts[action] += 1
-        else:
-            action_counts[action] = 1
+    print(f"Total actions: {total_actions}")
+    print(f"Unique actions: {sorted(actions.keys())}")
+    print(f"Number of unique actions: {len(actions)}")
     
-    # Calculate percentages
-    total_actions = len(actions)
-    action_percentages = {action: count / total_actions * 100 for action, count in action_counts.items()}
-    
-    # Sort actions by frequency
-    sorted_actions = sorted(action_percentages.items(), key=lambda x: x[1], reverse=True)
+    # Use the original order of actions
+    action_items = list(actions.items())
     
     # Plot action distribution
-    plt.figure(figsize=(10, 6))
-    bars = plt.bar([str(action) for action, _ in sorted_actions], [percentage for _, percentage in sorted_actions])
+    plt.figure(figsize=(12, 6))
+    bars = plt.bar([str(action) for action, _ in action_items], 
+                   [action_percentages[action] for action, _ in action_items])
     plt.title("Action Distribution")
     plt.xlabel("Action")
     plt.ylabel("Percentage")
@@ -151,15 +184,27 @@ def analyze_action_space(actions, game_name):
 
     # Add text annotations
     for bar in bars:
-        plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), f'{bar.get_height():.2f}%', ha='center', va='bottom')
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width() / 2, height,
+                 f'{height:.2f}%', ha='center', va='bottom')
 
     plt.tight_layout()
-    plt.savefig(f'new_dataset_analyze/{game_name}/action_distribution.png')
+    plt.savefig(f'dataset_analyze/{game_name}/action_distribution.png')
 
     # Print detailed breakdown
     print("\nAction frequency breakdown:")
-    for action, percentage in sorted_actions:
-        print(f"Action {action}: {percentage:.2f}%")
+    for action, count in action_items:
+        percentage = action_percentages[action]
+        print(f"Action {action}: {count} times ({percentage:.2f}%)")
+
+    # Calculate and print entropy
+    entropy = -sum((p/100) * np.log2(p/100) for p in action_percentages.values())
+    max_entropy = np.log2(len(actions))
+    normalized_entropy = entropy / max_entropy
+    print(f"\nAction distribution entropy: {entropy:.4f}")
+    print(f"Max possible entropy: {max_entropy:.4f}")
+    print(f"Normalized entropy: {normalized_entropy:.4f}")
+
 
 def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, game_name):
     avg_trajectory_length = np.mean(trajectory_lengths)

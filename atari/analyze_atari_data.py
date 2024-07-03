@@ -91,7 +91,7 @@ def analyze_frame_differences(obss, game_name):
 
 def analyze_action_space(actions, game_name):
     unique_actions = set(actions)
-    print(f"Unique actions: {sorted(unique_actions)}")
+    print(f"Unique actions: {list(unique_actions)}")
     print(f"Number of unique actions: {len(unique_actions)}")
     
     # Count occurrences of each action
@@ -106,12 +106,9 @@ def analyze_action_space(actions, game_name):
     total_actions = len(actions)
     action_percentages = {action: count / total_actions * 100 for action, count in action_counts.items()}
     
-    # Sort actions by frequency
-    sorted_actions = sorted(action_percentages.items(), key=lambda x: x[1], reverse=True)
-    
     # Plot action distribution
     plt.figure(figsize=(10, 6))
-    bars = plt.bar([str(action) for action, _ in sorted_actions], [percentage for _, percentage in sorted_actions])
+    bars = plt.bar([str(action) for action in action_percentages.keys()], [percentage for percentage in action_percentages.values()])
     plt.title("Action Distribution")
     plt.xlabel("Action")
     plt.ylabel("Percentage")
@@ -126,7 +123,7 @@ def analyze_action_space(actions, game_name):
 
     # Print detailed breakdown
     print("\nAction frequency breakdown:")
-    for action, percentage in sorted_actions:
+    for action, percentage in action_percentages.items():
         print(f"Action {action}: {percentage:.2f}%")
 
 
