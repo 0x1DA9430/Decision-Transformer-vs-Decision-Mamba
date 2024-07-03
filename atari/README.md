@@ -112,6 +112,9 @@ python train_atari.py --game 'Breakout' --data_dir_prefix ./data/data_atari/ --c
 ```
 
 ### Job submission to Eddie cluster
+
+Experiments for context length 30
+
 ```bash
 qsub dm_atari_breakout.sh
 qsub dt_atari_breakout.sh

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dm_10_atari_qbert
+#$ -N dm_10_qbert
 #$ -cwd
 
-#$ -l h_rt=17:00:00
+#$ -l h_rt=07:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
@@ -17,7 +17,7 @@
 
 # Save log
 #$ -j y
-#$ -o ./output/context_10_rtg_5max/atari_qbert_eddie/dm_qbert_output.log
+#$ -o ./output/context_10_rtg_5max/atari_qbert_eddie/dm_qbert_output_2.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
@@ -32,4 +32,5 @@ DATA_DIR=./data/data_atari/
 OUT_DIR=./output/context_10_rtg_5max/atari_qbert_eddie/
 
 EXP_Q=dmamba_qbert
-for seed in 123 132 321; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
+# for seed in 123 132 321; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
+for seed in 231 312; do python train_atari.py --game 'Qbert' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
