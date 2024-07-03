@@ -189,7 +189,7 @@ def analyze_action_space(actions, game_name):
                  f'{height:.2f}%', ha='center', va='bottom')
 
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze/{game_name}/action_distribution.png')
+    plt.savefig(f'new_dataset_analyze/{game_name}/action_distribution.png')
 
     # Print detailed breakdown
     print("\nAction frequency breakdown:")
@@ -230,7 +230,7 @@ def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_length
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}/reward_distribution.png')
+    plt.savefig(f'new_dataset_analyze/{game_name}/reward_distribution.png')
 
     # Visualize cumulative reward distribution
     plt.figure(figsize=(10, 5))
@@ -243,7 +243,7 @@ def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_length
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}/cumulative_reward_distribution.png')
+    plt.savefig(f'new_dataset_analyze/{game_name}/cumulative_reward_distribution.png')
     
 # def analyze_reward_sequence(rewards, done_idxs, game_name):
 #     trajectory_rewards = []
