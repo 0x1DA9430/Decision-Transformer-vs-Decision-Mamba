@@ -6,6 +6,7 @@ from tqdm import tqdm
 import os
 from collections import defaultdict
 
+
 def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, trajectories_per_buffer=100):
     obss_sample = []
     actions = defaultdict(int)
@@ -172,6 +173,8 @@ def analyze_action_space(actions, game_name):
     
     # Use the original order of actions
     action_items = list(actions.items())
+    # sort actions by index
+    action_items.sort(key=lambda x: x[0])
     
     # Plot action distribution
     plt.figure(figsize=(12, 6))
@@ -336,8 +339,8 @@ def main():
     print("\nReward sequence analysis:")
     analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, args.game)
 
-    print("\nFrame difference analysis:")
-    analyze_frame_differences(frame_differences, args.game)
+    # print("\nFrame difference analysis:")
+    # analyze_frame_differences(frame_differences, args.game)
 
 if __name__ == "__main__":
     main()
