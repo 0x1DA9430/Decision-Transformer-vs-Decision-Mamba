@@ -123,46 +123,6 @@ def analyze_frame_differences(obss, game_name):
     print(f"Median frame difference: {np.median(differences):.4f}")
 
 
-# def analyze_action_space(actions, game_name):
-#     unique_actions = set(actions)
-#     print(f"Unique actions: {sorted(unique_actions)}")
-#     print(f"Number of unique actions: {len(unique_actions)}")
-    
-#     # Count occurrences of each action
-#     action_counts = {}
-#     for action in actions:
-#         if action in action_counts:
-#             action_counts[action] += 1
-#         else:
-#             action_counts[action] = 1
-    
-#     # Calculate percentages
-#     total_actions = len(actions)
-#     action_percentages = {action: count / total_actions * 100 for action, count in action_counts.items()}
-    
-#     # Sort actions by frequency
-#     sorted_actions = sorted(action_percentages.items(), key=lambda x: x[1], reverse=True)
-    
-#     # Plot action distribution
-#     plt.figure(figsize=(10, 6))
-#     bars = plt.bar([str(action) for action, _ in sorted_actions], [percentage for _, percentage in sorted_actions])
-#     plt.title("Action Distribution")
-#     plt.xlabel("Action")
-#     plt.ylabel("Percentage")
-#     plt.xticks(rotation=45)
-
-#     # Add text annotations
-#     for bar in bars:
-#         plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), f'{bar.get_height():.2f}%', ha='center', va='bottom')
-
-#     plt.tight_layout()
-#     plt.savefig(f'new_dataset_analyze/{game_name}/action_distribution.png')
-
-#     # Print detailed breakdown
-#     print("\nAction frequency breakdown:")
-#     for action, percentage in sorted_actions:
-#         print(f"Action {action}: {percentage:.2f}%")
-
 def analyze_action_space(actions, game_name):
     total_actions = sum(actions.values())
     action_percentages = {action: (count / total_actions) * 100 for action, count in actions.items()}
@@ -248,61 +208,6 @@ def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_length
 
     plt.savefig(f'new_dataset_analyze/{game_name}/cumulative_reward_distribution.png')
     
-# def analyze_reward_sequence(rewards, done_idxs, game_name):
-#     trajectory_rewards = []
-#     start_idx = 0
-#     for end_idx in done_idxs:
-#         trajectory_rewards.append(rewards[start_idx:end_idx])
-#         start_idx = end_idx
-
-#     trajectory_lengths = [len(traj) for traj in trajectory_rewards]
-#     avg_trajectory_length = np.mean(trajectory_lengths)
-#     print(f"Average trajectory length: {avg_trajectory_length:.2f}")
-
-#     total_rewards = [sum(traj) for traj in trajectory_rewards]
-#     avg_total_reward = np.mean(total_rewards)
-#     print(f"Average total reward per trajectory: {avg_total_reward:.2f}")
-
-#     # Analyze reward delay
-#     first_nonzero_reward = []
-#     for traj in trajectory_rewards:
-#         try:
-#             first_nonzero = next(i for i, r in enumerate(traj) if r != 0)
-#             first_nonzero_reward.append(first_nonzero)
-#         except StopIteration:
-#             pass
-    
-#     if first_nonzero_reward:
-#         avg_first_nonzero = np.mean(first_nonzero_reward)
-#         print(f"Average steps until first non-zero reward: {avg_first_nonzero:.2f}")
-#     else:
-#         print("No non-zero rewards found in the analyzed trajectories.")
-
-#     # Visualize reward distribution
-#     plt.figure(figsize=(10, 5))
-#     n, bins, patches = plt.hist(rewards, bins=50)
-#     plt.title("Reward Distribution")
-#     plt.xlabel("Reward")
-#     plt.ylabel("Frequency")
-
-#     # Add text annotations
-#     for i in range(len(patches)):
-#         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
-
-#     plt.savefig(f'new_dataset_analyze/{game_name}/reward_distribution.png')
-
-#     # Visualize cumulative reward distribution
-#     plt.figure(figsize=(10, 5))
-#     n, bins, patches = plt.hist(total_rewards, bins=50)
-#     plt.title("Cumulative Reward Distribution per Trajectory")
-#     plt.xlabel("Cumulative Reward")
-#     plt.ylabel("Frequency")
-
-#     # Add text annotations
-#     for i in range(len(patches)):
-#         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
-
-#     plt.savefig(f'new_dataset_analyze/{game_name}/cumulative_reward_distribution.png')
 
 def main():
     parser = argparse.ArgumentParser(description="Analyze Atari game data")
