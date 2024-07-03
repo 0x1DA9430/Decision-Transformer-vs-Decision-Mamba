@@ -1,33 +1,34 @@
 Analyzing data for game: KungFuMaster
 Total steps analyzed: 5000000
-Number of trajectories: 1893
+Number of trajectories: 2024
 Visualizing a random game state:
 
 Action space analysis:
+Total actions: 5000000
 Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 Number of unique actions: 14
 
 Action frequency breakdown:
-Action 9: 7.14%
-Action 10: 7.14%
-Action 6: 7.14%
-Action 5: 7.14%
-Action 11: 7.14%
-Action 1: 7.14%
-Action 2: 7.14%
-Action 8: 7.14%
-Action 13: 7.14%
-Action 3: 7.14%
-Action 12: 7.14%
-Action 4: 7.14%
-Action 7: 7.14%
-Action 0: 7.14%
+Action 0: 325801 times (6.52%)
+Action 1: 286464 times (5.73%)
+Action 2: 270585 times (5.41%)
+Action 3: 463348 times (9.27%)
+Action 4: 341335 times (6.83%)
+Action 5: 360810 times (7.22%)
+Action 6: 362957 times (7.26%)
+Action 7: 348762 times (6.98%)
+Action 8: 456034 times (9.12%)
+Action 9: 345715 times (6.91%)
+Action 10: 332332 times (6.65%)
+Action 11: 371748 times (7.43%)
+Action 12: 345072 times (6.90%)
+Action 13: 389037 times (7.78%)
+
+Action distribution entropy: 3.7927
+Max possible entropy: 3.8074
+Normalized entropy: 0.9961
 
 Reward sequence analysis:
-Average trajectory length: 2640.55
-Average total reward per trajectory: 117.09
-Average steps until first non-zero reward: 109.56
-
-Frame difference analysis:
-Average frame difference: 0.5965
-Median frame difference: 0.2882
+Average trajectory length: 2469.33
+Average total reward per trajectory: 104.83
+Average steps until first non-zero reward: 123.22

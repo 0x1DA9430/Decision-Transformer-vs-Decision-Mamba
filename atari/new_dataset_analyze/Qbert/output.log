@@ -1,25 +1,26 @@
 Analyzing data for game: Qbert
 Total steps analyzed: 5000000
-Number of trajectories: 4870
+Number of trajectories: 4590
 Visualizing a random game state:
 
 Action space analysis:
+Total actions: 5000000
 Unique actions: [0, 1, 2, 3, 4, 5]
 Number of unique actions: 6
 
 Action frequency breakdown:
-Action 3: 16.67%
-Action 1: 16.67%
-Action 2: 16.67%
-Action 5: 16.67%
-Action 0: 16.67%
-Action 4: 16.67%
+Action 0: 757975 times (15.16%)
+Action 1: 757531 times (15.15%)
+Action 2: 808939 times (16.18%)
+Action 3: 928007 times (18.56%)
+Action 4: 814195 times (16.28%)
+Action 5: 933353 times (18.67%)
+
+Action distribution entropy: 2.5796
+Max possible entropy: 2.5850
+Normalized entropy: 0.9979
 
 Reward sequence analysis:
-Average trajectory length: 1026.19
-Average total reward per trajectory: 127.83
-Average steps until first non-zero reward: 58.97
-
-Frame difference analysis:
-Average frame difference: 0.4222
-Median frame difference: 0.0637
+Average trajectory length: 1089.15
+Average total reward per trajectory: 139.39
+Average steps until first non-zero reward: 56.16
