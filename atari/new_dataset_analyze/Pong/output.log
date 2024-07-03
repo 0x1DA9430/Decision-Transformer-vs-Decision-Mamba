@@ -1,0 +1,25 @@
+Analyzing data for game: Pong
+Total steps analyzed: 5000000
+Number of trajectories: 2312
+Visualizing a random game state:
+
+Action space analysis:
+Unique actions: [0, 1, 2, 3, 4, 5]
+Number of unique actions: 6
+
+Action frequency breakdown:
+Action 0: 16.67%
+Action 1: 16.67%
+Action 4: 16.67%
+Action 5: 16.67%
+Action 3: 16.67%
+Action 2: 16.67%
+
+Reward sequence analysis:
+Average trajectory length: 2161.93
+Average total reward per trajectory: 16.40
+Average steps until first non-zero reward: 115.01
+
+Frame difference analysis:
+Average frame difference: 0.1925
+Median frame difference: 0.0729

@@ -1,0 +1,23 @@
+Analyzing data for game: Breakout
+Total steps analyzed: 5000000
+Number of trajectories: 4148
+Visualizing a random game state:
+
+Action space analysis:
+Unique actions: [0, 1, 2, 3]
+Number of unique actions: 4
+
+Action frequency breakdown:
+Action 3: 25.00%
+Action 0: 25.00%
+Action 2: 25.00%
+Action 1: 25.00%
+
+Reward sequence analysis:
+Average trajectory length: 1205.25
+Average total reward per trajectory: 36.82
+Average steps until first non-zero reward: 41.13
+
+Frame difference analysis:
+Average frame difference: 0.1331
+Median frame difference: 0.0696
