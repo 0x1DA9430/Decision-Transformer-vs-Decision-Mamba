@@ -4,17 +4,13 @@ from data_process_atari.fixed_replay_buffer import FixedReplayBuffer
 import argparse
 from tqdm import tqdm
 import os
+from collections import defaultdict
 
-
-def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, trajectories_per_buffer=10):
-    obss = []
-    actions = []
-    rewards = []
-    done_idxs = []
-
-    pbar = tqdm(total=num_steps)
-    while len(obss) < num_steps:
-        buffer_num = np.random.choice(np.arange(50 - num_buffers, 50), 1)[0]
+def analyze_game_data_generator(game, data_dir_prefix, num_buffers=50, num_steps=5000000, trajectories_per_buffer=100):
+    steps_analyzed = 0
+    buffer_nums = np.random.choice(np.arange(50 - num_buffers, 50), num_buffers, replace=False)
+    
+    for buffer_num in buffer_nums:
         frb = FixedReplayBuffer(
             data_dir=data_dir_prefix + f'{game}/1/replay_logs',
             replay_suffix=buffer_num,
@@ -28,163 +24,126 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
         )
         
         if frb._loaded_buffers:
-            done = False
-            trajectories_to_load = trajectories_per_buffer
+            trajectories_loaded = 0
             i = 0
-            while not done:
+            while trajectories_loaded < trajectories_per_buffer and steps_analyzed < num_steps:
                 states, ac, ret, next_states, next_action, next_reward, terminal, indices = frb.sample_transition_batch(batch_size=1, indices=[i])
                 
                 states = states.transpose((0, 3, 1, 2))[0]  # (1, 84, 84, 4) --> (4, 84, 84)
                 
-                obss.append(states)
-                actions.append(ac[0])
-                rewards.append(ret[0])
+                yield states, ac[0], ret[0], terminal[0]
                 
-                pbar.update(1)
-                if len(obss) >= num_steps:
-                    pbar.close()
-                    done = True
-                    break
+                steps_analyzed += 1
                 
                 if terminal[0]:
-                    done_idxs.append(len(obss))
-                    if trajectories_to_load == 0:
-                        done = True
-                    else:
-                        trajectories_to_load -= 1
+                    trajectories_loaded += 1
+                
                 i += 1
                 if i >= 100000:
-                    done = True
-
-    pbar.close()
-    return obss, actions, rewards, done_idxs
-
-
-def visualize_state(state, game_name):
-    # Assuming state shape is (4, 84, 84)
-    fig, axes = plt.subplots(1, 4, figsize=(20, 5))
-    for i in range(4):
-        axes[i].imshow(state[i], cmap='gray')
-        axes[i].axis('off')
-        axes[i].set_title(f'Frame {i+1}')
-    plt.tight_layout()
-    plt.savefig(f'new_dataset_analyze/{game_name}/state_example.png')
-
-def analyze_frame_differences(obss, game_name):
-    # Randomly select 1000 consecutive pairs of states
-    indices = np.random.randint(0, len(obss) - 1, 1000)
-    differences = []
-    for i in indices:
-        diff = np.mean(np.abs(obss[i+1] - obss[i]))
-        differences.append(diff)
+                    break
     
-    plt.figure(figsize=(10, 5))
-    plt.hist(differences, bins=50)
-    plt.title("Distribution of Frame Differences")
-    plt.xlabel("Average Absolute Difference")
-    plt.ylabel("Frequency")
-    plt.savefig(f'new_dataset_analyze/{game_name}/frame_difference_distribution.png')
+    print(f"Total steps analyzed: {steps_analyzed}")
 
-    print(f"Average frame difference: {np.mean(differences):.4f}")
-    print(f"Median frame difference: {np.median(differences):.4f}")
+def incremental_analyze(game, data_dir_prefix, num_buffers=50, num_steps=5000000, trajectories_per_buffer=100):
+    action_counts = defaultdict(int)
+    reward_sum = 0
+    reward_counts = defaultdict(int)
+    total_rewards = []
+    current_trajectory_reward = 0
+    frame_differences = []
+    total_steps = 0
+    trajectory_lengths = []
+    current_trajectory_length = 0
+    first_nonzero_rewards = []
+    steps_to_first_nonzero = 0
 
+    data_generator = analyze_game_data_generator(game, data_dir_prefix, num_buffers, num_steps, trajectories_per_buffer)
+    
+    prev_state = None
+    for state, action, reward, done in tqdm(data_generator, total=num_steps):
+        # Action analysis
+        action_counts[action] += 1
+        
+        # Reward analysis
+        reward_sum += reward
+        reward_counts[reward] += 1
+        current_trajectory_reward += reward
+        current_trajectory_length += 1
+        
+        if reward != 0 and steps_to_first_nonzero == 0:
+            first_nonzero_rewards.append(steps_to_first_nonzero)
+            steps_to_first_nonzero = 0
+        elif reward == 0:
+            steps_to_first_nonzero += 1
+        
+        # Frame difference analysis
+        if prev_state is not None:
+            diff = np.mean(np.abs(state - prev_state))
+            frame_differences.append(diff)
+        prev_state = state
+        
+        if done:
+            total_rewards.append(current_trajectory_reward)
+            trajectory_lengths.append(current_trajectory_length)
+            current_trajectory_reward = 0
+            current_trajectory_length = 0
+            steps_to_first_nonzero = 0
+        
+        total_steps += 1
+    
+    return action_counts, reward_sum, reward_counts, total_rewards, frame_differences, total_steps, trajectory_lengths, first_nonzero_rewards
 
-def analyze_action_space(actions, game_name):
-    unique_actions = set(actions)
-    print(f"Unique actions: {sorted(unique_actions)}")
-    print(f"Number of unique actions: {len(unique_actions)}")
+def visualize_results(game, results):
+    action_counts, reward_sum, reward_counts, total_rewards, frame_differences, total_steps, trajectory_lengths, first_nonzero_rewards = results
     
-    # Count occurrences of each action
-    action_counts = {}
-    for action in actions:
-        if action in action_counts:
-            action_counts[action] += 1
-        else:
-            action_counts[action] = 1
+    os.makedirs(f'dataset_analyze/{game}', exist_ok=True)
     
-    # Calculate percentages
-    total_actions = len(actions)
-    action_percentages = {action: count / total_actions * 100 for action, count in action_counts.items()}
-    
-    # Sort actions by frequency
-    sorted_actions = sorted(action_percentages.items(), key=lambda x: x[1], reverse=True)
-    
-    # Plot action distribution
+    # Action distribution
     plt.figure(figsize=(10, 6))
-    bars = plt.bar([str(action) for action, _ in sorted_actions], [percentage for _, percentage in sorted_actions])
+    actions, counts = zip(*sorted(action_counts.items()))
+    plt.bar(actions, counts)
     plt.title("Action Distribution")
     plt.xlabel("Action")
-    plt.ylabel("Percentage")
-    plt.xticks(rotation=45)
-
-    # Add text annotations
-    for bar in bars:
-        plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), f'{bar.get_height():.2f}%', ha='center', va='bottom')
-
-    plt.tight_layout()
-    plt.savefig(f'new_dataset_analyze/{game_name}/action_distribution.png')
-
-    # Print detailed breakdown
-    print("\nAction frequency breakdown:")
-    for action, percentage in sorted_actions:
-        print(f"Action {action}: {percentage:.2f}%")
-
-
-def analyze_reward_sequence(rewards, done_idxs, game_name):
-    trajectory_rewards = []
-    start_idx = 0
-    for end_idx in done_idxs:
-        trajectory_rewards.append(rewards[start_idx:end_idx])
-        start_idx = end_idx
-
-    trajectory_lengths = [len(traj) for traj in trajectory_rewards]
-    avg_trajectory_length = np.mean(trajectory_lengths)
-    print(f"Average trajectory length: {avg_trajectory_length:.2f}")
-
-    total_rewards = [sum(traj) for traj in trajectory_rewards]
-    avg_total_reward = np.mean(total_rewards)
-    print(f"Average total reward per trajectory: {avg_total_reward:.2f}")
-
-    # Analyze reward delay
-    first_nonzero_reward = []
-    for traj in trajectory_rewards:
-        try:
-            first_nonzero = next(i for i, r in enumerate(traj) if r != 0)
-            first_nonzero_reward.append(first_nonzero)
-        except StopIteration:
-            pass
+    plt.ylabel("Count")
+    plt.savefig(f'dataset_analyze/{game}/action_distribution.png')
+    plt.close()
     
-    if first_nonzero_reward:
-        avg_first_nonzero = np.mean(first_nonzero_reward)
-        print(f"Average steps until first non-zero reward: {avg_first_nonzero:.2f}")
-    else:
-        print("No non-zero rewards found in the analyzed trajectories.")
-
-    # Visualize reward distribution
-    plt.figure(figsize=(10, 5))
-    n, bins, patches = plt.hist(rewards, bins=50)
+    # Reward distribution
+    plt.figure(figsize=(10, 6))
+    rewards, counts = zip(*sorted(reward_counts.items()))
+    plt.bar(rewards, counts)
     plt.title("Reward Distribution")
     plt.xlabel("Reward")
-    plt.ylabel("Frequency")
-
-    # Add text annotations
-    for i in range(len(patches)):
-        plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
-
-    plt.savefig(f'new_dataset_analyze/{game_name}/reward_distribution.png')
-
-    # Visualize cumulative reward distribution
-    plt.figure(figsize=(10, 5))
-    n, bins, patches = plt.hist(total_rewards, bins=50)
+    plt.ylabel("Count")
+    plt.savefig(f'dataset_analyze/{game}/reward_distribution.png')
+    plt.close()
+    
+    # Cumulative reward distribution
+    plt.figure(figsize=(10, 6))
+    plt.hist(total_rewards, bins=50)
     plt.title("Cumulative Reward Distribution per Trajectory")
     plt.xlabel("Cumulative Reward")
     plt.ylabel("Frequency")
-
-    # Add text annotations
-    for i in range(len(patches)):
-        plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
-
-    plt.savefig(f'new_dataset_analyze/{game_name}/cumulative_reward_distribution.png')
+    plt.savefig(f'dataset_analyze/{game}/cumulative_reward_distribution.png')
+    plt.close()
+    
+    # Frame difference distribution
+    plt.figure(figsize=(10, 6))
+    plt.hist(frame_differences, bins=50)
+    plt.title("Frame Difference Distribution")
+    plt.xlabel("Average Absolute Difference")
+    plt.ylabel("Frequency")
+    plt.savefig(f'dataset_analyze/{game}/frame_difference_distribution.png')
+    plt.close()
+    
+    # Print statistics
+    print(f"Total steps analyzed: {total_steps}")
+    print(f"Number of trajectories: {len(total_rewards)}")
+    print(f"Average trajectory length: {np.mean(trajectory_lengths):.2f}")
+    print(f"Average total reward per trajectory: {np.mean(total_rewards):.2f}")
+    print(f"Average frame difference: {np.mean(frame_differences):.4f}")
+    print(f"Median frame difference: {np.median(frame_differences):.4f}")
+    print(f"Average steps until first non-zero reward: {np.mean(first_nonzero_rewards):.2f}")
 
 def main():
     parser = argparse.ArgumentParser(description="Analyze Atari game data")
@@ -195,7 +154,7 @@ def main():
     parser.add_argument('--trajectories_per_buffer', type=int, default=100, help='Number of trajectories to sample per buffer')
     args = parser.parse_args()
 
-    obss, actions, rewards, done_idxs = analyze_game_data(
+    results = incremental_analyze(
         args.game, 
         args.data_dir_prefix, 
         args.num_buffers, 
@@ -203,23 +162,7 @@ def main():
         args.trajectories_per_buffer
     )
 
-    # Create directory for saving analysis results
-    os.makedirs(f'new_dataset_analyze/{args.game}', exist_ok=True)
-
-    print(f"Analyzing data for game: {args.game}")
-    print(f"Total steps analyzed: {len(obss)}")
-    print(f"Number of trajectories: {len(done_idxs)}")
-
-    # Visualize a random state
-    random_state_index = np.random.randint(len(obss))
-    print("Visualizing a random game state:")
-    visualize_state(obss[random_state_index], args.game)
-
-    print("\nAction space analysis:")
-    analyze_action_space(actions, args.game)
-
-    print("\nReward sequence analysis:")
-    analyze_reward_sequence(rewards, done_idxs, args.game)
+    visualize_results(args.game, results)
 
 if __name__ == "__main__":
     main()
