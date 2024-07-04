@@ -24,6 +24,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 from mingpt.layers import Block
+from data_process_atari.create_dataset import create_action_fusion_mapping
 
 
 logger = logging.getLogger(__name__)
@@ -55,6 +56,8 @@ class GPT(nn.Module):
         self.config = config
         self.model_type = config.model_type
         self.block_size = config.block_size
+        self.use_action_fusion = config.use_action_fusion
+        self.game = config.game
 
         # input embedding stem
         self.tok_emb = nn.Embedding(config.vocab_size, config.n_embd)
@@ -83,7 +86,15 @@ class GPT(nn.Module):
             nn.Flatten(),
             nn.Linear(3136, config.n_embd), nn.Tanh())
         self.ret_emb = nn.Sequential(nn.Linear(1, config.n_embd), nn.Tanh())
-        self.action_embeddings = nn.Sequential(nn.Embedding(config.vocab_size, config.n_embd), nn.Tanh())
+
+        # Action fusion
+        if self.use_action_fusion:
+            self.action_fusion_map = create_action_fusion_mapping(self.game)
+            fused_vocab_size = len(set(self.action_fusion_map.values()))
+            self.action_embeddings = nn.Sequential(nn.Embedding(fused_vocab_size, config.n_embd), nn.Tanh())
+        else:
+            self.action_embeddings = nn.Sequential(nn.Embedding(config.vocab_size, config.n_embd), nn.Tanh())
+
         nn.init.normal_(self.action_embeddings[0].weight, mean=0.0, std=0.02)
 
     def get_block_size(self):
@@ -163,6 +174,9 @@ class GPT(nn.Module):
         #*** embeddings
         state_embeddings = self.state_encoder(states.reshape(-1, 4, 84, 84).type(torch.float32).contiguous())  # (batch * block_size, n_embd)
         state_embeddings = state_embeddings.reshape(states.shape[0], states.shape[1], self.config.n_embd)  # (batch, block_size, n_embd)
+
+        if self.use_action_fusion and actions is not None:
+                actions = torch.tensor([self.action_fusion_map[a.item()] for a in actions.flatten()]).reshape(actions.shape).to(actions.device)
 
         if actions is not None and self.model_type == 'reward_conditioned':
             rtg_embeddings = self.ret_emb(rtgs.type(torch.float32))

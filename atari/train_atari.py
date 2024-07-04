@@ -75,10 +75,12 @@ parser.add_argument('--log_to_wandb', '-w', type=bool, default=False,
 parser.add_argument('--log_to_mlflow', type=bool, default=False,
                     help='Log training and validation metrics to mlflow')
 
+parser.add_argument('--use_action_fusion', action='store_true',
+                    help='Use action fusion for complex games')
 
 def main():
     logging.basicConfig(
-            format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
+            format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
             datefmt="%m/%d/%Y %H:%M:%S",
             level=logging.INFO,
     )
@@ -118,6 +120,7 @@ def main():
                                                                         args.game,
                                                                         args.data_dir_prefix,
                                                                         args.trajectories_per_buffer,
+                                                                        args.use_action_fusion,
                                                                         )
     
     # print('*'*50)
@@ -146,6 +149,8 @@ def main():
         window_size=args.conv_window_size,
         conv_proj=args.conv_proj,
         max_timestep=max(timesteps),
+        use_action_fusion=args.use_action_fusion,
+        game=args.game,
         )
     
     model = GPT(mconf)
@@ -166,6 +171,7 @@ def main():
         log_to_mlflow=args.log_to_mlflow,
         output_dir=output_dir,
         args_dir=args_dir,
+        use_action_fusion=args.use_action_fusion,
         )
     
     trainer = Trainer(model, train_dataset, None, tconf)

@@ -91,7 +91,7 @@ e.g.
 
 ```bash
 python train_atari.py \
-        --game 'Breakout' \
+        --game 'Hero' \
         --data_dir_prefix ./data/data_atari/ \
         --context_length 5 \
         --n_layer 3 \
@@ -103,12 +103,13 @@ python train_atari.py \
         --num_buffers 50 \
         --trajectories_per_buffer 5 \
         --output ./output/ \
-        --experiment min_dmamba \
-        --seed 123
+        --experiment test_experiment \
+        --seed 123 \
+        --use_action_fusion
 ```
 or
 ```bash
-python train_atari.py --game 'Breakout' --data_dir_prefix ./data/data_atari/ --context_length 30 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 --num_steps 5000 --trajectories_per_buffer 5 > ./output/test_experiment.log 2>&1
+python train_atari.py --game 'Hero' --data_dir_prefix ./data/data_atari/ --context_length 10 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 --num_steps 5000 --trajectories_per_buffer 10 --use_action_fusion > ./output/test_experiment.log 2>&1
 ```
 
 ### Job submission to Eddie cluster

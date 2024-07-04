@@ -4,7 +4,96 @@ from torch.utils.data import Dataset
 from data_process_atari.fixed_replay_buffer import FixedReplayBuffer
 from tqdm import tqdm
 
-def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_per_buffer):
+# TODO: the problem may lies into the action fusion mapping
+
+"""Over simplified, cannot get effective return"""
+# def test_create_action_fusion_mapping(game):
+#     if game == 'KungFuMaster':
+#         return {
+#             0: 0,  # NOOP
+#             1: 1, 2: 1, 3: 1, 4: 1,  # Directional
+#             5: 2, 6: 2,  # Diagonal
+#             7: 3, 8: 3, 9: 3,  # Fire + Direction
+#             10: 4, 11: 4, 12: 4, 13: 4  # Diagonal + Fire
+#         }
+#     elif game == 'Hero':
+#         return {
+#             0: 0,  # NOOP
+#             1: 1,  # FIRE
+#             2: 2, 3: 2, 4: 2, 5: 2,  # Directional
+#             6: 3, 7: 3, 8: 3, 9: 3,  # Diagonal
+#             10: 4, 11: 4, 12: 4, 13: 4,  # Fire + Direction
+#             14: 5, 15: 5, 16: 5, 17: 5  # Diagonal + Fire
+#         }
+#     else:
+#         return None  # No fusion for other games
+
+# """"Unchanged"""
+# def create_action_fusion_mapping(game):
+#     if game == "KungFuMaster":
+#         return {
+#             0: 0, # NOOP
+#             1: 1, 2: 2, 3: 3, 4: 4, # Directional
+#             5: 5, 6: 6, # Diagonal
+#             7: 7, 8: 8, 9: 9, # Fire + Direction
+#             10: 10, 11: 11, 12: 12, 13: 13 # Diagonal + Fire
+#         }
+#     elif game == "Hero":
+#         return {
+#             0: 0, # NOOP
+#             1: 1, # FIRE
+#             2: 2, 3: 3, 4: 4, 5: 5, # Directional
+#             6: 6, 7: 7, 8: 8, 9: 9, # Diagonal
+#             10: 10, 11: 11, 12: 12, 13: 13, # Fire + Direction
+#             14: 14, 15: 15, 16: 16, 17: 17 # Diagonal + Fire
+#         }
+#     else:
+#         return None # No fusion for other games
+
+def create_action_fusion_mapping(game):
+    if game == 'Hero':
+        return {
+            0: 0,  # NOOP
+            1: 1,  # FIRE
+            2: 2,  # UP
+            3: 3,  # RIGHT
+            4: 4,  # LEFT
+            5: 5,  # DOWN
+            6: 6,  # UPRIGHT
+            7: 7,  # UPLEFT
+            8: 8,  # DOWNRIGHT
+            9: 9,  # DOWNLEFT
+            10: 2, # UPFIRE -> UP
+            11: 3, # RIGHTFIRE -> RIGHT
+            12: 4, # LEFTFIRE -> LEFT
+            13: 5, # DOWNFIRE -> DOWN
+            14: 6, # UPRIGHTFIRE -> UPRIGHT
+            15: 7, # UPLEFTFIRE -> UPLEFT
+            16: 8, # DOWNRIGHTFIRE -> DOWNRIGHT
+            17: 9, # DOWNLEFTFIRE -> DOWNLEFT
+        }
+    elif game == 'KungFuMaster':
+        return {
+            0: 0,  # NOOP
+            1: 1,  # UP
+            2: 2,  # RIGHT
+            3: 3,  # LEFT
+            4: 4,  # DOWN
+            5: 5,  # DOWNRIGHT
+            6: 6,  # DOWNLEFT
+            7: 2,  # RIGHTFIRE -> RIGHT
+            8: 3,  # LEFTFIRE -> LEFT
+            9: 4,  # DOWNFIRE -> DOWN
+            10: 7, # UPRIGHTFIRE
+            11: 8, # UPLEFTFIRE
+            12: 5, # DOWNRIGHTFIRE -> DOWNRIGHT
+            13: 6, # DOWNLEFTFIRE -> DOWNLEFT
+        }
+    else:
+        return None  # No fusion for other games
+
+    
+def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_per_buffer, use_action_fusion):
     # -- load data from memory (make more efficient)
     obss = []
     actions = []
@@ -15,12 +104,14 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
     transitions_per_buffer = np.zeros(50, dtype=int)
     num_trajectories = 0
 
+    # Create action fusion mapping if needed
+    action_fusion_map = create_action_fusion_mapping(game) if use_action_fusion else None
+
     print('loading trajectories from buffers')
     pbar = tqdm(total=num_steps, mininterval=60)  # Initialize the progress bar
     while len(obss) < num_steps:
         buffer_num = np.random.choice(np.arange(50 - num_buffers, 50), 1)[0]
         i = transitions_per_buffer[buffer_num]
-        # print('loading from buffer %d which has %d already loaded' % (buffer_num, i))
         frb = FixedReplayBuffer(
             data_dir=data_dir_prefix + f'{game}/1/replay_logs',
             replay_suffix=buffer_num,
@@ -42,7 +133,20 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
                 states = states.transpose((0, 3, 1, 2))[0] # (1, 84, 84, 4) --> (4, 84, 84)
 
                 obss += [states]
-                actions += [ac[0]]
+
+                # Apply action fusion if enabled
+                if use_action_fusion:
+                    ac = action_fusion_map[ac[0]]
+                    actions += [ac]
+                else:
+                    actions += [ac[0]]
+
+                # # print actions during loading
+                # print("using action fusion" if use_action_fusion else "not using action fusion")
+                # print('-'*50)
+                # print(actions)
+                # print('-'*50)
+
                 stepwise_returns += [ret[0]]
                 
                 # Update progress bar
