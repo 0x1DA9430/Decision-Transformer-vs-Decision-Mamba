@@ -1,0 +1,11 @@
+CUDA_VISIBLE_DEVICES: 
+CUDA_VISIBLE_DEVICES: 0
+Warning: This module should only be used with the A100 GPU nodes.  If you are using the K80 or Titan-X GPUs please use an older cuda version.
+WARNING: If you use conda to create environments, your home directory may fill up. Please see our documentation at 
+ https://www.wiki.ed.ac.uk/display/ResearchServices/Anaconda for advice.
+2024-07-04 03:07:30.901284: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-07-04 03:07:30.977017: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-07-04 03:07:35.171076: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+loading trajectories from buffers
+  0%|          | 0/500000 [00:00<?, ?it/s]
