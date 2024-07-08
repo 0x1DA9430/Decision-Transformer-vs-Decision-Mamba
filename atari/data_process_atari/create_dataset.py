@@ -28,28 +28,6 @@ from tqdm import tqdm
 #     else:
 #         return None  # No fusion for other games
 
-# """"Unchanged"""
-# def create_action_fusion_mapping(game):
-#     if game == "KungFuMaster":
-#         return {
-#             0: 0, # NOOP
-#             1: 1, 2: 2, 3: 3, 4: 4, # Directional
-#             5: 5, 6: 6, # Diagonal
-#             7: 7, 8: 8, 9: 9, # Fire + Direction
-#             10: 10, 11: 11, 12: 12, 13: 13 # Diagonal + Fire
-#         }
-#     elif game == "Hero":
-#         return {
-#             0: 0, # NOOP
-#             1: 1, # FIRE
-#             2: 2, 3: 3, 4: 4, 5: 5, # Directional
-#             6: 6, 7: 7, 8: 8, 9: 9, # Diagonal
-#             10: 10, 11: 11, 12: 12, 13: 13, # Fire + Direction
-#             14: 14, 15: 15, 16: 16, 17: 17 # Diagonal + Fire
-#         }
-#     else:
-#         return None # No fusion for other games
-
 def create_action_fusion_mapping(game):
     if game == 'Hero':
         return {
