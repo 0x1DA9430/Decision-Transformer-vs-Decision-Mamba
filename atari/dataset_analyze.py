@@ -24,8 +24,8 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
     pbar = tqdm(total=num_steps)
     total_processed = 0
 
-    # Start from the last buffer
-    for buffer_num in range(49, 49 - num_buffers, -1):
+    while total_processed < num_steps:
+        buffer_num = np.random.choice(np.arange(50 - num_buffers, 50), 1)[0]
         frb = FixedReplayBuffer(
             data_dir=data_dir_prefix + f'{game}/1/replay_logs',
             replay_suffix=buffer_num,
@@ -39,9 +39,11 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
         )
         
         if frb._loaded_buffers:
-            # Start from the end of the buffer
-            i = frb.add_count - 1
-            while i >= 0 and total_processed < num_steps:
+            done = False
+            trajectories_to_load = trajectories_per_buffer
+            i = 0
+            prev_state = None
+            while not done:
                 states, ac, ret, next_states, next_action, next_reward, terminal, indices = frb.sample_transition_batch(batch_size=1, indices=[i])
                 
                 states = states.transpose((0, 3, 1, 2))[0]  # (1, 84, 84, 4) --> (4, 84, 84)
@@ -49,6 +51,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                 if len(obss_sample) < 1000:  # Keep a sample of observations for visualization
                     obss_sample.append(states)
                 
+                # actions[ac[0]] += 1
                 actions[int(ac[0])] += 1
                 rewards.append(ret[0])
                 current_trajectory_reward += ret[0]
@@ -57,9 +60,9 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                 if current_trajectory_first_nonzero == -1 and ret[0] != 0:
                     current_trajectory_first_nonzero = current_trajectory_length
 
-                if i < frb.add_count - 1:
-                    prev_state = frb.get_observation_stack(i+1).transpose((2, 0, 1))
+                if prev_state is not None:
                     frame_differences.append(np.mean(np.abs(states - prev_state)))
+                prev_state = states
 
                 total_processed += 1
                 pbar.update(1)
@@ -75,11 +78,18 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                     current_trajectory_length = 0
                     current_trajectory_first_nonzero = -1
 
+                    trajectories_to_load -= 1
+                    if trajectories_to_load == 0:
+                        done = True
+
                 if total_processed >= num_steps:
                     pbar.close()
-                    return obss_sample, dict(actions), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards
+                    done = True
+                    break
                 
-                i -= 1
+                i += 1
+                if i >= 100000:
+                    done = True
 
     pbar.close()
     return obss_sample, dict(actions), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards
