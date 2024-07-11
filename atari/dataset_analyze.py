@@ -7,7 +7,7 @@ import os
 from collections import defaultdict
 
 
-def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, trajectories_per_buffer=100):
+def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, trajectories_per_buffer=100, use_random_sampling=True):
     obss_sample = []
     actions = defaultdict(int)
     rewards = []
@@ -24,15 +24,19 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
     pbar = tqdm(total=num_steps)
     total_processed = 0
 
-    # Calculate the starting point for the last 10% of the data
-    total_data_points = 50 * 100000  # 50 buffers * 100000 capacity per buffer
-    start_point = total_data_points - num_steps
+    if use_random_sampling:
+        buffer_range = range(50 - num_buffers, 50)
+    else:
+        total_data_points = 50 * 100000  # 50 buffers * 100000 capacity per buffer
+        start_point = total_data_points - num_steps
+        start_buffer = start_point // 100000
+        start_index = start_point % 100000
+        buffer_range = range(start_buffer, 50)
 
-    # Start from the buffer containing the start_point
-    start_buffer = start_point // 100000
-    start_index = start_point % 100000
+    for buffer_num in buffer_range:
+        if use_random_sampling:
+            buffer_num = np.random.choice(buffer_range)
 
-    for buffer_num in range(start_buffer, 50):
         frb = FixedReplayBuffer(
             data_dir=data_dir_prefix + f'{game}/1/replay_logs',
             replay_suffix=buffer_num,
@@ -46,7 +50,8 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
         )
         
         if frb._loaded_buffers:
-            i = start_index if buffer_num == start_buffer else 0
+            i = start_index if not use_random_sampling and buffer_num == start_buffer else 0
+            trajectories_loaded = 0
             while i < 100000:
                 states, ac, ret, next_states, next_action, next_reward, terminal, indices = frb.sample_transition_batch(batch_size=1, indices=[i])
                 
@@ -76,6 +81,10 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                     current_trajectory_reward = 0
                     current_trajectory_length = 0
                     current_trajectory_first_nonzero = -1
+
+                    trajectories_loaded += 1
+                    if use_random_sampling and trajectories_loaded >= trajectories_per_buffer:
+                        break
 
                 if total_processed >= num_steps:
                     pbar.close()
@@ -208,7 +217,8 @@ def main():
     parser.add_argument('--data_dir_prefix', type=str, default='./data/data_atari/', help='Path to dataset')
     parser.add_argument('--num_buffers', type=int, default=50, help='Number of buffers to sample from')
     parser.add_argument('--num_steps', type=int, default=5000000, help='Number of steps to analyze (10% of dataset)')
-    parser.add_argument('--trajectories_per_buffer', type=int, default=100, help='Number of trajectories to sample per buffer')
+    parser.add_argument('--trajectories_per_buffer', type=int, default=100, help='Number of trajectories to sample per buffer (only used with random sampling)')
+    parser.add_argument('--use_random_sampling', action='store_true', help='Use random sampling instead of analyzing the last 10%')
     args = parser.parse_args()
 
     obss_sample, actions, rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards = analyze_game_data(
@@ -216,7 +226,8 @@ def main():
         args.data_dir_prefix, 
         args.num_buffers, 
         args.num_steps, 
-        args.trajectories_per_buffer
+        args.trajectories_per_buffer,
+        args.use_random_sampling
     )
 
     # Create directory for saving analysis results
