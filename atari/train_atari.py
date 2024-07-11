@@ -115,13 +115,22 @@ def main():
     with open(args_dir, 'w') as f:
         f.write(yaml.safe_dump(args.__dict__, default_flow_style=False))
 
-    obss, actions, returns, done_idxs, rtgs, timesteps = create_dataset(args.num_buffers,
-                                                                        args.num_steps,
-                                                                        args.game,
-                                                                        args.data_dir_prefix,
-                                                                        args.trajectories_per_buffer,
-                                                                        args.use_action_fusion,
-                                                                        )
+    obss, actions, returns, done_idxs, rtgs, timesteps, action_fusion_map, action_probs = create_dataset(
+        args.num_buffers,
+        args.num_steps,
+        args.game,
+        args.data_dir_prefix,
+        args.trajectories_per_buffer,
+        args.use_action_fusion,
+    )
+
+    # obss, actions, returns, done_idxs, rtgs, timesteps = create_dataset(args.num_buffers,
+    #                                                                     args.num_steps,
+    #                                                                     args.game,
+    #                                                                     args.data_dir_prefix,
+    #                                                                     args.trajectories_per_buffer,
+    #                                                                     args.use_action_fusion,
+    #                                                                     )
     
     # print('*'*50)
     # print('Dataset:')
@@ -151,6 +160,8 @@ def main():
         max_timestep=max(timesteps),
         use_action_fusion=args.use_action_fusion,
         game=args.game,
+        action_fusion_map=action_fusion_map,
+        action_probs=action_probs,
         )
     
     model = GPT(mconf)

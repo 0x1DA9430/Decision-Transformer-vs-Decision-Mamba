@@ -32,7 +32,7 @@ import torch
 from torch.utils.data.dataloader import DataLoader
 
 from mingpt.utils import sample, update_summary
-from data_process_atari.create_dataset import create_action_fusion_mapping
+from data_process_atari.create_dataset import create_action_fusion_mapping, get_action_probs
 
 import csv
 
@@ -94,10 +94,10 @@ class Trainer:
         self.use_action_fusion = config.use_action_fusion # Use action fusion or not
         self.game = config.game 
 
-        # Action fusion mapping
+        # Action fusion mapping and probabilities
         if self.use_action_fusion:
             self.action_fusion_map = create_action_fusion_mapping(self.game)
-            self.reverse_action_fusion_map = {v: k for k, v in self.action_fusion_map.items()}
+            self.action_probs = get_action_probs(self.game)
 
         # take over whatever gpus are on the system
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -107,6 +107,13 @@ class Trainer:
 
         self.start_time = time.time()
 
+    def reverse_map_action(self, reduced_action):
+        original_actions = [k for k, v in self.action_fusion_map.items() if v == reduced_action]
+        probs = [self.action_probs[a] for a in original_actions]
+        total_prob = sum(probs)
+        normalized_probs = [p / total_prob for p in probs]
+        return np.random.choice(original_actions, p=normalized_probs)
+    
     def save_checkpoint(self):
         # DataParallel wrappers keep raw model object in .module attribute
         raw_model = self.model.module if hasattr(self.model, "module") else self.model
@@ -294,55 +301,53 @@ class Trainer:
             all_states = state
             actions = []
 
-            # """
-            # With reverse mapping
-            # """
-            # while True:
-            #     if done:
-            #         state, reward_sum, done = env.reset(), 0, False
-                
-            #     action = sampled_action.cpu().numpy()[0,-1]
-
-            #     print("using action fusion: %s" % self.use_action_fusion)
-            #     print("action before: ", action)
-
-            #     if self.use_action_fusion:
-            #         # Map the fused action back to the original action space
-            #         action = self.reverse_action_fusion_map[action]
-            #     else:
-            #         action = sampled_action.cpu().numpy()[0,-1]
-                
-            #     print("action after: ", action)
-
-            #     actions += [sampled_action]
-            #     state, reward, done = env.step(action)
-            #     reward_sum += reward
-            #     j += 1
-            
             """
-            Without reverse mapping
+            With reverse mapping
             """
             while True:
                 if done:
                     state, reward_sum, done = env.reset(), 0, False
                 
                 action = sampled_action.cpu().numpy()[0,-1]
-                actions += [sampled_action]
-
-                # # If using action fusion, map the environment action to the fused action space
-                # if self.use_action_fusion:
-                #     env_action = list(self.action_fusion_map.keys())[list(self.action_fusion_map.values()).index(action)]
-                # else:
-                #     env_action = action
-
-                env_action = action
 
                 # print("using action fusion: %s" % self.use_action_fusion)
-                # print("action: %d, env_action: %d" % (action, env_action))
+                # print("action before: ", action)
 
-                state, reward, done = env.step(env_action)
+                # Reverse map the action if using action fusion
+                if self.use_action_fusion:
+                    action = self.reverse_map_action(action)
+                    
+                # print("action after: ", action)
+
+                actions += [sampled_action]
+                state, reward, done = env.step(action)
                 reward_sum += reward
                 j += 1
+            
+            # """
+            # Without reverse mapping
+            # """
+            # while True:
+            #     if done:
+            #         state, reward_sum, done = env.reset(), 0, False
+                
+            #     action = sampled_action.cpu().numpy()[0,-1]
+            #     actions += [sampled_action]
+
+            #     # # If using action fusion, map the environment action to the fused action space
+            #     # if self.use_action_fusion:
+            #     #     env_action = list(self.action_fusion_map.keys())[list(self.action_fusion_map.values()).index(action)]
+            #     # else:
+            #     #     env_action = action
+
+            #     env_action = action
+
+            #     # print("using action fusion: %s" % self.use_action_fusion)
+            #     # print("action: %d, env_action: %d" % (action, env_action))
+
+            #     state, reward, done = env.step(env_action)
+            #     reward_sum += reward
+            #     j += 1
 
                 if done:
                     T_rewards.append(reward_sum)

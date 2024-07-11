@@ -70,6 +70,20 @@ def create_action_fusion_mapping(game):
     else:
         return None  # No fusion for other games
 
+def get_action_probs(game):
+    if game == 'Hero':
+        return {
+            0: 0.05062, 1: 0.04602, 2: 0.04000, 3: 0.06265, 4: 0.05882, 5: 0.04852, 6: 0.04840,
+            7: 0.04644, 8: 0.06300, 9: 0.05618, 10: 0.04030, 11: 0.07317, 12: 0.06553, 13: 0.05024,
+            14: 0.05181, 15: 0.05065, 16: 0.07800, 17: 0.06965
+        }
+    elif game == 'KungFuMaster':
+        return {
+            0: 0.06515, 1: 0.05810, 2: 0.05423, 3: 0.09354, 4: 0.06801, 5: 0.07249, 6: 0.07120,
+            7: 0.07013, 8: 0.09301, 9: 0.06806, 10: 0.06535, 11: 0.07500, 12: 0.06880, 13: 0.07693
+        }
+    else:
+        return None
     
 def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_per_buffer, use_action_fusion):
     # -- load data from memory (make more efficient)
@@ -84,6 +98,7 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
 
     # Create action fusion mapping if needed
     action_fusion_map = create_action_fusion_mapping(game) if use_action_fusion else None
+    action_probs = get_action_probs(game) if use_action_fusion else None
 
     print('loading trajectories from buffers')
     pbar = tqdm(total=num_steps, mininterval=60)  # Initialize the progress bar
@@ -179,7 +194,7 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
         start_index = i+1
     print('max timestep is %d' % max(timesteps))
 
-    return obss, actions, returns, done_idxs, rtg, timesteps
+    return obss, actions, returns, done_idxs, rtg, timesteps, action_fusion_map, action_probs
 
 
 class StateActionReturnDataset(Dataset):

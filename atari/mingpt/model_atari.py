@@ -24,7 +24,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 from mingpt.layers import Block
-from data_process_atari.create_dataset import create_action_fusion_mapping
+from data_process_atari.create_dataset import create_action_fusion_mapping, get_action_probs
 
 
 logger = logging.getLogger(__name__)
@@ -90,6 +90,7 @@ class GPT(nn.Module):
         # Action fusion
         if self.use_action_fusion:
             self.action_fusion_map = create_action_fusion_mapping(self.game)
+            self.action_probs = get_action_probs(self.game)
             fused_vocab_size = len(set(self.action_fusion_map.values()))
             self.action_embeddings = nn.Sequential(nn.Embedding(fused_vocab_size, config.n_embd), nn.Tanh())
         else:
@@ -176,7 +177,7 @@ class GPT(nn.Module):
         state_embeddings = state_embeddings.reshape(states.shape[0], states.shape[1], self.config.n_embd)  # (batch, block_size, n_embd)
 
         if self.use_action_fusion and actions is not None:
-                actions = torch.tensor([self.action_fusion_map[a.item()] for a in actions.flatten()]).reshape(actions.shape).to(actions.device)
+            actions = torch.tensor([self.action_fusion_map[a.item()] for a in actions.flatten()]).reshape(actions.shape).to(actions.device)
 
         if actions is not None and self.model_type == 'reward_conditioned':
             rtg_embeddings = self.ret_emb(rtgs.type(torch.float32))
