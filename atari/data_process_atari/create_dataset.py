@@ -4,10 +4,8 @@ from torch.utils.data import Dataset
 from data_process_atari.fixed_replay_buffer import FixedReplayBuffer
 from tqdm import tqdm
 
-# TODO: the problem may lies into the action fusion mapping
 
-"""Over simplified, cannot get effective return"""
-# def test_create_action_fusion_mapping(game):
+# def create_action_fusion_mapping(game):
 #     if game == 'KungFuMaster':
 #         return {
 #             0: 0,  # NOOP
