@@ -222,7 +222,7 @@ def main():
     parser.add_argument('--trajectories_per_buffer', type=int, default=100, help='Number of trajectories to sample per buffer')
     args = parser.parse_args()
 
-    obss_sample, actions, rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards = analyze_game_data(
+    obss_sample, actions, rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards, max_return = analyze_game_data(
         args.game, 
         args.data_dir_prefix, 
         args.num_buffers, 
