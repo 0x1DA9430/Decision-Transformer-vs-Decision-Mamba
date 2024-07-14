@@ -20,6 +20,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
     current_trajectory_reward = 0
     current_trajectory_length = 0
     current_trajectory_first_nonzero = -1
+    max_return = float('-inf')  # Initialize max_return
 
     pbar = tqdm(total=num_steps)
     total_processed = 0
@@ -51,7 +52,6 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                 if len(obss_sample) < 1000:  # Keep a sample of observations for visualization
                     obss_sample.append(states)
                 
-                # actions[ac[0]] += 1
                 actions[int(ac[0])] += 1
                 rewards.append(ret[0])
                 current_trajectory_reward += ret[0]
@@ -74,6 +74,8 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                     if current_trajectory_first_nonzero != -1:
                         first_nonzero_rewards.append(current_trajectory_first_nonzero)
                     
+                    max_return = max(max_return, current_trajectory_reward)  # Update max_return
+                    
                     current_trajectory_reward = 0
                     current_trajectory_length = 0
                     current_trajectory_first_nonzero = -1
@@ -92,7 +94,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                     done = True
 
     pbar.close()
-    return obss_sample, dict(actions), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards
+    return obss_sample, dict(actions), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards, max_return
 
 def visualize_state(state, game_name):
     # Assuming state shape is (4, 84, 84)
@@ -169,12 +171,14 @@ def analyze_action_space(actions, game_name):
     print(f"Normalized entropy: {normalized_entropy:.4f}")
 
 
-def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, game_name):
+def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, max_return, game_name):
     avg_trajectory_length = np.mean(trajectory_lengths)
     print(f"Average trajectory length: {avg_trajectory_length:.2f}")
 
     avg_total_reward = np.mean(total_rewards)
     print(f"Average total reward per trajectory: {avg_total_reward:.2f}")
+
+    print(f"Maximum return: {max_return:.2f}")  # Add this line to print the max return
 
     if first_nonzero_rewards:
         avg_first_nonzero = np.mean(first_nonzero_rewards)
@@ -242,7 +246,7 @@ def main():
     analyze_action_space(actions, args.game)
 
     print("\nReward sequence analysis:")
-    analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, args.game)
+    analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, max_return, args.game)
 
     # print("\nFrame difference analysis:")
     # analyze_frame_differences(frame_differences, args.game)
