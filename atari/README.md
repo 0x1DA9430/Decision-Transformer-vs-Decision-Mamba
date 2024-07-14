@@ -45,6 +45,11 @@ pip install causal-conv1d --no-cache-dir
 >
 > `mamba-ssm==2.0.3` and `causal-conv1d==1.2.2.post1`
 
+### Upgrade charset_normalizer
+```bash
+pip install --upgrade charset_normalizer
+```
+
 ## Download dataset
 
 ### Download dqn_replay
