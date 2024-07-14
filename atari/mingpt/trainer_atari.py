@@ -247,6 +247,10 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(950)  # 5*max return in training data
                 elif self.config.game == 'KungFuMaster':
                     eval_return, eval_time = self.get_returns(1420) # 5*max return in training data
+                elif self.config.game == 'Alien':
+                    eval_return, eval_time = self.get_returns(1075) # 5*max return in training data
+                elif self.config.game == 'NameThisGame':
+                    eval_return, eval_time = self.get_returns(2960) # 5*max return in training data
                 else:
                     raise NotImplementedError()
 
@@ -396,6 +400,7 @@ class Env():
         special_rom_names = {
             # 'montezumarevenge': 'montezuma_revenge',
             'kungfumaster': 'kung_fu_master',
+            'namethisgame': 'name_this_game',
         }
 
         # Get the correct ROM name using the dictionary or default to the game name
