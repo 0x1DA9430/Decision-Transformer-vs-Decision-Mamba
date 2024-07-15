@@ -249,8 +249,12 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(1420) # 5*max return in training data
                 elif self.config.game == 'Alien':
                     eval_return, eval_time = self.get_returns(1075) # 5*max return in training data
-                elif self.config.game == 'NameThisGame':
-                    eval_return, eval_time = self.get_returns(2960) # 5*max return in training data
+                elif self.config.game == 'RoadRunner':
+                    eval_return, eval_time = self.get_returns(1075) # 5*max return in training data
+                elif self.config.game == 'BattleZone':
+                    eval_return, eval_time = self.get_returns(0000)
+                elif self.config.game == 'ChopperCommand':
+                    eval_return, eval_time = self.get_returns(0000)
                 else:
                     raise NotImplementedError()
 
@@ -400,7 +404,9 @@ class Env():
         special_rom_names = {
             # 'montezumarevenge': 'montezuma_revenge',
             'kungfumaster': 'kung_fu_master',
-            'namethisgame': 'name_this_game',
+            'roadrunner': 'road_runner',
+            'battlezone': 'battle_zone',
+            'choppercommand': 'chopper_command',
         }
 
         # Get the correct ROM name using the dictionary or default to the game name

@@ -153,6 +153,11 @@ qsub 10_dm_atari_seaquest.sh
 qsub 10_dt_atari_seaquest.sh
 qsub 10_dm_atari_pong.sh
 qsub 10_dt_atari_pong.sh
+
+qsub 10_dm_atari_roadrunner.sh
+qsub 10_dt_atari_roadrunner.sh
+qsub 10_dm_atari_alien.sh
+qsub 10_dt_atari_alien.sh
 ```
 Experiments for context length 50
 ```bash
