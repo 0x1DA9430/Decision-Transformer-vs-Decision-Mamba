@@ -252,9 +252,9 @@ class Trainer:
                 elif self.config.game == 'RoadRunner':
                     eval_return, eval_time = self.get_returns(1075) # 5*max return in training data
                 elif self.config.game == 'BattleZone':
-                    eval_return, eval_time = self.get_returns(0000)
+                    eval_return, eval_time = self.get_returns(160)  # 5*max return in training data
                 elif self.config.game == 'ChopperCommand':
-                    eval_return, eval_time = self.get_returns(0000)
+                    eval_return, eval_time = self.get_returns(350)  # 5*max return in training data
                 else:
                     raise NotImplementedError()
 
