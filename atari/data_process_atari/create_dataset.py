@@ -31,42 +31,84 @@ def create_action_fusion_mapping(game):
         return {
             0: 0,  # NOOP
             1: 1,  # FIRE
-            2: 2,  # UP
-            3: 3,  # RIGHT
-            4: 4,  # LEFT
-            5: 5,  # DOWN
-            6: 6,  # UPRIGHT
-            7: 7,  # UPLEFT
-            8: 8,  # DOWNRIGHT
-            9: 9,  # DOWNLEFT
-            10: 2, # UPFIRE -> UP
-            11: 3, # RIGHTFIRE -> RIGHT
-            12: 4, # LEFTFIRE -> LEFT
-            13: 5, # DOWNFIRE -> DOWN
-            14: 6, # UPRIGHTFIRE -> UPRIGHT
-            15: 7, # UPLEFTFIRE -> UPLEFT
-            16: 8, # DOWNRIGHTFIRE -> DOWNRIGHT
-            17: 9, # DOWNLEFTFIRE -> DOWNLEFT
+            2: 2,  # UP -> UP, UPFIRE
+            3: 3,  # RIGHT -> RIGHT, RIGHTFIRE
+            4: 4,  # LEFT -> LEFT, LEFTFIRE
+            5: 5,  # DOWN -> DOWN, DOWNFIRE
+            6: 6,  # UPRIGHT -> UPRIGHT, UPRIGHTFIRE
+            7: 7,  # UPLEFT -> UPLEFT, UPLEFTFIRE
+            8: 8,  # DOWNRIGHT -> DOWNRIGHT, DOWNRIGHTFIRE
+            9: 9,  # DOWNLEFT -> DOWNLEFT, DOWNLEFTFIRE
+            10: 2, # UPFIRE -> UP, UPFIRE
+            11: 3, # RIGHTFIRE -> RIGHT, RIGHTFIRE
+            12: 4, # LEFTFIRE -> LEFT, LEFTFIRE
+            13: 5, # DOWNFIRE -> DOWN, DOWNFIRE
+            14: 6, # UPRIGHTFIRE -> UPRIGHT, UPRIGHTFIRE
+            15: 7, # UPLEFTFIRE -> UPLEFT, UPLEFTFIRE
+            16: 8, # DOWNRIGHTFIRE -> DOWNRIGHT, DOWNRIGHTFIRE
+            17: 9, # DOWNLEFTFIRE -> DOWNLEFT, DOWNLEFTFIRE
         }
     elif game == 'KungFuMaster':
         return {
             0: 0,  # NOOP
             1: 1,  # UP
-            2: 2,  # RIGHT
-            3: 3,  # LEFT
-            4: 4,  # DOWN
-            5: 5,  # DOWNRIGHT
-            6: 6,  # DOWNLEFT
-            7: 2,  # RIGHTFIRE -> RIGHT
-            8: 3,  # LEFTFIRE -> LEFT
-            9: 4,  # DOWNFIRE -> DOWN
+            2: 2,  # RIGHT -> RIGHT, RIGHTFIRE
+            3: 3,  # LEFT -> LEFT, LEFTFIRE
+            4: 4,  # DOWN -> DOWN, DOWNFIRE
+            5: 5,  # DOWNRIGHT -> DOWNRIGHT, DOWNRIGHTFIRE
+            6: 6,  # DOWNLEFT -> DOWNLEFT, DOWNLEFTFIRE
+            7: 2,  # RIGHTFIRE -> RIGHT, RIGHTFIRE
+            8: 3,  # LEFTFIRE -> LEFT, LEFTFIRE
+            9: 4,  # DOWNFIRE -> DOWN, DOWNFIRE
             10: 7, # UPRIGHTFIRE
             11: 8, # UPLEFTFIRE
-            12: 5, # DOWNRIGHTFIRE -> DOWNRIGHT
-            13: 6, # DOWNLEFTFIRE -> DOWNLEFT
+            12: 5, # DOWNRIGHTFIRE -> DOWNRIGHT, DOWNRIGHTFIRE
+            13: 6, # DOWNLEFTFIRE -> DOWNLEFT, DOWNLEFTFIRE
         }
     else:
-        return None  # No fusion for other games
+        return None # No fusion for other games
+
+# def create_action_fusion_mapping(game):
+#     if game == 'Hero':
+#         return {
+#             0: 0,  # NOOP
+#             1: 1,  # FIRE
+#             2: 2,  # UP
+#             3: 3,  # RIGHT
+#             4: 4,  # LEFT
+#             5: 5,  # DOWN
+#             6: 6,  # UPRIGHT
+#             7: 7,  # UPLEFT
+#             8: 8,  # DOWNRIGHT
+#             9: 9,  # DOWNLEFT
+#             10: 2, # UPFIRE -> UP
+#             11: 3, # RIGHTFIRE -> RIGHT
+#             12: 4, # LEFTFIRE -> LEFT
+#             13: 5, # DOWNFIRE -> DOWN
+#             14: 6, # UPRIGHTFIRE -> UPRIGHT
+#             15: 7, # UPLEFTFIRE -> UPLEFT
+#             16: 8, # DOWNRIGHTFIRE -> DOWNRIGHT
+#             17: 9, # DOWNLEFTFIRE -> DOWNLEFT
+#         }
+#     elif game == 'KungFuMaster':
+#         return {
+#             0: 0,  # NOOP
+#             1: 1,  # UP
+#             2: 2,  # RIGHT
+#             3: 3,  # LEFT
+#             4: 4,  # DOWN
+#             5: 5,  # DOWNRIGHT
+#             6: 6,  # DOWNLEFT
+#             7: 2,  # RIGHTFIRE -> RIGHT
+#             8: 3,  # LEFTFIRE -> LEFT
+#             9: 4,  # DOWNFIRE -> DOWN
+#             10: 7, # UPRIGHTFIRE
+#             11: 8, # UPLEFTFIRE
+#             12: 5, # DOWNRIGHTFIRE -> DOWNRIGHT
+#             13: 6, # DOWNLEFTFIRE -> DOWNLEFT
+#         }
+#     else:
+#         return None  # No fusion for other games
 
 def get_action_probs(game):
     if game == 'Hero':

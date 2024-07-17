@@ -309,9 +309,6 @@ class Trainer:
             all_states = state
             actions = []
 
-            """
-            With reverse mapping
-            """
             while True:
                 if done:
                     state, reward_sum, done = env.reset(), 0, False
@@ -321,41 +318,17 @@ class Trainer:
                 # print("using action fusion: %s" % self.use_action_fusion)
                 # print("action before: ", action)
 
-                # Reverse map the action if using action fusion
-                if self.use_action_fusion:
-                    action = self.reverse_map_action(action)
-                    
+                """ Reverse mapping """
+                # # Reverse map the action if using action fusion
+                # if self.use_action_fusion:
+                #     action = self.reverse_map_action(action)
+            
                 # print("action after: ", action)
 
                 actions += [sampled_action]
                 state, reward, done = env.step(action)
                 reward_sum += reward
                 j += 1
-            
-            # """
-            # Without reverse mapping
-            # """
-            # while True:
-            #     if done:
-            #         state, reward_sum, done = env.reset(), 0, False
-                
-            #     action = sampled_action.cpu().numpy()[0,-1]
-            #     actions += [sampled_action]
-
-            #     # # If using action fusion, map the environment action to the fused action space
-            #     # if self.use_action_fusion:
-            #     #     env_action = list(self.action_fusion_map.keys())[list(self.action_fusion_map.values()).index(action)]
-            #     # else:
-            #     #     env_action = action
-
-            #     env_action = action
-
-            #     # print("using action fusion: %s" % self.use_action_fusion)
-            #     # print("action: %d, env_action: %d" % (action, env_action))
-
-            #     state, reward, done = env.step(env_action)
-            #     reward_sum += reward
-            #     j += 1
 
                 if done:
                     T_rewards.append(reward_sum)
@@ -415,14 +388,93 @@ class Env():
         # Load the ROM
         self.ale.loadROM(atari_py.get_game_path(rom_name))
 
-        actions = self.ale.getMinimalActionSet()
-        self.actions = dict([i, e] for i, e in zip(range(len(actions)), actions))
+        # Fused action mapping
+        self.fused_action_map = self._create_fused_action_map(args.game)
+        
+        if self.fused_action_map is not None:
+            self.actions = dict([i, e] for i, e in zip(range(len(self.fused_action_map)), self.fused_action_map.keys())) # fused actions
+        else:
+            actions = self.ale.getMinimalActionSet()
+            self.actions = dict([i, e] for i, e in zip(range(len(actions)), actions)) # original actions 
+ 
         self.lives = 0  # Life counter (used in DeepMind training)
         self.life_termination = False  # Used to check if resetting only from loss of life
         self.window = args.history_length  # Number of frames to concatenate
         self.state_buffer = deque([], maxlen=args.history_length)
         self.training = True  # Consistent with model training mode
+    
+    def _create_fused_action_map(self, game):
+        if game.lower() == 'hero':
+            return {
+                0: [0],    # NOOP
+                1: [1],    # FIRE
+                2: [2, 10], # UP, UPFIRE
+                3: [3, 11], # RIGHT, RIGHTFIRE
+                4: [4, 12], # LEFT, LEFTFIRE
+                5: [5, 13], # DOWN, DOWNFIRE
+                6: [6, 14], # UPRIGHT, UPRIGHTFIRE
+                7: [7, 15], # UPLEFT, UPLEFTFIRE
+                8: [8, 16], # DOWNRIGHT, DOWNRIGHTFIRE
+                9: [9, 17], # DOWNLEFT, DOWNLEFTFIRE
+            }
+        elif game.lower() == 'kungfumaster':
+            return {
+                0: [0],     # NOOP
+                1: [1],     # UP
+                2: [2, 7],  # RIGHT, RIGHTFIRE
+                3: [3, 8],  # LEFT, LEFTFIRE
+                4: [4, 9],  # DOWN, DOWNFIRE
+                5: [5, 12], # DOWNRIGHT, DOWNRIGHTFIRE
+                6: [6, 13], # DOWNLEFT, DOWNLEFTFIRE
+                7: [10],    # UPRIGHTFIRE
+                8: [11],    # UPLEFTFIRE
+            }
+        else:
+            return None  # No reverse mapping for other games
 
+    # def _create_fused_action_map(self, game):
+    #     if game.lower() == 'hero':
+    #         return {
+    #             0: [0],  # NOOP
+    #             1: [1],  # FIRE
+    #             2: [2],  # UP
+    #             3: [3],  # RIGHT
+    #             4: [4],  # LEFT
+    #             5: [5],  # DOWN
+    #             6: [2, 3],  # UPRIGHT
+    #             7: [2, 4],  # UPLEFT
+    #             8: [5, 3],  # DOWNRIGHT
+    #             9: [5, 4],  # DOWNLEFT
+    #             10: [2, 1],  # UPFIRE
+    #             11: [3, 1],  # RIGHTFIRE
+    #             12: [4, 1],  # LEFTFIRE
+    #             13: [5, 1],  # DOWNFIRE
+    #             14: [2, 3, 1],  # UPRIGHTFIRE
+    #             15: [2, 4, 1],  # UPLEFTFIRE
+    #             16: [5, 3, 1],  # DOWNRIGHTFIRE
+    #             17: [5, 4, 1],  # DOWNLEFTFIRE
+    #         }
+    #     elif game.lower() == 'kungfumaster':
+    #         return {
+    #             0: [0],  # NOOP
+    #             1: [1],  # UP
+    #             2: [2],  # RIGHT
+    #             3: [3],  # LEFT
+    #             4: [4],  # DOWN
+    #             5: [4, 2],  # DOWNRIGHT
+    #             6: [4, 3],  # DOWNLEFT
+    #             7: [2, 5],  # RIGHTFIRE
+    #             8: [3, 5],  # LEFTFIRE
+    #             9: [4, 5],  # DOWNFIRE
+    #             10: [1, 2, 5],  # UPRIGHTFIRE
+    #             11: [1, 3, 5],  # UPLEFTFIRE
+    #             12: [4, 2, 5],  # DOWNRIGHTFIRE
+    #             13: [4, 3, 5],  # DOWNLEFTFIRE
+    #         }
+    #     else:
+    #         # No fusion for other games
+    #         return None
+        
     def _get_state(self):
         state = cv2.resize(self.ale.getScreenGrayscale(), (84, 84), interpolation=cv2.INTER_LINEAR)
         return torch.tensor(state, dtype=torch.float32, device=self.device).div_(255)
@@ -450,12 +502,43 @@ class Env():
         self.lives = self.ale.lives()
         return torch.stack(list(self.state_buffer), 0)
 
+    # def step(self, action):
+    #     # Repeat action 4 times, max pool over last 2 frames
+    #     frame_buffer = torch.zeros(2, 84, 84, device=self.device)
+    #     reward, done = 0, False
+    #     for t in range(4):
+    #         reward += self.ale.act(self.actions.get(action))
+    #         if t == 2:
+    #             frame_buffer[0] = self._get_state()
+    #         elif t == 3:
+    #             frame_buffer[1] = self._get_state()
+    #         done = self.ale.game_over()
+    #         if done:
+    #             break
+    #     observation = frame_buffer.max(0)[0]
+    #     self.state_buffer.append(observation)
+    #     # Detect loss of life as terminal in training mode
+    #     if self.training:
+    #         lives = self.ale.lives()
+    #         if lives < self.lives and lives > 0:  # Lives > 0 for Q*bert
+    #             self.life_termination = not done  # Only set flag when not truly done
+    #             done = True
+    #         self.lives = lives
+    #     # Return state, reward, done
+    #     return torch.stack(list(self.state_buffer), 0), reward, done
+    
     def step(self, action):
-        # Repeat action 4 times, max pool over last 2 frames
+        # Repeat actions 4 times, max pool over last 2 frames
         frame_buffer = torch.zeros(2, 84, 84, device=self.device)
         reward, done = 0, False
         for t in range(4):
-            reward += self.ale.act(self.actions.get(action))
+            
+            if self.fused_action_map is not None:
+                for a in self.fused_action_map[self.actions.get(action)]:
+                    reward += self.ale.act(a) # Use fused actions
+            else:
+                reward += self.ale.act(self.actions.get(action)) # Use original actions
+
             if t == 2:
                 frame_buffer[0] = self._get_state()
             elif t == 3:
