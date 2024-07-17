@@ -7,7 +7,7 @@ import os
 from collections import defaultdict
 
 
-def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, trajectories_per_buffer=100, use_random_sampling=True):
+def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, trajectories_per_buffer=100, use_random_sampling=False):
     obss_sample = []
     actions = defaultdict(int)
     rewards = []
@@ -23,6 +23,8 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
 
     pbar = tqdm(total=num_steps)
     total_processed = 0
+
+    print("using random sampling:", use_random_sampling)
 
     if use_random_sampling:
         buffer_range = range(50 - num_buffers, 50)
@@ -104,7 +106,7 @@ def visualize_state(state, game_name):
         axes[i].axis('off')
         axes[i].set_title(f'Frame {i+1}')
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze/{game_name}/state_example.png')
+    plt.savefig(f'dataset_analyze_1p/{game_name}/state_example.png')
 
 def analyze_frame_differences(obss, game_name):
     # Randomly select 1000 consecutive pairs of states
@@ -119,7 +121,7 @@ def analyze_frame_differences(obss, game_name):
     plt.title("Distribution of Frame Differences")
     plt.xlabel("Average Absolute Difference")
     plt.ylabel("Frequency")
-    plt.savefig(f'dataset_analyze/{game_name}/frame_difference_distribution.png')
+    plt.savefig(f'dataset_analyze_1p/{game_name}/frame_difference_distribution.png')
 
     print(f"Average frame difference: {np.mean(differences):.4f}")
     print(f"Median frame difference: {np.median(differences):.4f}")
@@ -154,7 +156,7 @@ def analyze_action_space(actions, game_name):
                  f'{height:.2f}%', ha='center', va='bottom')
 
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze/{game_name}/action_distribution.png')
+    plt.savefig(f'dataset_analyze_1p/{game_name}/action_distribution.png')
 
     # Print detailed breakdown
     print("\nAction frequency breakdown:")
@@ -195,7 +197,7 @@ def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_length
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}/reward_distribution.png')
+    plt.savefig(f'dataset_analyze_1p/{game_name}/reward_distribution.png')
 
     # Visualize cumulative reward distribution
     plt.figure(figsize=(10, 5))
@@ -208,7 +210,7 @@ def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_length
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}/cumulative_reward_distribution.png')
+    plt.savefig(f'dataset_analyze_1p/{game_name}/cumulative_reward_distribution.png')
     
 
 def main():
@@ -216,9 +218,9 @@ def main():
     parser.add_argument('--game', type=str, required=True, help='Name of the Atari game')
     parser.add_argument('--data_dir_prefix', type=str, default='./data/data_atari/', help='Path to dataset')
     parser.add_argument('--num_buffers', type=int, default=50, help='Number of buffers to sample from')
-    parser.add_argument('--num_steps', type=int, default=5000000, help='Number of steps to analyze (10% of dataset)')
-    parser.add_argument('--trajectories_per_buffer', type=int, default=100, help='Number of trajectories to sample per buffer (only used with random sampling)')
-    parser.add_argument('--use_random_sampling', action='store_true', help='Use random sampling instead of analyzing the last 10%')
+    parser.add_argument('--num_steps', type=int, default=500000, help='Number of steps to analyze (10% of dataset)')
+    parser.add_argument('--trajectories_per_buffer', type=int, default=10, help='Number of trajectories to sample per buffer (only used with random sampling)')
+    parser.add_argument('--use_random_sampling', action='store_true', help='Use random sampling instead of analyzing the last 1%')
     args = parser.parse_args()
 
     obss_sample, actions, rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards = analyze_game_data(
@@ -231,7 +233,7 @@ def main():
     )
 
     # Create directory for saving analysis results
-    os.makedirs(f'dataset_analyze/{args.game}', exist_ok=True)
+    os.makedirs(f'dataset_analyze_1p/{args.game}', exist_ok=True)
 
     print(f"Analyzing data for game: {args.game}")
     print(f"Total steps analyzed: {len(rewards)}")
