@@ -253,8 +253,6 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(1075) # 5*max return in training data
                 elif self.config.game == 'BattleZone':
                     eval_return, eval_time = self.get_returns(160)  # 5*max return in training data
-                elif self.config.game == 'ChopperCommand':
-                    eval_return, eval_time = self.get_returns(350)  # 5*max return in training data
                 else:
                     raise NotImplementedError()
 
@@ -379,7 +377,6 @@ class Env():
             'kungfumaster': 'kung_fu_master',
             'roadrunner': 'road_runner',
             'battlezone': 'battle_zone',
-            'choppercommand': 'chopper_command',
         }
 
         # Get the correct ROM name using the dictionary or default to the game name

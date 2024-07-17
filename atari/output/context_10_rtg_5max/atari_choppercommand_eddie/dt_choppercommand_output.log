@@ -1,21 +1,0 @@
-CUDA_VISIBLE_DEVICES: 
-CUDA_VISIBLE_DEVICES: 1
-Warning: This module should only be used with the A100 GPU nodes.  If you are using the K80 or Titan-X GPUs please use an older cuda version.
-WARNING: If you use conda to create environments, your home directory may fill up. Please see our documentation at 
- https://www.wiki.ed.ac.uk/display/ResearchServices/Anaconda for advice.
-2024-07-16 15:05:09.030603: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2024-07-16 15:05:09.870332: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-07-16 15:05:14.275823: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-loading trajectories from buffers
-  0%|          | 0/500000 [00:00<?, ?it/s]  8%|▊         | 37502/500000 [01:02<12:47, 602.30it/s] 11%|█         | 53313/500000 [01:19<12:21, 602.30it/s] 17%|█▋        | 83090/500000 [02:03<10:09, 684.02it/s] 20%|█▉        | 98934/500000 [02:19<09:46, 684.02it/s] 26%|██▋       | 131311/500000 [03:05<08:26, 727.64it/s] 29%|██▉       | 144449/500000 [03:19<08:08, 727.64it/s] 35%|███▍      | 174384/500000 [04:05<07:30, 723.11it/s] 38%|███▊      | 188829/500000 [04:20<07:10, 723.11it/s] 44%|████▎     | 217883/500000 [05:06<06:31, 720.16it/s] 47%|████▋     | 235717/500000 [05:20<06:06, 720.16it/s] 55%|█████▍    | 274889/500000 [06:09<04:46, 785.35it/s] 57%|█████▋    | 286575/500000 [06:20<04:31, 785.35it/s] 64%|██████▎   | 318408/500000 [07:09<03:57, 764.32it/s] 65%|██████▌   | 326877/500000 [07:20<03:46, 764.32it/s] 72%|███████▏  | 359135/500000 [08:09<03:11, 737.45it/s] 73%|███████▎  | 366302/500000 [08:20<03:01, 737.45it/s] 82%|████████▏ | 410291/500000 [09:11<01:57, 766.63it/s] 85%|████████▌ | 425593/500000 [09:30<01:37, 766.63it/s] 91%|█████████ | 455942/500000 [10:11<00:57, 762.85it/s] 95%|█████████▍| 473858/500000 [10:30<00:34, 762.85it/s]100%|██████████| 500000/500000 [11:03<00:00, 753.26it/s]
-07/16/2024 15:16:50 - INFO - mingpt.model_atari - number of parameters: 1647616
-this buffer has 13138 loaded transitions and there are now 500000 transitions total divided into 645 trajectories
-max rtg is 70
-max timestep is 3508
-epoch 0
-  0%|          | 0/1954 [00:00<?, ?it/s]  6%|▋         | 124/1954 [01:00<14:50,  2.05it/s]  6%|▋         | 124/1954 [01:11<14:50,  2.05it/s] 13%|█▎        | 262/1954 [02:00<12:49,  2.20it/s] 13%|█▎        | 262/1954 [02:11<12:49,  2.20it/s] 20%|██        | 400/1954 [03:00<11:33,  2.24it/s] 20%|██        | 400/1954 [03:11<11:33,  2.24it/s] 28%|██▊       | 538/1954 [04:00<10:25,  2.26it/s] 28%|██▊       | 538/1954 [04:11<10:25,  2.26it/s] 35%|███▍      | 676/1954 [05:00<09:21,  2.28it/s] 35%|███▍      | 676/1954 [05:11<09:21,  2.28it/s] 42%|████▏     | 814/1954 [06:00<08:19,  2.28it/s] 42%|████▏     | 814/1954 [06:11<08:19,  2.28it/s] 49%|████▊     | 952/1954 [07:00<07:17,  2.29it/s] 49%|████▊     | 952/1954 [07:11<07:17,  2.29it/s] 56%|█████▌    | 1090/1954 [08:00<06:16,  2.29it/s] 56%|█████▌    | 1090/1954 [08:11<06:16,  2.29it/s] 63%|██████▎   | 1228/1954 [09:01<05:16,  2.29it/s] 63%|██████▎   | 1228/1954 [09:11<05:16,  2.29it/s] 70%|██████▉   | 1367/1954 [10:01<04:15,  2.29it/s] 70%|██████▉   | 1367/1954 [10:11<04:15,  2.29it/s] 77%|███████▋  | 1505/1954 [11:01<03:15,  2.29it/s] 77%|███████▋  | 1505/1954 [11:21<03:15,  2.29it/s] 84%|████████▍ | 1644/1954 [12:01<02:14,  2.30it/s] 84%|████████▍ | 1644/1954 [12:21<02:14,  2.30it/s] 91%|█████████ | 1783/1954 [13:02<01:14,  2.30it/s] 91%|█████████ | 1783/1954 [13:21<01:14,  2.30it/s] 98%|█████████▊| 1921/1954 [14:02<00:14,  2.30it/s]100%|██████████| 1954/1954 [14:16<00:00,  2.28it/s]
-07/16/2024 15:31:18 - INFO - mingpt.trainer_atari - train loss: 1.731803
-target return: 350, eval return: 800
-epoch 1
-  0%|          | 0/1954 [00:00<?, ?it/s]
