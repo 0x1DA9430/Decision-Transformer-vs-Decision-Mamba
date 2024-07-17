@@ -1,0 +1,39 @@
+Analyzing data for game: Jamesbond
+Total steps analyzed: 5000000
+Number of trajectories: 3376
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 5000000
+Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+Number of unique actions: 18
+
+Action frequency breakdown:
+Action 0: 130959 times (2.62%)
+Action 1: 132271 times (2.65%)
+Action 2: 144374 times (2.89%)
+Action 3: 362891 times (7.26%)
+Action 4: 409122 times (8.18%)
+Action 5: 99601 times (1.99%)
+Action 6: 535820 times (10.72%)
+Action 7: 376942 times (7.54%)
+Action 8: 206723 times (4.13%)
+Action 9: 334189 times (6.68%)
+Action 10: 176321 times (3.53%)
+Action 11: 340201 times (6.80%)
+Action 12: 276788 times (5.54%)
+Action 13: 119069 times (2.38%)
+Action 14: 429731 times (8.59%)
+Action 15: 448109 times (8.96%)
+Action 16: 175268 times (3.51%)
+Action 17: 301621 times (6.03%)
+
+Action distribution entropy: 4.0075
+Max possible entropy: 4.1699
+Normalized entropy: 0.9611
+
+Reward sequence analysis:
+Average trajectory length: 1480.70
+Average total reward per trajectory: 8.43
+Maximum return: 22.00
+Average steps until first non-zero reward: 171.37

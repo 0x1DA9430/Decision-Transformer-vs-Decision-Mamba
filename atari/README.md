@@ -161,8 +161,19 @@ qsub 10_dt_atari_alien.sh
 
 qsub 10_dm_atari_battlezone.sh
 qsub 10_dt_atari_battlezone.sh
-qsub 10_dm_atari_choppercommand.sh
-qsub 10_dt_atari_choppercommand.sh
+
+
+qsub 10_dm_atari_bankheist.sh
+qsub 10_dt_atari_bankheist.sh
+
+qsub 10_dm_atari_fishingderby.sh
+qsub 10_dt_atari_fishingderby.sh
+
+qsub 10_dm_atari_zaxxon.sh
+qsub 10_dt_atari_zaxxon.sh
+
+qsub 10_dm_atari_jamesbond.sh
+qsub 10_dt_atari_jamesbond.sh
 ```
 Experiments for context length 50
 ```bash

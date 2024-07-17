@@ -253,6 +253,14 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(1075) # 5*max return in training data
                 elif self.config.game == 'BattleZone':
                     eval_return, eval_time = self.get_returns(160)  # 5*max return in training data
+                elif self.config.game == 'BankHeist':
+                    eval_return, eval_time = self.get_returns(680)  # 5*max return in training data
+                elif self.config.game == 'FishingDerby':
+                    eval_return, eval_time = self.get_returns(305)  # 5*max return in training data
+                elif self.config.game == 'Zaxxon':
+                    eval_return, eval_time = self.get_returns(170)  # 5*max return in training data
+                elif self.config.game == 'Jamesbond':
+                    eval_return, eval_time = self.get_returns(110)  # 5*max return in training data
                 else:
                     raise NotImplementedError()
 
@@ -377,6 +385,8 @@ class Env():
             'kungfumaster': 'kung_fu_master',
             'roadrunner': 'road_runner',
             'battlezone': 'battle_zone',
+            'bankheist': 'bank_heist',
+            'fishingderby': 'fishing_derby',
         }
 
         # Get the correct ROM name using the dictionary or default to the game name
