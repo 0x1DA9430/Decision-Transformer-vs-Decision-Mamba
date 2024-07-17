@@ -1,6 +1,6 @@
 Analyzing data for game: Breakout
 Total steps analyzed: 5000000
-Number of trajectories: 4065
+Number of trajectories: 4062
 Visualizing a random game state:
 
 Action space analysis:
@@ -9,16 +9,17 @@ Unique actions: [0, 1, 2, 3]
 Number of unique actions: 4
 
 Action frequency breakdown:
-Action 0: 1209336 times (24.19%)
-Action 1: 1232969 times (24.66%)
-Action 2: 1045439 times (20.91%)
-Action 3: 1512256 times (30.25%)
+Action 0: 1210848 times (24.22%)
+Action 1: 1213747 times (24.27%)
+Action 2: 1035576 times (20.71%)
+Action 3: 1539829 times (30.80%)
 
-Action distribution entropy: 1.9872
+Action distribution entropy: 1.9850
 Max possible entropy: 2.0000
-Normalized entropy: 0.9936
+Normalized entropy: 0.9925
 
 Reward sequence analysis:
-Average trajectory length: 1229.84
-Average total reward per trajectory: 37.47
-Average steps until first non-zero reward: 43.09
+Average trajectory length: 1230.57
+Average total reward per trajectory: 37.26
+Maximum return: 104.00
+Average steps until first non-zero reward: 45.62
