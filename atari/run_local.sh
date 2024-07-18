@@ -1,11 +1,15 @@
 # Run the executable
 DATA_DIR=./data/data_atari/
-OUT_DIR=./output/context_10_rtg_5max_action_fusion_simplest/atari_hero_local/
+OUT_DIR=./output/context_30_rtg_5max_action_fusion_reverse/atari_hero_local/
 
 EXP_Q=dmamba_hero
-for seed in 123 132 321; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed --use_action_fusion; done
+for seed in 123 132; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed --use_action_fusion; done
+
+# for seed in 123 132 321; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed --use_action_fusion; done
 # for seed in 231 312; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed --use_action_fusion; done
 
 EXP_DTQ=dtrans_hero
-for seed in 123 132 321; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed --use_action_fusion; done
+for seed in 123 132; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed --use_action_fusion; done
+
+# for seed in 123 132 321; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 30 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed --use_action_fusion; done
 # for seed in 231 312; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'attn' --output $OUT_DIR --experiment $EXP_DTQ --seed $seed --use_action_fusion; done

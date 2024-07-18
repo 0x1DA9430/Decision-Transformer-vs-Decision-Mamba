@@ -410,6 +410,7 @@ class Env():
         self.state_buffer = deque([], maxlen=args.history_length)
         self.training = True  # Consistent with model training mode
     
+    """simple"""
     def _create_fused_action_map(self, game):
         if game.lower() == 'hero':
             return {
@@ -439,44 +440,31 @@ class Env():
         else:
             return None  # No reverse mapping for other games
 
+    """1p"""
     # def _create_fused_action_map(self, game):
     #     if game.lower() == 'hero':
     #         return {
-    #             0: [0],  # NOOP
-    #             1: [1],  # FIRE
-    #             2: [2],  # UP
-    #             3: [3],  # RIGHT
-    #             4: [4],  # LEFT
-    #             5: [5],  # DOWN
-    #             6: [2, 3],  # UPRIGHT
-    #             7: [2, 4],  # UPLEFT
-    #             8: [5, 3],  # DOWNRIGHT
-    #             9: [5, 4],  # DOWNLEFT
-    #             10: [2, 1],  # UPFIRE
-    #             11: [3, 1],  # RIGHTFIRE
-    #             12: [4, 1],  # LEFTFIRE
-    #             13: [5, 1],  # DOWNFIRE
-    #             14: [2, 3, 1],  # UPRIGHTFIRE
-    #             15: [2, 4, 1],  # UPLEFTFIRE
-    #             16: [5, 3, 1],  # DOWNRIGHTFIRE
-    #             17: [5, 4, 1],  # DOWNLEFTFIRE
+    #             0: [2, 10],
+    #             1: [6, 7],
+    #             2: [0],
+    #             3: [15, 14],
+    #             4: [1],
+    #             5: [5, 13],
+    #             6: [4, 9],
+    #             7: [8, 3],
+    #             8: [12, 17],
+    #             9: [11, 16]
     #         }
     #     elif game.lower() == 'kungfumaster':
     #         return {
-    #             0: [0],  # NOOP
-    #             1: [1],  # UP
-    #             2: [2],  # RIGHT
-    #             3: [3],  # LEFT
-    #             4: [4],  # DOWN
-    #             5: [4, 2],  # DOWNRIGHT
-    #             6: [4, 3],  # DOWNLEFT
-    #             7: [2, 5],  # RIGHTFIRE
-    #             8: [3, 5],  # LEFTFIRE
-    #             9: [4, 5],  # DOWNFIRE
-    #             10: [1, 2, 5],  # UPRIGHTFIRE
-    #             11: [1, 3, 5],  # UPLEFTFIRE
-    #             12: [4, 2, 5],  # DOWNRIGHTFIRE
-    #             13: [4, 3, 5],  # DOWNLEFTFIRE
+    #             0: [2, 1],
+    #             1: [0],
+    #             2: [4, 10],
+    #             3: [12, 6],
+    #             4: [9, 7],
+    #             5: [13, 5],
+    #             6: [3, 11],
+    #             7: [8]
     #         }
     #     else:
     #         # No fusion for other games

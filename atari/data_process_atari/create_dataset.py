@@ -26,6 +26,7 @@ from tqdm import tqdm
 #     else:
 #         return None  # No fusion for other games
 
+"""simple"""
 def create_action_fusion_mapping(game):
     if game == 'Hero':
         return {
@@ -68,44 +69,45 @@ def create_action_fusion_mapping(game):
     else:
         return None # No fusion for other games
 
+"""1p"""
 # def create_action_fusion_mapping(game):
 #     if game == 'Hero':
 #         return {
-#             0: 0,  # NOOP
-#             1: 1,  # FIRE
-#             2: 2,  # UP
-#             3: 3,  # RIGHT
-#             4: 4,  # LEFT
-#             5: 5,  # DOWN
-#             6: 6,  # UPRIGHT
-#             7: 7,  # UPLEFT
-#             8: 8,  # DOWNRIGHT
-#             9: 9,  # DOWNLEFT
-#             10: 2, # UPFIRE -> UP
-#             11: 3, # RIGHTFIRE -> RIGHT
-#             12: 4, # LEFTFIRE -> LEFT
-#             13: 5, # DOWNFIRE -> DOWN
-#             14: 6, # UPRIGHTFIRE -> UPRIGHT
-#             15: 7, # UPLEFTFIRE -> UPLEFT
-#             16: 8, # DOWNRIGHTFIRE -> DOWNRIGHT
-#             17: 9, # DOWNLEFTFIRE -> DOWNLEFT
+#             0: 2,   # NOOP -> UP
+#             1: 4,   # FIRE -> LEFT
+#             2: 0,   # UP -> NOOP
+#             3: 7,   # RIGHT -> DOWNRIGHT
+#             4: 6,   # LEFT -> UPLEFT
+#             5: 5,   # DOWN -> DOWN
+#             6: 1,   # UPRIGHT -> FIRE
+#             7: 1,   # UPLEFT -> FIRE
+#             8: 7,   # DOWNRIGHT -> DOWNRIGHT
+#             9: 6,   # DOWNLEFT -> UPLEFT
+#             10: 0,  # UPFIRE -> NOOP
+#             11: 9,  # RIGHTFIRE -> DOWNLEFTFIRE
+#             12: 8,  # LEFTFIRE -> DOWNRIGHT
+#             13: 5,  # DOWNFIRE -> DOWN
+#             14: 3,  # UPRIGHTFIRE -> RIGHT
+#             15: 3,  # UPLEFTFIRE -> RIGHT
+#             16: 9,  # DOWNRIGHTFIRE -> DOWNLEFTFIRE
+#             17: 8,  # DOWNLEFTFIRE -> DOWNRIGHT
 #         }
 #     elif game == 'KungFuMaster':
 #         return {
-#             0: 0,  # NOOP
-#             1: 1,  # UP
-#             2: 2,  # RIGHT
-#             3: 3,  # LEFT
-#             4: 4,  # DOWN
-#             5: 5,  # DOWNRIGHT
-#             6: 6,  # DOWNLEFT
-#             7: 2,  # RIGHTFIRE -> RIGHT
-#             8: 3,  # LEFTFIRE -> LEFT
-#             9: 4,  # DOWNFIRE -> DOWN
-#             10: 7, # UPRIGHTFIRE
-#             11: 8, # UPLEFTFIRE
-#             12: 5, # DOWNRIGHTFIRE -> DOWNRIGHT
-#             13: 6, # DOWNLEFTFIRE -> DOWNLEFT
+#             0: 1,    # NOOP -> UP
+#             1: 0,    # UP -> NOOP
+#             2: 0,    # RIGHT -> NOOP
+#             3: 6,    # LEFT -> DOWNLEFT
+#             4: 2,    # DOWN -> RIGHT
+#             5: 5,    # DOWNRIGHT
+#             6: 3,    # DOWNLEFT -> LEFT
+#             7: 4,    # RIGHTFIRE -> DOWN
+#             8: 7,    # LEFTFIRE -> UPLEFTFIRE
+#             9: 4,    # DOWNFIRE -> DOWN
+#             10: 2,   # UPRIGHTFIRE -> RIGHT
+#             11: 6,   # UPLEFTFIRE -> DOWNLEFT
+#             12: 3,   # DOWNRIGHTFIRE -> LEFT
+#             13: 5,   # DOWNLEFTFIRE -> DOWNRIGHT
 #         }
 #     else:
 #         return None  # No fusion for other games
@@ -173,12 +175,6 @@ def create_dataset(num_buffers, num_steps, game, data_dir_prefix, trajectories_p
                     actions += [ac]
                 else:
                     actions += [ac[0]]
-
-                # # print actions during loading
-                # print("using action fusion" if use_action_fusion else "not using action fusion")
-                # print('-'*50)
-                # print(actions)
-                # print('-'*50)
 
                 stepwise_returns += [ret[0]]
                 

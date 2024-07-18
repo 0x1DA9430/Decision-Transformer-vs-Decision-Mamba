@@ -17,7 +17,7 @@
 
 # Save log
 #$ -j y
-#$ -o ./output/context_10_rtg_5max_action_fusion/atari_hero_eddie/dm_hero_output.log
+#$ -o ./output/context_10_rtg_5max_action_fusion_reverse/atari_hero_eddie/dm_hero_output.log
 
 # Initialise the environment
 . /etc/profile.d/modules.sh
