@@ -10,6 +10,7 @@ from collections import defaultdict
 def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, trajectories_per_buffer=100, use_random_sampling=False):
     obss_sample = []
     actions = defaultdict(int)
+    action_pairs = defaultdict(int)
     rewards = []
     done_idxs = []
     frame_differences = []
@@ -20,6 +21,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
     current_trajectory_reward = 0
     current_trajectory_length = 0
     current_trajectory_first_nonzero = -1
+    previous_action = None
 
     pbar = tqdm(total=num_steps)
     total_processed = 0
@@ -62,7 +64,13 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
                 if len(obss_sample) < 1000:  # Keep a sample of observations for visualization
                     obss_sample.append(states)
                 
-                actions[int(ac[0])] += 1
+                current_action = int(ac[0])
+                actions[current_action] += 1
+                
+                if previous_action is not None:
+                    action_pairs[(previous_action, current_action)] += 1
+                previous_action = current_action
+
                 rewards.append(ret[0])
                 current_trajectory_reward += ret[0]
                 current_trajectory_length += 1
@@ -83,6 +91,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
                     current_trajectory_reward = 0
                     current_trajectory_length = 0
                     current_trajectory_first_nonzero = -1
+                    previous_action = None
 
                     trajectories_loaded += 1
                     if use_random_sampling and trajectories_loaded >= trajectories_per_buffer:
@@ -90,12 +99,12 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
 
                 if total_processed >= num_steps:
                     pbar.close()
-                    return obss_sample, dict(actions), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards
+                    return obss_sample, dict(actions), dict(action_pairs), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards
                 
                 i += 1
 
     pbar.close()
-    return obss_sample, dict(actions), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards
+    return obss_sample, dict(actions), dict(action_pairs), rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards
 
 
 def visualize_state(state, game_name):
@@ -172,6 +181,49 @@ def analyze_action_space(actions, game_name):
     print(f"Max possible entropy: {max_entropy:.4f}")
     print(f"Normalized entropy: {normalized_entropy:.4f}")
 
+def analyze_action_pairs(action_pairs, game_name):
+    total_pairs = sum(action_pairs.values())
+    pair_percentages = {pair: (count / total_pairs) * 100 for pair, count in action_pairs.items()}
+    
+    print(f"\nAction pair analysis:")
+    print(f"Total action pairs: {total_pairs}")
+    print(f"Unique action pairs: {len(action_pairs)}")
+    
+    # Sort action pairs by frequency
+    sorted_pairs = sorted(pair_percentages.items(), key=lambda x: x[1], reverse=True)
+    
+    # Print top 10 most frequent pairs
+    print("\nTop 10 most frequent action pairs:")
+    for pair, percentage in sorted_pairs[:10]:
+        print(f"Action pair {pair}: {action_pairs[pair]} times ({percentage:.2f}%)")
+    
+    # Visualize top 20 action pairs
+    plt.figure(figsize=(15, 8))
+    top_20_pairs = sorted_pairs[:20]
+    bars = plt.bar([f"{pair[0]},{pair[1]}" for pair, _ in top_20_pairs], 
+                   [percentage for _, percentage in top_20_pairs])
+    plt.title("Top 20 Action Pair Distribution")
+    plt.xlabel("Action Pair")
+    plt.ylabel("Percentage")
+    plt.xticks(rotation=90)
+
+    # Add text annotations
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width() / 2, height,
+                 f'{height:.2f}%', ha='center', va='bottom', rotation=90)
+
+    plt.tight_layout()
+    plt.savefig(f'dataset_analyze_1p/{game_name}/action_pair_distribution.png')
+
+    # Calculate and print entropy
+    entropy = -sum((p/100) * np.log2(p/100) for p in pair_percentages.values())
+    max_entropy = np.log2(len(action_pairs))
+    normalized_entropy = entropy / max_entropy
+    print(f"\nAction pair distribution entropy: {entropy:.4f}")
+    print(f"Max possible entropy: {max_entropy:.4f}")
+    print(f"Normalized entropy: {normalized_entropy:.4f}")
+
 
 def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, game_name):
     avg_trajectory_length = np.mean(trajectory_lengths)
@@ -218,12 +270,12 @@ def main():
     parser.add_argument('--game', type=str, required=True, help='Name of the Atari game')
     parser.add_argument('--data_dir_prefix', type=str, default='./data/data_atari/', help='Path to dataset')
     parser.add_argument('--num_buffers', type=int, default=50, help='Number of buffers to sample from')
-    parser.add_argument('--num_steps', type=int, default=500000, help='Number of steps to analyze (10% of dataset)')
+    parser.add_argument('--num_steps', type=int, default=500000, help='Number of steps to analyze (1% of dataset)')
     parser.add_argument('--trajectories_per_buffer', type=int, default=10, help='Number of trajectories to sample per buffer (only used with random sampling)')
     parser.add_argument('--use_random_sampling', action='store_true', help='Use random sampling instead of analyzing the last 1%')
     args = parser.parse_args()
 
-    obss_sample, actions, rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards = analyze_game_data(
+    obss_sample, actions, action_pairs, rewards, done_idxs, frame_differences, total_rewards, trajectory_lengths, first_nonzero_rewards = analyze_game_data(
         args.game, 
         args.data_dir_prefix, 
         args.num_buffers, 
@@ -246,6 +298,9 @@ def main():
 
     print("\nAction space analysis:")
     analyze_action_space(actions, args.game)
+
+    print("\nAction pair analysis:")
+    analyze_action_pairs(action_pairs, args.game)
 
     print("\nReward sequence analysis:")
     analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, args.game)
