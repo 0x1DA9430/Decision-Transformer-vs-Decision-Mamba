@@ -67,7 +67,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=500000, t
                 current_action = int(ac[0])
                 actions[current_action] += 1
                 
-                if previous_action is not None:
+                if previous_action is not None and previous_action != current_action:
                     action_pairs[(previous_action, current_action)] += 1
                 previous_action = current_action
 
@@ -186,24 +186,24 @@ def analyze_action_pairs(action_pairs, game_name):
     pair_percentages = {pair: (count / total_pairs) * 100 for pair, count in action_pairs.items()}
     
     print(f"\nAction pair analysis:")
-    print(f"Total action pairs: {total_pairs}")
-    print(f"Unique action pairs: {len(action_pairs)}")
+    print(f"Total distinct action pairs: {total_pairs}")
+    print(f"Unique distinct action pairs: {len(action_pairs)}")
     
     # Sort action pairs by frequency
     sorted_pairs = sorted(pair_percentages.items(), key=lambda x: x[1], reverse=True)
     
     # Print top 10 most frequent pairs
-    print("\nTop 10 most frequent action pairs:")
+    print("\nTop 10 most frequent distinct action pairs:")
     for pair, percentage in sorted_pairs[:10]:
         print(f"Action pair {pair}: {action_pairs[pair]} times ({percentage:.2f}%)")
     
     # Visualize top 20 action pairs
     plt.figure(figsize=(15, 8))
     top_20_pairs = sorted_pairs[:20]
-    bars = plt.bar([f"{pair[0]},{pair[1]}" for pair, _ in top_20_pairs], 
+    bars = plt.bar([f"{pair[0]}->{pair[1]}" for pair, _ in top_20_pairs], 
                    [percentage for _, percentage in top_20_pairs])
-    plt.title("Top 20 Action Pair Distribution")
-    plt.xlabel("Action Pair")
+    plt.title("Top 20 Distinct Action Pair Distribution")
+    plt.xlabel("Action Pair (Previous -> Current)")
     plt.ylabel("Percentage")
     plt.xticks(rotation=90)
 
@@ -214,15 +214,16 @@ def analyze_action_pairs(action_pairs, game_name):
                  f'{height:.2f}%', ha='center', va='bottom', rotation=90)
 
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze_1p/{game_name}/action_pair_distribution.png')
+    plt.savefig(f'dataset_analyze_1p/{game_name}/distinct_action_pair_distribution.png')
 
     # Calculate and print entropy
     entropy = -sum((p/100) * np.log2(p/100) for p in pair_percentages.values())
     max_entropy = np.log2(len(action_pairs))
     normalized_entropy = entropy / max_entropy
-    print(f"\nAction pair distribution entropy: {entropy:.4f}")
+    print(f"\nDistinct action pair distribution entropy: {entropy:.4f}")
     print(f"Max possible entropy: {max_entropy:.4f}")
     print(f"Normalized entropy: {normalized_entropy:.4f}")
+
 
 
 def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, game_name):
