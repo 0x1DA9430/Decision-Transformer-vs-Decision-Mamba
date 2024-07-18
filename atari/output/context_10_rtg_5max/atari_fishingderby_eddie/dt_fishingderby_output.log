@@ -1,0 +1,11 @@
+CUDA_VISIBLE_DEVICES: 
+CUDA_VISIBLE_DEVICES: 3
+Warning: This module should only be used with the A100 GPU nodes.  If you are using the K80 or Titan-X GPUs please use an older cuda version.
+WARNING: If you use conda to create environments, your home directory may fill up. Please see our documentation at 
+ https://www.wiki.ed.ac.uk/display/ResearchServices/Anaconda for advice.
+2024-07-18 16:11:16.215649: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-07-18 16:11:16.789064: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-07-18 16:11:20.538417: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+loading trajectories from buffers
+  0%|          | 0/500000 [00:00<?, ?it/s] 15%|█▌        | 75667/500000 [01:03<05:56, 1189.88it/s] 23%|██▎       | 114000/500000 [01:19<05:24, 1189.88it/s] 34%|███▍      | 168938/500000 [02:07<04:05, 1348.36it/s] 38%|███▊      | 187715/500000 [02:19<03:51, 1348.36it/s] 53%|█████▎    | 264170/500000 [03:11<02:47, 1409.40it/s] 61%|██████    | 302946/500000 [03:30<02:19, 1409.40it/s] 72%|███████▏  | 357722/500000 [04:15<01:39, 1430.13it/s] 77%|███████▋  | 386139/500000 [04:30<01:19, 1430.13it/s] 91%|█████████ | 452627/500000 [05:20<00:32, 1447.36it/s] 98%|█████████▊| 491010/500000 [05:40<00:06, 1447.36it/s]100%|██████████| 500000/500000 [05:47<00:00, 1440.88it/s]
