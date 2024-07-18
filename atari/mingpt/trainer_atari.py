@@ -538,10 +538,11 @@ class Env():
         # Repeat actions 4 times, max pool over last 2 frames
         frame_buffer = torch.zeros(2, 84, 84, device=self.device)
         reward, done = 0, False
+
         for t in range(4):
             
             if self.fused_action_map is not None:
-                for a in self.fused_action_map[self.actions.get(action)]:
+                for a in reversed(self.fused_action_map[self.actions.get(action)]):
                     reward += self.ale.act(a) # Use fused actions
             else:
                 reward += self.ale.act(self.actions.get(action)) # Use original actions
@@ -555,6 +556,18 @@ class Env():
                 break
         observation = frame_buffer.max(0)[0]
         self.state_buffer.append(observation)
+
+        # # only use fused actions
+        # fused_actions = self.fused_action_map[self.actions[action]]
+        # for a in fused_actions:
+        #     reward += self.ale.act(a)
+        #     done = self.ale.game_over()
+        #     if done:
+        #         break
+        
+        # observation = self._get_state()
+        # self.state_buffer.append(observation)
+
         # Detect loss of life as terminal in training mode
         if self.training:
             lives = self.ale.lives()

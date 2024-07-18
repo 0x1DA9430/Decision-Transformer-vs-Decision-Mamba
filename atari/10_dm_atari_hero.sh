@@ -29,7 +29,7 @@ python -m atari_py.import_roms ROMS > /dev/null 2>&1
 
 # Run the executable
 DATA_DIR=./data/data_atari/
-OUT_DIR=./output/context_10_rtg_5max_action_fusion/atari_hero_eddie/
+OUT_DIR=./output/context_10_rtg_5max_action_fusion_reverse/atari_hero_eddie/
 
 EXP_Q=dmamba_hero
 for seed in 123 132 321; do python train_atari.py --game 'Hero' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed --use_action_fusion; done
