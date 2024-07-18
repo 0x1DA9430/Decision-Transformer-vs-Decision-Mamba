@@ -1,0 +1,56 @@
+Analyzing data for game: KungFuMaster
+Total steps analyzed: 500000
+Number of trajectories: 181
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 500000
+Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+Number of unique actions: 14
+
+Action frequency breakdown:
+Action 0: 32151 times (6.43%)
+Action 1: 30824 times (6.16%)
+Action 2: 23937 times (4.79%)
+Action 3: 39810 times (7.96%)
+Action 4: 33516 times (6.70%)
+Action 5: 39450 times (7.89%)
+Action 6: 35685 times (7.14%)
+Action 7: 37724 times (7.54%)
+Action 8: 43573 times (8.71%)
+Action 9: 35733 times (7.15%)
+Action 10: 33503 times (6.70%)
+Action 11: 40592 times (8.12%)
+Action 12: 35493 times (7.10%)
+Action 13: 38009 times (7.60%)
+
+Action distribution entropy: 3.7942
+Max possible entropy: 3.8074
+Normalized entropy: 0.9966
+
+Action pair analysis:
+
+Action pair analysis:
+Total distinct action pairs: 203664
+Unique distinct action pairs: 182
+
+Top 10 most frequent distinct action pairs:
+Action pair (3, 8): 4939 times (2.43%)
+Action pair (5, 13): 3829 times (1.88%)
+Action pair (5, 8): 3509 times (1.72%)
+Action pair (3, 11): 3122 times (1.53%)
+Action pair (5, 3): 2442 times (1.20%)
+Action pair (5, 11): 2425 times (1.19%)
+Action pair (8, 5): 2330 times (1.14%)
+Action pair (2, 3): 2239 times (1.10%)
+Action pair (6, 8): 2225 times (1.09%)
+Action pair (13, 5): 2176 times (1.07%)
+
+Distinct action pair distribution entropy: 7.3515
+Max possible entropy: 7.5078
+Normalized entropy: 0.9792
+
+Reward sequence analysis:
+Average trajectory length: 2758.12
+Average total reward per trajectory: 127.80
+Average steps until first non-zero reward: 108.71

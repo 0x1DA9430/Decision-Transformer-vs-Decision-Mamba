@@ -1,0 +1,60 @@
+Analyzing data for game: Hero
+Total steps analyzed: 500000
+Number of trajectories: 391
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 500000
+Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+Number of unique actions: 18
+
+Action frequency breakdown:
+Action 0: 22805 times (4.56%)
+Action 1: 23710 times (4.74%)
+Action 2: 16865 times (3.37%)
+Action 3: 33694 times (6.74%)
+Action 4: 28357 times (5.67%)
+Action 5: 25723 times (5.14%)
+Action 6: 20442 times (4.09%)
+Action 7: 21368 times (4.27%)
+Action 8: 33426 times (6.69%)
+Action 9: 29723 times (5.94%)
+Action 10: 17393 times (3.48%)
+Action 11: 40560 times (8.11%)
+Action 12: 34142 times (6.83%)
+Action 13: 28114 times (5.62%)
+Action 14: 23229 times (4.65%)
+Action 15: 22259 times (4.45%)
+Action 16: 43525 times (8.71%)
+Action 17: 34665 times (6.93%)
+
+Action distribution entropy: 4.1194
+Max possible entropy: 4.1699
+Normalized entropy: 0.9879
+
+Action pair analysis:
+
+Action pair analysis:
+Total distinct action pairs: 178121
+Unique distinct action pairs: 306
+
+Top 10 most frequent distinct action pairs:
+Action pair (16, 17): 1340 times (0.75%)
+Action pair (11, 16): 1270 times (0.71%)
+Action pair (17, 16): 1252 times (0.70%)
+Action pair (16, 12): 1218 times (0.68%)
+Action pair (3, 16): 1217 times (0.68%)
+Action pair (16, 11): 1216 times (0.68%)
+Action pair (16, 3): 1209 times (0.68%)
+Action pair (11, 17): 1189 times (0.67%)
+Action pair (12, 16): 1180 times (0.66%)
+Action pair (17, 11): 1157 times (0.65%)
+
+Distinct action pair distribution entropy: 8.1276
+Max possible entropy: 8.2574
+Normalized entropy: 0.9843
+
+Reward sequence analysis:
+Average trajectory length: 1276.51
+Average total reward per trajectory: 160.02
+Average steps until first non-zero reward: 48.24
