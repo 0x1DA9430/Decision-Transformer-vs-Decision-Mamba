@@ -5,7 +5,10 @@ import argparse
 from tqdm import tqdm
 import os
 from collections import defaultdict
-
+import cv2
+from skimage.metrics import structural_similarity as ssim
+from scipy.stats import entropy
+import zlib
 
 def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, trajectories_per_buffer=100):
     obss_sample = []
@@ -49,7 +52,7 @@ def analyze_game_data(game, data_dir_prefix, num_buffers=50, num_steps=5000000, 
                 
                 states = states.transpose((0, 3, 1, 2))[0]  # (1, 84, 84, 4) --> (4, 84, 84)
                 
-                if len(obss_sample) < 1000:  # Keep a sample of observations for visualization
+                if len(obss_sample) < 5000:  # Keep a sample of observations for visualization
                     obss_sample.append(states)
                 
                 actions[int(ac[0])] += 1
@@ -104,25 +107,90 @@ def visualize_state(state, game_name):
         axes[i].axis('off')
         axes[i].set_title(f'Frame {i+1}')
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze/{game_name}/state_example.png')
+    plt.savefig(f'dataset_analyze_expand/{game_name}/state_example.png')
 
-def analyze_frame_differences(obss, game_name):
-    # Randomly select 1000 consecutive pairs of states
-    indices = np.random.randint(0, len(obss) - 1, 1000)
-    differences = []
-    for i in indices:
-        diff = np.mean(np.abs(obss[i+1] - obss[i]))
-        differences.append(diff)
+
+def measure_frame_complexity(frames):
+    """
+    Measure the complexity of a sequence of game frames.
     
-    plt.figure(figsize=(10, 5))
-    plt.hist(differences, bins=50)
-    plt.title("Distribution of Frame Differences")
-    plt.xlabel("Average Absolute Difference")
-    plt.ylabel("Frequency")
-    plt.savefig(f'dataset_analyze/{game_name}/frame_difference_distribution.png')
+    :param frames: numpy array of shape (num_frames, height, width)
+    :return: dict of complexity measures
+    """
+    results = {}
+    
+    # 1. Image Entropy
+    entropies = []
+    for frame in frames:
+        hist = cv2.calcHist([frame], [0], None, [256], [0, 256])
+        hist = hist.ravel() / hist.sum()
+        entropies.append(entropy(hist))
+    results['entropy'] = {
+        'mean': np.mean(entropies),
+        'std': np.std(entropies)
+    }
+    
+    # 2. Edge Detection
+    edge_ratios = []
+    for frame in frames:
+        edges = cv2.Canny(frame, 100, 200)
+        edge_ratio = np.sum(edges > 0) / (frame.shape[0] * frame.shape[1])
+        edge_ratios.append(edge_ratio)
+    results['edge_ratio'] = {
+        'mean': np.mean(edge_ratios),
+        'std': np.std(edge_ratios)
+    }
+    
+    # 3. Compression Ratio
+    compression_ratios = []
+    for frame in frames:
+        original_size = frame.nbytes
+        compressed_size = len(zlib.compress(frame.tobytes()))
+        compression_ratios.append(original_size / compressed_size)
+    results['compression_ratio'] = {
+        'mean': np.mean(compression_ratios),
+        'std': np.std(compression_ratios)
+    }
+    
+    # 4. Structural Similarity Index (SSIM)
+    ssim_scores = []
+    for i in range(len(frames) - 1):
+        score = ssim(frames[i], frames[i+1])
+        ssim_scores.append(score)
+    results['ssim'] = {
+        'mean': np.mean(ssim_scores),
+        'std': np.std(ssim_scores)
+    }
+    
+    # 5. Feature Detection (using SIFT)
+    sift = cv2.SIFT_create()
+    feature_counts = []
+    for frame in frames:
+        keypoints = sift.detect(frame, None)
+        feature_counts.append(len(keypoints))
+    results['feature_count'] = {
+        'mean': np.mean(feature_counts),
+        'std': np.std(feature_counts)
+    }
+    
+    return results
 
-    print(f"Average frame difference: {np.mean(differences):.4f}")
-    print(f"Median frame difference: {np.median(differences):.4f}")
+# Function to analyze complexity across all frames
+def analyze_frame_complexity(obss):
+    # obss is a list of numpy arrays, obss[i].shape=(4, 84, 84), len(obss)=3000
+    
+    # analyse the average complexity of each frame across all observations
+    complexities = []
+    for obs in obss:
+        state = [obs[i] for i in range(4)]
+        complexity = measure_frame_complexity(state)
+        complexities.append(complexity)
+    
+    # Print results (average complexity across all observations)
+    for key in complexities[0].keys():
+        mean = np.mean([c[key]['mean'] for c in complexities])
+        std = np.mean([c[key]['std'] for c in complexities])
+        print(f"{key}: {mean:.4f} +/- {std:.4f}")
 
 
 def analyze_action_space(actions, game_name):
@@ -154,7 +222,7 @@ def analyze_action_space(actions, game_name):
                  f'{height:.2f}%', ha='center', va='bottom')
 
     plt.tight_layout()
-    plt.savefig(f'dataset_analyze/{game_name}/action_distribution.png')
+    plt.savefig(f'dataset_analyze_expand/{game_name}/action_distribution.png')
 
     # Print detailed breakdown
     print("\nAction frequency breakdown:")
@@ -197,7 +265,7 @@ def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_length
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}/reward_distribution.png')
+    plt.savefig(f'dataset_analyze_expand/{game_name}/reward_distribution.png')
 
     # Visualize cumulative reward distribution
     plt.figure(figsize=(10, 5))
@@ -210,7 +278,7 @@ def analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_length
     for i in range(len(patches)):
         plt.text(patches[i].get_x() + patches[i].get_width() / 2, patches[i].get_height(), str(int(patches[i].get_height())), ha='center', va='bottom')
 
-    plt.savefig(f'dataset_analyze/{game_name}/cumulative_reward_distribution.png')
+    plt.savefig(f'dataset_analyze_expand/{game_name}/cumulative_reward_distribution.png')
     
 
 def main():
@@ -218,7 +286,7 @@ def main():
     parser.add_argument('--game', type=str, required=True, help='Name of the Atari game')
     parser.add_argument('--data_dir_prefix', type=str, default='./data/data_atari/', help='Path to dataset')
     parser.add_argument('--num_buffers', type=int, default=50, help='Number of buffers to sample from')
-    parser.add_argument('--num_steps', type=int, default=5000000, help='Number of steps to analyze (10% of dataset)')
+    parser.add_argument('--num_steps', type=int, default=5000, help='Number of steps to analyze (10% of dataset)')
     parser.add_argument('--trajectories_per_buffer', type=int, default=100, help='Number of trajectories to sample per buffer')
     args = parser.parse_args()
 
@@ -231,7 +299,7 @@ def main():
     )
 
     # Create directory for saving analysis results
-    os.makedirs(f'dataset_analyze/{args.game}', exist_ok=True)
+    os.makedirs(f'dataset_analyze_expand/{args.game}', exist_ok=True)
 
     print(f"Analyzing data for game: {args.game}")
     print(f"Total steps analyzed: {len(rewards)}")
@@ -248,8 +316,9 @@ def main():
     print("\nReward sequence analysis:")
     analyze_reward_sequence(rewards, done_idxs, total_rewards, trajectory_lengths, first_nonzero_rewards, max_return, args.game)
 
-    # print("\nFrame difference analysis:")
-    # analyze_frame_differences(frame_differences, args.game)
+    print("\nFrame complexity analysis:")
+    analyze_frame_complexity(obss_sample)
+
 
 if __name__ == "__main__":
     main()
