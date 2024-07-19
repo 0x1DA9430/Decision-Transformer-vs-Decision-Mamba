@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dt_128_seaquest
+#$ -N dt_50_seaquest
 #$ -cwd
 
 #$ -l h_rt=24:00:00

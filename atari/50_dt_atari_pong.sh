@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grid Engine options (lines prefixed with #$)
-#$ -N dt_128_pong
+#$ -N dt_50_pong
 #$ -cwd
 
 #$ -l h_rt=24:00:00
