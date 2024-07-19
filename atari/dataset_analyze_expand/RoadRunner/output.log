@@ -1,0 +1,46 @@
+Analyzing data for game: RoadRunner
+Total steps analyzed: 5000000
+Number of trajectories: 4452
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 5000000
+Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+Number of unique actions: 18
+
+Action frequency breakdown:
+Action 0: 180334 times (3.61%)
+Action 1: 169536 times (3.39%)
+Action 2: 273987 times (5.48%)
+Action 3: 144471 times (2.89%)
+Action 4: 465542 times (9.31%)
+Action 5: 326451 times (6.53%)
+Action 6: 139968 times (2.80%)
+Action 7: 839191 times (16.78%)
+Action 8: 163092 times (3.26%)
+Action 9: 826211 times (16.52%)
+Action 10: 183212 times (3.66%)
+Action 11: 158057 times (3.16%)
+Action 12: 219692 times (4.39%)
+Action 13: 171749 times (3.43%)
+Action 14: 149749 times (2.99%)
+Action 15: 226003 times (4.52%)
+Action 16: 142548 times (2.85%)
+Action 17: 220207 times (4.40%)
+
+Action distribution entropy: 3.8543
+Max possible entropy: 4.1699
+Normalized entropy: 0.9243
+
+Reward sequence analysis:
+Average trajectory length: 1123.01
+Average total reward per trajectory: 129.36
+Maximum return: 292.00
+Average steps until first non-zero reward: 81.03
+
+Frame complexity analysis:
+entropy: 1.7731 +/- 0.0137
+edge_ratio: 0.1084 +/- 0.0012
+compression_ratio: 12.8877 +/- 0.6273
+ssim: 0.8767 +/- 0.0169
+feature_count: 24.6051 +/- 1.6453

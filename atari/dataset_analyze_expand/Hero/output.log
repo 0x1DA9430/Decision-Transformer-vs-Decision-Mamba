@@ -1,0 +1,46 @@
+Analyzing data for game: Hero
+Total steps analyzed: 5000000
+Number of trajectories: 4193
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 5000000
+Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+Number of unique actions: 18
+
+Action frequency breakdown:
+Action 0: 246371 times (4.93%)
+Action 1: 233322 times (4.67%)
+Action 2: 204892 times (4.10%)
+Action 3: 322328 times (6.45%)
+Action 4: 291090 times (5.82%)
+Action 5: 244629 times (4.89%)
+Action 6: 241533 times (4.83%)
+Action 7: 226782 times (4.54%)
+Action 8: 322088 times (6.44%)
+Action 9: 281560 times (5.63%)
+Action 10: 202040 times (4.04%)
+Action 11: 362802 times (7.26%)
+Action 12: 332159 times (6.64%)
+Action 13: 249738 times (4.99%)
+Action 14: 252999 times (5.06%)
+Action 15: 248535 times (4.97%)
+Action 16: 388602 times (7.77%)
+Action 17: 348530 times (6.97%)
+
+Action distribution entropy: 4.1430
+Max possible entropy: 4.1699
+Normalized entropy: 0.9935
+
+Reward sequence analysis:
+Average trajectory length: 1192.23
+Average total reward per trajectory: 127.36
+Maximum return: 290.00
+Average steps until first non-zero reward: 54.94
+
+Frame complexity analysis:
+entropy: 2.0051 +/- 0.0188
+edge_ratio: 0.1051 +/- 0.0013
+compression_ratio: 10.5482 +/- 0.6077
+ssim: 0.9634 +/- 0.0183
+feature_count: 38.8357 +/- 1.7200

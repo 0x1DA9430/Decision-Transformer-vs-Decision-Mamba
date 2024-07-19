@@ -1,0 +1,34 @@
+Analyzing data for game: Pong
+Total steps analyzed: 5000000
+Number of trajectories: 2384
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 5000000
+Unique actions: [0, 1, 2, 3, 4, 5]
+Number of unique actions: 6
+
+Action frequency breakdown:
+Action 0: 726300 times (14.53%)
+Action 1: 766418 times (15.33%)
+Action 2: 762927 times (15.26%)
+Action 3: 951595 times (19.03%)
+Action 4: 756791 times (15.14%)
+Action 5: 1035969 times (20.72%)
+
+Action distribution entropy: 2.5713
+Max possible entropy: 2.5850
+Normalized entropy: 0.9947
+
+Reward sequence analysis:
+Average trajectory length: 2096.52
+Average total reward per trajectory: 13.21
+Maximum return: 35.00
+Average steps until first non-zero reward: 112.64
+
+Frame complexity analysis:
+entropy: 0.6770 +/- 0.0055
+edge_ratio: 0.0476 +/- 0.0007
+compression_ratio: 40.0009 +/- 1.2978
+ssim: 0.9727 +/- 0.0059
+feature_count: 9.1602 +/- 1.4200

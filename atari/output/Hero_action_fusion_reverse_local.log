@@ -1,6 +1,0 @@
-2024-07-18 14:04:51.031222: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2024-07-18 14:04:51.418380: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-07-18 14:04:52.331939: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-loading trajectories from buffers
-  0%|          | 0/500000 [00:00<?, ?it/s] 15%|█▍        | 74749/500000 [01:08<06:31, 1086.39it/s] 18%|█▊        | 88680/500000 [01:20<06:18, 1086.39it/s] 29%|██▉       | 146935/500000 [02:08<05:06, 1151.13it/s] 32%|███▏      | 161072/500000 [02:20<04:54, 1151.13it/s] 44%|████▍     | 218889/500000 [03:09<04:00, 1168.57it/s] 46%|████▌     | 230576/500000 [03:20<03:50, 1168.57it/s]

@@ -1,0 +1,46 @@
+Analyzing data for game: BankHeist
+Total steps analyzed: 5000000
+Number of trajectories: 4218
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 5000000
+Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+Number of unique actions: 18
+
+Action frequency breakdown:
+Action 0: 178537 times (3.57%)
+Action 1: 105527 times (2.11%)
+Action 2: 170964 times (3.42%)
+Action 3: 468328 times (9.37%)
+Action 4: 613907 times (12.28%)
+Action 5: 157710 times (3.15%)
+Action 6: 464565 times (9.29%)
+Action 7: 626597 times (12.53%)
+Action 8: 514280 times (10.29%)
+Action 9: 623026 times (12.46%)
+Action 10: 105955 times (2.12%)
+Action 11: 150284 times (3.01%)
+Action 12: 146775 times (2.94%)
+Action 13: 98809 times (1.98%)
+Action 14: 139472 times (2.79%)
+Action 15: 142822 times (2.86%)
+Action 16: 141747 times (2.83%)
+Action 17: 150695 times (3.01%)
+
+Action distribution entropy: 3.8300
+Max possible entropy: 4.1699
+Normalized entropy: 0.9185
+
+Reward sequence analysis:
+Average trajectory length: 1185.34
+Average total reward per trajectory: 58.85
+Maximum return: 115.00
+Average steps until first non-zero reward: 20.04
+
+Frame complexity analysis:
+entropy: 1.8757 +/- 0.0730
+edge_ratio: 0.1728 +/- 0.0129
+compression_ratio: 7.7770 +/- 0.7888
+ssim: 0.8738 +/- 0.1154
+feature_count: 188.8682 +/- 18.8461
