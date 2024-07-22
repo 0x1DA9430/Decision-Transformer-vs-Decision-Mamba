@@ -192,22 +192,17 @@ qsub 50_dt_atari_seaquest.sh
 qsub 50_dm_atari_pong.sh
 qsub 50_dt_atari_pong.sh
 ```
-
-sumbit splited jobs
+Experiments for context length 100
 ```bash
-qsub 50_dm_atari_hero_1.sh
-qsub 50_dm_atari_hero_2.sh
-qsub 50_dm_atari_hero_3.sh
-qsub 50_dt_atari_hero_1.sh
-qsub 50_dt_atari_hero_2.sh
-qsub 50_dt_atari_hero_3.sh
+qsub 100_dm_atari_breakout.sh
+qsub 100_dt_atari_breakout.sh
+qsub 100_dm_atari_qbert.sh
+qsub 100_dt_atari_qbert.sh
 
-qsub 50_dm_atari_kungfumaster_1.sh
-qsub 50_dm_atari_kungfumaster_2.sh
-qsub 50_dm_atari_kungfumaster_3.sh
-qsub 50_dt_atari_kungfumaster_1.sh
-qsub 50_dt_atari_kungfumaster_2.sh
-qsub 50_dt_atari_kungfumaster_3.sh
+qsub 100_dm_atari_hero.sh
+qsub 100_dt_atari_hero.sh
+qsub 100_dm_atari_kungfumaster.sh
+qsub 100_dt_atari_kungfumaster.sh
 ```
 
 ```
