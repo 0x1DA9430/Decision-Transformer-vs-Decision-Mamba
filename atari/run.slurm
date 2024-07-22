@@ -13,7 +13,7 @@
 #SBATCH --mail-user=s2524927@ed.ac.uk
 
 # Load the required modules 
-module load python/3.9.13-gpu
+module load python/3.9.13
 module load nvidia/nvhpc
 
 source /work/tc064/tc064/s2524927/myvenv/bin/activate
