@@ -288,6 +288,7 @@ class Trainer:
 
         self.model.train(False)
         args = Args(self.config.game.lower(), self.config.seed)
+        args.use_action_fusion = self.use_action_fusion
         env = Env(args)
         env.eval()
 
@@ -376,8 +377,7 @@ class Env():
         self.ale.setFloat('repeat_action_probability', 0)  # Disable sticky actions
         self.ale.setInt('frame_skip', 0)
         self.ale.setBool('color_averaging', False)
-
-        # self.ale.loadROM(atari_py.get_game_path(args.game)) # ROM loading must be done after setting options
+        self.use_action_fusion = args.use_action_fusion
 
         # Define a dictionary for games with special ROM names
         special_rom_names = {
@@ -391,12 +391,10 @@ class Env():
 
         # Get the correct ROM name using the dictionary or default to the game name
         rom_name = special_rom_names.get(args.game, args.game)
-
-        # Load the ROM
-        self.ale.loadROM(atari_py.get_game_path(rom_name))
+        self.ale.loadROM(atari_py.get_game_path(rom_name)) # Load the ROM
 
         # Fused action mapping
-        self.fused_action_map = self._create_fused_action_map(args.game)
+        self.fused_action_map = self._create_fused_action_map(args.game) if self.use_action_fusion else None
         
         if self.fused_action_map is not None:
             self.actions = dict([i, e] for i, e in zip(range(len(self.fused_action_map)), self.fused_action_map.keys())) # fused actions
@@ -529,7 +527,7 @@ class Env():
 
         for t in range(4):
             
-            if self.fused_action_map is not None:
+            if self.use_action_fusion and self.fused_action_map is not None:
                 for a in reversed(self.fused_action_map[self.actions.get(action)]):
                     reward += self.ale.act(a) # Use fused actions
             else:
@@ -544,17 +542,6 @@ class Env():
                 break
         observation = frame_buffer.max(0)[0]
         self.state_buffer.append(observation)
-
-        # # only use fused actions
-        # fused_actions = self.fused_action_map[self.actions[action]]
-        # for a in fused_actions:
-        #     reward += self.ale.act(a)
-        #     done = self.ale.game_over()
-        #     if done:
-        #         break
-        
-        # observation = self._get_state()
-        # self.state_buffer.append(observation)
 
         # Detect loss of life as terminal in training mode
         if self.training:
@@ -592,3 +579,4 @@ class Args:
         self.max_episode_length = 108e3
         self.game = game
         self.history_length = 4
+        self.use_action_fusion = False
