@@ -13,7 +13,7 @@
 #SBATCH --mail-user=s2524927@ed.ac.uk
 
 # Load the required modules 
-module load python/3.9.13
+module load module load pytorch/2.2.0-gpu
 module load nvidia/nvhpc
 
 source /work/tc064/tc064/s2524927/myvenv/bin/activate
@@ -28,5 +28,5 @@ EXP_Q=dmamba_breakout
 
 # Run the script with different seeds
 for seed in 123 132 321; do
-    srun python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed
+    srun python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q -$
 done
