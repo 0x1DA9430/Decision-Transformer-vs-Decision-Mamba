@@ -9,11 +9,12 @@
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=tc064-s2524927
 
-# Load the required modules 
-# module load module load pytorch/2.2.0-gpu
+# Load the required modules
+module load python/3.9.13-gpu
+module load module load pytorch/2.2.0-gpu
 module load nvidia/nvhpc
 
-source /work/tc064/tc064/s2524927/myvenv/bin/activate
+# source /work/tc064/tc064/s2524927/myvenv/bin/activate
 
 python -m atari_py.import_roms ROMS > /dev/null 2>&1
 
