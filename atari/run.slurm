@@ -9,11 +9,8 @@
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=tc064-s2524927
 
-#SBATCH --mail-type=BEGIN,END
-#SBATCH --mail-user=s2524927@ed.ac.uk
-
 # Load the required modules 
-module load module load pytorch/2.2.0-gpu
+# module load module load pytorch/2.2.0-gpu
 module load nvidia/nvhpc
 
 source /work/tc064/tc064/s2524927/myvenv/bin/activate
@@ -26,7 +23,9 @@ OUT_DIR=./output/cirrus_exp_test/atari_breakout_cirrus/
 
 EXP_Q=dmamba_breakout
 
-# Run the script with different seeds
-for seed in 123 132 321; do
-    srun python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q -$
-done
+# # Run the script with different seeds
+# for seed in 123 132 321; do
+#     srun python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 10 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q -$
+# done
+
+srun python run_cirrus.py
