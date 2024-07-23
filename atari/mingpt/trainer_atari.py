@@ -263,7 +263,7 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(110)  # 5*max return in training data
                 elif self.config.game == 'MontezumaRevenge':
                     eval_return, eval_time = self.get_returns(0)    # the max return is 0 in training data
-                    raise NotImplementedError()
+                raise NotImplementedError()
 
                 logs = dict()
                 logs['training/train_loss_mean'] = loss
