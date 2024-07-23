@@ -4,28 +4,6 @@ from torch.utils.data import Dataset
 from data_process_atari.fixed_replay_buffer import FixedReplayBuffer
 from tqdm import tqdm
 
-
-# def create_action_fusion_mapping(game):
-#     if game == 'KungFuMaster':
-#         return {
-#             0: 0,  # NOOP
-#             1: 1, 2: 1, 3: 1, 4: 1,  # Directional
-#             5: 2, 6: 2,  # Diagonal
-#             7: 3, 8: 3, 9: 3,  # Fire + Direction
-#             10: 4, 11: 4, 12: 4, 13: 4  # Diagonal + Fire
-#         }
-#     elif game == 'Hero':
-#         return {
-#             0: 0,  # NOOP
-#             1: 1,  # FIRE
-#             2: 2, 3: 2, 4: 2, 5: 2,  # Directional
-#             6: 3, 7: 3, 8: 3, 9: 3,  # Diagonal
-#             10: 4, 11: 4, 12: 4, 13: 4,  # Fire + Direction
-#             14: 5, 15: 5, 16: 5, 17: 5  # Diagonal + Fire
-#         }
-#     else:
-#         return None  # No fusion for other games
-
 """simple fusion"""
 def create_action_fusion_mapping(game):
     if game == 'Hero':
@@ -112,6 +90,7 @@ def create_action_fusion_mapping(game):
 #     else:
 #         return None  # No fusion for other games
 
+"""Probs of each action, used for reverse mapping when action reduction is enabled"""
 def get_action_probs(game):
     if game == 'Hero':
         return {
