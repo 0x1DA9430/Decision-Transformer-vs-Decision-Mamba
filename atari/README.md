@@ -27,6 +27,7 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvi
 ```
 
 #### Or PyTorch and CUDA 12.1
+
 ```bash
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 ```
@@ -46,6 +47,7 @@ pip install causal-conv1d --no-cache-dir
 > `mamba-ssm==2.0.3` and `causal-conv1d==1.2.2.post1`
 
 ### Upgrade charset_normalizer
+
 ```bash
 pip install --upgrade charset_normalizer
 ```
@@ -112,7 +114,9 @@ python train_atari.py \
         --seed 123 \
         --use_action_fusion
 ```
+
 or
+
 ```bash
 python train_atari.py --game 'Hero' --data_dir_prefix ./data/data_atari/ --context_length 10 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 --num_steps 5000 --trajectories_per_buffer 10 --use_action_fusion > ./output/test_experiment.log 2>&1
 ```
@@ -137,7 +141,9 @@ qsub dt_atari_seaquest.sh
 qsub dm_atari_pong.sh
 qsub dt_atari_pong.sh
 ```
+
 Experiments for context length 10
+
 ```bash
 qsub 10_dm_atari_breakout.sh
 qsub 10_dt_atari_breakout.sh
@@ -175,7 +181,9 @@ qsub 10_dt_atari_zaxxon.sh
 qsub 10_dm_atari_jamesbond.sh
 qsub 10_dt_atari_jamesbond.sh
 ```
+
 Experiments for context length 50
+
 ```bash
 qsub 50_dm_atari_breakout.sh
 qsub 50_dt_atari_breakout.sh
@@ -192,7 +200,9 @@ qsub 50_dt_atari_seaquest.sh
 qsub 50_dm_atari_pong.sh
 qsub 50_dt_atari_pong.sh
 ```
+
 Experiments for context length 100
+
 ```bash
 qsub 100_dm_atari_breakout.sh
 qsub 100_dt_atari_breakout.sh
@@ -205,7 +215,7 @@ qsub 100_dm_atari_kungfumaster.sh
 qsub 100_dt_atari_kungfumaster.sh
 ```
 
-```
+```bash
 python analyze_atari_data.py --game Breakout 
 
 python analyze_atari_data.py --game Qbert 
@@ -219,10 +229,7 @@ python analyze_atari_data.py --game Seaquest
 python analyze_atari_data.py --game Pong 
 ```
 
-
-
 > use single eGPU (reset after every boot)
 > `export CUDA_VISIBLE_DEVICES=0`
 
 > Notice: `atari-py` is fully deprecated and no future updates, bug fixes or releases will be made. Please use the official [Arcade Learning Environment](https://github.com/mgbellemare/Arcade-Learning-Environment) Python package (`ale-py`) instead; it is *partially backwards compatible* with `atari-py` code.
-
