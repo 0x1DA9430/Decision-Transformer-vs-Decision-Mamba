@@ -4,7 +4,7 @@ We build our Atari implementation on top of [minGPT](https://github.com/karpathy
 
 ## Dependencies
 
-```
+```bash
 conda create -n [env name] python=3.9
 ```
 
@@ -228,6 +228,12 @@ python analyze_atari_data.py --game Seaquest
 
 python analyze_atari_data.py --game Pong 
 ```
+
+### Use action fusion for Hero/KungFuMaster
+
+add `--use_action_fusion` as flag when run python scripts
+
+### Misc
 
 > use single eGPU (reset after every boot)
 > `export CUDA_VISIBLE_DEVICES=0`
