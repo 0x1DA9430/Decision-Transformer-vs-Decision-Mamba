@@ -261,7 +261,8 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(170)  # 5*max return in training data
                 elif self.config.game == 'Jamesbond':
                     eval_return, eval_time = self.get_returns(110)  # 5*max return in training data
-                else:
+                elif self.config.game == 'MontezumaRevenge':
+                    eval_return, eval_time = self.get_returns(0)    # the max return is 0 in training data
                     raise NotImplementedError()
 
                 logs = dict()
@@ -381,7 +382,7 @@ class Env():
 
         # Define a dictionary for games with special ROM names
         special_rom_names = {
-            # 'montezumarevenge': 'montezuma_revenge',
+            'montezumarevenge': 'montezuma_revenge',
             'kungfumaster': 'kung_fu_master',
             'roadrunner': 'road_runner',
             'battlezone': 'battle_zone',
@@ -408,7 +409,7 @@ class Env():
         self.state_buffer = deque([], maxlen=args.history_length)
         self.training = True  # Consistent with model training mode
     
-    """simple"""
+    """simple fusion"""
     def _create_fused_action_map(self, game):
         if game.lower() == 'hero':
             return {
@@ -438,7 +439,7 @@ class Env():
         else:
             return None  # No reverse mapping for other games
 
-    """1p"""
+    """fuse according to last 1%"""
     # def _create_fused_action_map(self, game):
     #     if game.lower() == 'hero':
     #         return {

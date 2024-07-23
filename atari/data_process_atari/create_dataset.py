@@ -26,7 +26,7 @@ from tqdm import tqdm
 #     else:
 #         return None  # No fusion for other games
 
-"""simple"""
+"""simple fusion"""
 def create_action_fusion_mapping(game):
     if game == 'Hero':
         return {
@@ -69,7 +69,7 @@ def create_action_fusion_mapping(game):
     else:
         return None # No fusion for other games
 
-"""1p"""
+"""fuse according to last 1%"""
 # def create_action_fusion_mapping(game):
 #     if game == 'Hero':
 #         return {
