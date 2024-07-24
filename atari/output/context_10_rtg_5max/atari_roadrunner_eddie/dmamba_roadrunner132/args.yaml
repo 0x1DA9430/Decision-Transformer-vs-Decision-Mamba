@@ -16,7 +16,7 @@ n_layer: 6
 num_buffers: 50
 num_steps: 500000
 output: ./output/context_10_rtg_5max/atari_roadrunner_eddie/
-seed: 132
+seed: 231
 token_mixer: mamba
 trajectories_per_buffer: 10
 use_action_fusion: false

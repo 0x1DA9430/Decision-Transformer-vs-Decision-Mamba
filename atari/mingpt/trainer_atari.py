@@ -263,6 +263,8 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(110)  # 5*max return in training data
                 elif self.config.game == 'MontezumaRevenge':
                     eval_return, eval_time = self.get_returns(0)    # the max return is 0 in training data
+                elif self.config.game == 'MsPacman':
+                    eval_return, eval_time = self.get_returns(2350) # 5*max return in training data
                 else:
                     raise NotImplementedError()
 
@@ -389,6 +391,7 @@ class Env():
             'battlezone': 'battle_zone',
             'bankheist': 'bank_heist',
             'fishingderby': 'fishing_derby',
+            'mspacman': 'ms_pacman',
         }
 
         # Get the correct ROM name using the dictionary or default to the game name

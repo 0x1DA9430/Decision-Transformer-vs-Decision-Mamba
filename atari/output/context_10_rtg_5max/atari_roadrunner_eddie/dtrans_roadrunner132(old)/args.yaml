@@ -4,7 +4,7 @@ conv_proj: false
 conv_window_size: 6
 data_dir_prefix: ./data/data_atari/
 epochs: 5
-experiment: dmamba_roadrunner
+experiment: dtrans_roadrunner
 game: RoadRunner
 learning_rate: 0.0006
 log_to_mlflow: false
@@ -16,7 +16,7 @@ n_layer: 6
 num_buffers: 50
 num_steps: 500000
 output: ./output/context_10_rtg_5max/atari_roadrunner_eddie/
-seed: 231
-token_mixer: mamba
+seed: 132
+token_mixer: attn
 trajectories_per_buffer: 10
 use_action_fusion: false
