@@ -1,0 +1,66 @@
+CUDA_VISIBLE_DEVICES: 
+CUDA_VISIBLE_DEVICES: 1
+Warning: This module should only be used with the A100 GPU nodes.  If you are using the K80 or Titan-X GPUs please use an older cuda version.
+WARNING: If you use conda to create environments, your home directory may fill up. Please see our documentation at 
+ https://www.wiki.ed.ac.uk/display/ResearchServices/Anaconda for advice.
+2024-07-24 01:04:31.062752: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-07-24 01:04:31.657938: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-07-24 01:04:36.090718: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+loading trajectories from buffers
+  0%|          | 0/500000 [00:00<?, ?it/s] 19%|█▊        | 93155/500000 [01:06<04:52, 1391.67it/s] 25%|██▌       | 126144/500000 [01:19<04:28, 1391.67it/s] 43%|████▎     | 213356/500000 [02:06<02:45, 1735.13it/s] 54%|█████▍    | 268974/500000 [02:19<02:13, 1735.13it/s] 77%|███████▋  | 384063/500000 [03:14<00:54, 2117.84it/s] 88%|████████▊ | 437808/500000 [03:30<00:29, 2117.84it/s]518309it [04:15, 2149.32it/s]                            565133it [04:30, 2149.32it/s]576332it [04:31, 2120.76it/s]
+07/24/2024 01:13:31 - INFO - mingpt.model_atari - number of parameters: 4965120
+this buffer has 11198 loaded transitions and there are now 500000 transitions total divided into 201 trajectories
+max rtg is 0
+max timestep is 27002
+epoch 0
+  0%|          | 0/1953 [00:00<?, ?it/s]  1%|          | 16/1953 [00:27<54:44,  1.70s/it]
+Traceback (most recent call last):
+  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 212, in <module>
+    main()
+  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 191, in main
+    trainer.train()
+  File "/exports/eddie/scratch/s2524927/msc-project/atari/mingpt/trainer_atari.py", line 214, in train
+    loss = run_epoch('train', epoch_num=epoch, epoch_losses=epoch_losses, epoch_lrs=epoch_lrs)
+  File "/exports/eddie/scratch/s2524927/msc-project/atari/mingpt/trainer_atari.py", line 152, in run_epoch
+    for it, (x, y, r, t) in pbar:
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1346, in _next_data
+    return self._process_data(data)
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1372, in _process_data
+    data.reraise()
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/_utils.py", line 705, in reraise
+    raise exception
+RuntimeError: Caught RuntimeError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/worker.py", line 308, in _worker_loop
+    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/fetch.py", line 54, in fetch
+    return self.collate_fn(data)
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 316, in default_collate
+    return collate(batch, collate_fn_map=default_collate_fn_map)
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 173, in collate
+    return [collate(samples, collate_fn_map=collate_fn_map) for samples in transposed]  # Backwards compatibility.
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 173, in <listcomp>
+    return [collate(samples, collate_fn_map=collate_fn_map) for samples in transposed]  # Backwards compatibility.
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 141, in collate
+    return collate_fn_map[elem_type](batch, collate_fn_map=collate_fn_map)
+  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 212, in collate_tensor_fn
+    out = elem.new(storage).resize_(len(batch), *list(elem.size()))
+RuntimeError: Trying to resize storage that is not resizable
+
+2024-07-24 01:14:18.287684: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-07-24 01:14:18.917041: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-07-24 01:14:22.906648: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+loading trajectories from buffers
+  0%|          | 0/500000 [00:00<?, ?it/s] 21%|██        | 103643/500000 [01:08<04:21, 1517.46it/s] 28%|██▊       | 140656/500000 [01:20<03:56, 1517.46it/s] 45%|████▌     | 225210/500000 [02:08<02:32, 1798.87it/s] 49%|████▉     | 244255/500000 [02:20<02:22, 1798.87it/s] 70%|██████▉   | 347923/500000 [03:08<01:19, 1907.92it/s] 80%|███████▉  | 399626/500000 [03:20<00:52, 1907.92it/s]536126it [04:08, 2383.96it/s]                            553585it [04:10, 2206.59it/s]
+07/24/2024 01:23:30 - INFO - mingpt.model_atari - number of parameters: 4965120
+this buffer has 19187 loaded transitions and there are now 500000 transitions total divided into 196 trajectories
+max rtg is 0
+max timestep is 27002
+epoch 0
+  0%|          | 0/1953 [00:00<?, ?it/s]  2%|▏         | 39/1953 [01:00<49:32,  1.55s/it]  2%|▏         | 39/1953 [01:19<49:32,  1.55s/it]  4%|▍         | 81/1953 [02:01<46:38,  1.49s/it]  4%|▍         | 81/1953 [02:19<46:38,  1.49s/it]  6%|▋         | 123/1953 [03:02<45:03,  1.48s/it]  6%|▋         | 123/1953 [03:19<45:03,  1.48s/it]  8%|▊         | 165/1953 [04:04<43:50,  1.47s/it]  8%|▊         | 165/1953 [04:19<43:50,  1.47s/it] 11%|█         | 206/1953 [05:04<42:47,  1.47s/it] 11%|█         | 206/1953 [05:19<42:47,  1.47s/it] 13%|█▎        | 247/1953 [06:04<41:46,  1.47s/it] 13%|█▎        | 247/1953 [06:19<41:46,  1.47s/it] 15%|█▍        | 288/1953 [07:04<40:45,  1.47s/it] 15%|█▍        | 288/1953 [07:19<40:45,  1.47s/it] 17%|█▋        | 329/1953 [08:05<39:45,  1.47s/it] 17%|█▋        | 329/1953 [08:19<39:45,  1.47s/it] 19%|█▉        | 370/1953 [09:05<38:44,  1.47s/it] 19%|█▉        | 370/1953 [09:19<38:44,  1.47s/it] 21%|██        | 411/1953 [10:05<37:44,  1.47s/it] 21%|██        | 411/1953 [10:19<37:44,  1.47s/it]
