@@ -1,98 +1,0 @@
-CUDA_VISIBLE_DEVICES: 
-CUDA_VISIBLE_DEVICES: 1
-Warning: This module should only be used with the A100 GPU nodes.  If you are using the K80 or Titan-X GPUs please use an older cuda version.
-WARNING: If you use conda to create environments, your home directory may fill up. Please see our documentation at 
- https://www.wiki.ed.ac.uk/display/ResearchServices/Anaconda for advice.
-2024-07-23 17:12:58.648888: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2024-07-23 17:12:59.262244: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-07-23 17:13:03.207904: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-loading trajectories from buffers
-  0%|          | 0/500000 [00:00<?, ?it/s] 19%|█▊        | 93155/500000 [01:06<04:51, 1397.79it/s] 26%|██▌       | 127840/500000 [01:20<04:26, 1397.79it/s] 43%|████▎     | 214618/500000 [02:06<02:43, 1750.30it/s] 54%|█████▍    | 268974/500000 [02:20<02:11, 1750.30it/s] 77%|███████▋  | 384063/500000 [03:13<00:54, 2118.31it/s] 88%|████████▊ | 440561/500000 [03:30<00:28, 2118.31it/s]518309it [04:14, 2151.27it/s]                            567287it [04:30, 2151.27it/s]576332it [04:31, 2124.21it/s]
-07/23/2024 17:21:48 - INFO - mingpt.model_atari - number of parameters: 4662528
-this buffer has 11198 loaded transitions and there are now 500000 transitions total divided into 201 trajectories
-max rtg is 0
-max timestep is 27002
-epoch 0
-  0%|          | 0/1953 [00:00<?, ?it/s]  2%|▏         | 41/1953 [01:01<47:41,  1.50s/it]  2%|▏         | 41/1953 [01:13<47:41,  1.50s/it]  3%|▎         | 59/1953 [01:26<46:11,  1.46s/it]
-Traceback (most recent call last):
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 212, in <module>
-    main()
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 191, in main
-    trainer.train()
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/mingpt/trainer_atari.py", line 214, in train
-    loss = run_epoch('train', epoch_num=epoch, epoch_losses=epoch_losses, epoch_lrs=epoch_lrs)
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/mingpt/trainer_atari.py", line 152, in run_epoch
-    for it, (x, y, r, t) in pbar:
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/tqdm/std.py", line 1181, in __iter__
-    for obj in iterable:
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 631, in __next__
-    data = self._next_data()
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1346, in _next_data
-    return self._process_data(data)
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1372, in _process_data
-    data.reraise()
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/_utils.py", line 705, in reraise
-    raise exception
-RuntimeError: Caught RuntimeError in DataLoader worker process 0.
-Original Traceback (most recent call last):
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/worker.py", line 308, in _worker_loop
-    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/fetch.py", line 54, in fetch
-    return self.collate_fn(data)
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 316, in default_collate
-    return collate(batch, collate_fn_map=default_collate_fn_map)
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 173, in collate
-    return [collate(samples, collate_fn_map=collate_fn_map) for samples in transposed]  # Backwards compatibility.
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 173, in <listcomp>
-    return [collate(samples, collate_fn_map=collate_fn_map) for samples in transposed]  # Backwards compatibility.
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 141, in collate
-    return collate_fn_map[elem_type](batch, collate_fn_map=collate_fn_map)
-  File "/exports/eddie/scratch/s2524927/anaconda/envs/ssm/lib/python3.9/site-packages/torch/utils/data/_utils/collate.py", line 212, in collate_tensor_fn
-    out = elem.new(storage).resize_(len(batch), *list(elem.size()))
-RuntimeError: Trying to resize storage that is not resizable
-
-2024-07-23 17:23:37.795482: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2024-07-23 17:23:37.870955: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-07-23 17:23:41.370691: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-loading trajectories from buffers
-  0%|          | 0/500000 [00:00<?, ?it/s] 21%|██        | 103643/500000 [01:07<04:18, 1533.18it/s] 28%|██▊       | 140656/500000 [01:20<03:54, 1533.18it/s] 45%|████▌     | 225256/500000 [02:07<02:31, 1809.19it/s] 49%|████▉     | 244255/500000 [02:20<02:21, 1809.19it/s] 70%|███████   | 351016/500000 [03:07<01:16, 1936.55it/s] 80%|███████▉  | 399626/500000 [03:20<00:51, 1936.55it/s]541703it [04:07, 2418.44it/s]                            553585it [04:09, 2220.99it/s]
-07/23/2024 17:32:35 - INFO - mingpt.model_atari - number of parameters: 4662528
-this buffer has 19187 loaded transitions and there are now 500000 transitions total divided into 196 trajectories
-max rtg is 0
-max timestep is 27002
-epoch 0
-  0%|          | 0/1953 [00:00<?, ?it/s]  2%|▏         | 37/1953 [01:00<52:28,  1.64s/it]  2%|▏         | 37/1953 [01:14<52:28,  1.64s/it]  4%|▍         | 75/1953 [02:00<50:19,  1.61s/it]  4%|▍         | 75/1953 [02:14<50:19,  1.61s/it]  6%|▌         | 114/1953 [03:01<48:32,  1.58s/it]  6%|▌         | 114/1953 [03:14<48:32,  1.58s/it]  8%|▊         | 153/1953 [04:02<47:19,  1.58s/it]  8%|▊         | 153/1953 [04:14<47:19,  1.58s/it] 10%|▉         | 192/1953 [05:03<46:06,  1.57s/it] 10%|▉         | 192/1953 [05:14<46:06,  1.57s/it] 12%|█▏        | 231/1953 [06:04<45:02,  1.57s/it] 12%|█▏        | 231/1953 [06:24<45:02,  1.57s/it] 14%|█▍        | 270/1953 [07:05<43:59,  1.57s/it] 14%|█▍        | 270/1953 [07:24<43:59,  1.57s/it] 16%|█▌        | 309/1953 [08:06<42:51,  1.56s/it] 16%|█▌        | 309/1953 [08:24<42:51,  1.56s/it] 18%|█▊        | 348/1953 [09:07<41:50,  1.56s/it] 18%|█▊        | 348/1953 [09:24<41:50,  1.56s/it] 20%|█▉        | 387/1953 [10:08<40:50,  1.56s/it] 20%|█▉        | 387/1953 [10:24<40:50,  1.56s/it] 22%|██▏       | 426/1953 [11:10<39:54,  1.57s/it] 22%|██▏       | 426/1953 [11:24<39:54,  1.57s/it] 24%|██▍       | 465/1953 [12:11<38:51,  1.57s/it] 24%|██▍       | 465/1953 [12:24<38:51,  1.57s/it] 26%|██▌       | 504/1953 [13:12<37:49,  1.57s/it] 26%|██▌       | 504/1953 [13:24<37:49,  1.57s/it] 28%|██▊       | 543/1953 [14:13<36:50,  1.57s/it] 28%|██▊       | 543/1953 [14:24<36:50,  1.57s/it] 30%|██▉       | 582/1953 [15:14<35:46,  1.57s/it] 30%|██▉       | 582/1953 [15:24<35:46,  1.57s/it] 32%|███▏      | 621/1953 [16:15<34:46,  1.57s/it] 32%|███▏      | 621/1953 [16:34<34:46,  1.57s/it] 34%|███▍      | 660/1953 [17:16<33:42,  1.56s/it] 34%|███▍      | 660/1953 [17:34<33:42,  1.56s/it] 36%|███▌      | 699/1953 [18:17<32:41,  1.56s/it] 36%|███▌      | 699/1953 [18:34<32:41,  1.56s/it] 38%|███▊      | 738/1953 [19:18<31:42,  1.57s/it] 38%|███▊      | 738/1953 [19:34<31:42,  1.57s/it] 40%|███▉      | 777/1953 [20:18<30:37,  1.56s/it] 40%|███▉      | 777/1953 [20:34<30:37,  1.56s/it] 42%|████▏     | 816/1953 [21:19<29:37,  1.56s/it] 42%|████▏     | 816/1953 [21:34<29:37,  1.56s/it] 44%|████▍     | 855/1953 [22:21<28:38,  1.57s/it] 44%|████▍     | 855/1953 [22:34<28:38,  1.57s/it] 46%|████▌     | 894/1953 [23:22<27:35,  1.56s/it] 46%|████▌     | 894/1953 [23:34<27:35,  1.56s/it] 48%|████▊     | 933/1953 [24:23<26:35,  1.56s/it] 48%|████▊     | 933/1953 [24:34<26:35,  1.56s/it] 50%|████▉     | 972/1953 [25:24<25:34,  1.56s/it] 50%|████▉     | 972/1953 [25:34<25:34,  1.56s/it] 52%|█████▏    | 1011/1953 [26:25<24:34,  1.57s/it] 52%|█████▏    | 1011/1953 [26:44<24:34,  1.57s/it] 54%|█████▍    | 1050/1953 [27:26<23:34,  1.57s/it] 54%|█████▍    | 1050/1953 [27:44<23:34,  1.57s/it] 56%|█████▌    | 1089/1953 [28:27<22:30,  1.56s/it] 56%|█████▌    | 1089/1953 [28:44<22:30,  1.56s/it] 58%|█████▊    | 1128/1953 [29:28<21:30,  1.56s/it] 58%|█████▊    | 1128/1953 [29:44<21:30,  1.56s/it] 60%|█████▉    | 1167/1953 [30:29<20:29,  1.56s/it] 60%|█████▉    | 1167/1953 [30:44<20:29,  1.56s/it] 62%|██████▏   | 1206/1953 [31:30<19:27,  1.56s/it] 62%|██████▏   | 1206/1953 [31:44<19:27,  1.56s/it] 64%|██████▎   | 1245/1953 [32:31<18:27,  1.56s/it] 64%|██████▎   | 1245/1953 [32:44<18:27,  1.56s/it] 66%|██████▌   | 1284/1953 [33:32<17:25,  1.56s/it] 66%|██████▌   | 1284/1953 [33:44<17:25,  1.56s/it] 68%|██████▊   | 1323/1953 [34:32<16:24,  1.56s/it] 68%|██████▊   | 1323/1953 [34:44<16:24,  1.56s/it] 70%|██████▉   | 1362/1953 [35:34<15:24,  1.56s/it] 70%|██████▉   | 1362/1953 [35:44<15:24,  1.56s/it] 72%|███████▏  | 1401/1953 [36:35<14:23,  1.57s/it] 72%|███████▏  | 1401/1953 [36:54<14:23,  1.57s/it] 74%|███████▎  | 1440/1953 [37:36<13:22,  1.56s/it] 74%|███████▎  | 1440/1953 [37:54<13:22,  1.56s/it] 76%|███████▌  | 1479/1953 [38:37<12:22,  1.57s/it] 76%|███████▌  | 1479/1953 [38:54<12:22,  1.57s/it] 78%|███████▊  | 1518/1953 [39:38<11:20,  1.56s/it] 78%|███████▊  | 1518/1953 [39:54<11:20,  1.56s/it] 80%|███████▉  | 1557/1953 [40:39<10:19,  1.56s/it] 80%|███████▉  | 1557/1953 [40:54<10:19,  1.56s/it] 82%|████████▏ | 1596/1953 [41:40<09:19,  1.57s/it] 82%|████████▏ | 1596/1953 [41:54<09:19,  1.57s/it] 84%|████████▎ | 1635/1953 [42:41<08:17,  1.56s/it] 84%|████████▎ | 1635/1953 [42:54<08:17,  1.56s/it] 86%|████████▌ | 1674/1953 [43:42<07:16,  1.56s/it] 86%|████████▌ | 1674/1953 [43:54<07:16,  1.56s/it] 88%|████████▊ | 1713/1953 [44:43<06:15,  1.56s/it] 88%|████████▊ | 1713/1953 [44:54<06:15,  1.56s/it] 90%|████████▉ | 1752/1953 [45:44<05:14,  1.56s/it] 90%|████████▉ | 1752/1953 [45:54<05:14,  1.56s/it] 92%|█████████▏| 1791/1953 [46:45<04:13,  1.56s/it] 92%|█████████▏| 1791/1953 [47:04<04:13,  1.56s/it] 94%|█████████▎| 1830/1953 [47:46<03:12,  1.56s/it] 94%|█████████▎| 1830/1953 [48:04<03:12,  1.56s/it] 96%|█████████▌| 1869/1953 [48:47<02:11,  1.56s/it] 96%|█████████▌| 1869/1953 [49:04<02:11,  1.56s/it] 98%|█████████▊| 1908/1953 [49:48<01:10,  1.57s/it] 98%|█████████▊| 1908/1953 [50:04<01:10,  1.57s/it]100%|█████████▉| 1947/1953 [50:49<00:09,  1.56s/it]100%|██████████| 1953/1953 [50:58<00:00,  1.57s/it]
-07/23/2024 18:23:42 - INFO - mingpt.trainer_atari - train loss: 0.889521
-target return: 0, eval return: 0
-Traceback (most recent call last):
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 212, in <module>
-    main()
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 191, in main
-    trainer.train()
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/mingpt/trainer_atari.py", line 266, in train
-    raise NotImplementedError()
-NotImplementedError
-2024-07-23 18:52:39.973359: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2024-07-23 18:52:40.049070: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-07-23 18:52:43.858292: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-loading trajectories from buffers
-  0%|          | 0/500000 [00:00<?, ?it/s] 34%|███▍      | 172123/500000 [01:00<01:54, 2868.71it/s] 41%|████      | 205036/500000 [01:10<01:42, 2868.71it/s] 60%|█████▉    | 297561/500000 [02:00<01:23, 2411.02it/s] 67%|██████▋   | 333955/500000 [02:10<01:08, 2411.02it/s] 85%|████████▍ | 423948/500000 [03:08<00:35, 2134.72it/s] 89%|████████▉ | 446990/500000 [03:20<00:24, 2134.72it/s]600000it [03:58, 2513.84it/s]                            
-07/23/2024 19:02:05 - INFO - mingpt.model_atari - number of parameters: 4662528
-this buffer has 85986 loaded transitions and there are now 500000 transitions total divided into 178 trajectories
-max rtg is 0
-max timestep is 27002
-epoch 0
-  0%|          | 0/1953 [00:00<?, ?it/s]  2%|▏         | 42/1953 [01:00<46:04,  1.45s/it]  2%|▏         | 42/1953 [01:13<46:04,  1.45s/it]  4%|▍         | 86/1953 [02:00<43:32,  1.40s/it]  4%|▍         | 86/1953 [02:13<43:32,  1.40s/it]  7%|▋         | 131/1953 [03:02<41:58,  1.38s/it]  7%|▋         | 131/1953 [03:13<41:58,  1.38s/it]  9%|▉         | 176/1953 [04:03<40:40,  1.37s/it]  9%|▉         | 176/1953 [04:13<40:40,  1.37s/it] 11%|█▏        | 221/1953 [05:04<39:31,  1.37s/it] 11%|█▏        | 221/1953 [05:23<39:31,  1.37s/it] 14%|█▎        | 266/1953 [06:06<38:25,  1.37s/it] 14%|█▎        | 266/1953 [06:23<38:25,  1.37s/it] 16%|█▌        | 311/1953 [07:07<37:20,  1.36s/it] 16%|█▌        | 311/1953 [07:23<37:20,  1.36s/it] 18%|█▊        | 356/1953 [08:08<36:16,  1.36s/it] 18%|█▊        | 356/1953 [08:23<36:16,  1.36s/it] 20%|██        | 400/1953 [09:08<35:18,  1.36s/it] 20%|██        | 400/1953 [09:23<35:18,  1.36s/it] 23%|██▎       | 445/1953 [10:09<34:15,  1.36s/it] 23%|██▎       | 445/1953 [10:23<34:15,  1.36s/it] 25%|██▌       | 490/1953 [11:11<33:13,  1.36s/it] 25%|██▌       | 490/1953 [11:23<33:13,  1.36s/it] 27%|██▋       | 535/1953 [12:12<32:11,  1.36s/it] 27%|██▋       | 535/1953 [12:23<32:11,  1.36s/it] 30%|██▉       | 580/1953 [13:13<31:09,  1.36s/it] 30%|██▉       | 580/1953 [13:23<31:09,  1.36s/it] 32%|███▏      | 625/1953 [14:14<30:08,  1.36s/it] 32%|███▏      | 625/1953 [14:33<30:08,  1.36s/it] 34%|███▍      | 670/1953 [15:16<29:07,  1.36s/it] 34%|███▍      | 670/1953 [15:33<29:07,  1.36s/it] 37%|███▋      | 715/1953 [16:17<28:06,  1.36s/it] 37%|███▋      | 715/1953 [16:33<28:06,  1.36s/it] 39%|███▉      | 760/1953 [17:18<27:04,  1.36s/it] 39%|███▉      | 760/1953 [17:33<27:04,  1.36s/it] 41%|████      | 805/1953 [18:19<26:02,  1.36s/it] 41%|████      | 805/1953 [18:33<26:02,  1.36s/it] 44%|████▎     | 850/1953 [19:21<25:01,  1.36s/it] 44%|████▎     | 850/1953 [19:33<25:01,  1.36s/it] 46%|████▌     | 895/1953 [20:22<24:00,  1.36s/it] 46%|████▌     | 895/1953 [20:33<24:00,  1.36s/it] 48%|████▊     | 940/1953 [21:23<22:59,  1.36s/it] 48%|████▊     | 940/1953 [21:43<22:59,  1.36s/it] 50%|█████     | 985/1953 [22:25<21:58,  1.36s/it] 50%|█████     | 985/1953 [22:43<21:58,  1.36s/it] 53%|█████▎    | 1030/1953 [23:26<20:57,  1.36s/it] 53%|█████▎    | 1030/1953 [23:43<20:57,  1.36s/it] 55%|█████▍    | 1074/1953 [24:26<19:57,  1.36s/it] 55%|█████▍    | 1074/1953 [24:43<19:57,  1.36s/it] 57%|█████▋    | 1119/1953 [25:27<18:56,  1.36s/it] 57%|█████▋    | 1119/1953 [25:43<18:56,  1.36s/it] 60%|█████▉    | 1163/1953 [26:27<17:56,  1.36s/it] 60%|█████▉    | 1163/1953 [26:43<17:56,  1.36s/it] 62%|██████▏   | 1208/1953 [27:28<16:55,  1.36s/it] 62%|██████▏   | 1208/1953 [27:43<16:55,  1.36s/it] 64%|██████▍   | 1252/1953 [28:28<15:55,  1.36s/it] 64%|██████▍   | 1252/1953 [28:43<15:55,  1.36s/it] 66%|██████▋   | 1297/1953 [29:30<14:53,  1.36s/it] 66%|██████▋   | 1297/1953 [29:43<14:53,  1.36s/it] 69%|██████▊   | 1342/1953 [30:31<13:52,  1.36s/it] 69%|██████▊   | 1342/1953 [30:43<13:52,  1.36s/it] 71%|███████   | 1386/1953 [31:31<12:53,  1.36s/it] 71%|███████   | 1386/1953 [31:43<12:53,  1.36s/it] 73%|███████▎  | 1431/1953 [32:32<11:51,  1.36s/it] 73%|███████▎  | 1431/1953 [32:43<11:51,  1.36s/it] 76%|███████▌  | 1476/1953 [33:34<10:49,  1.36s/it] 76%|███████▌  | 1476/1953 [33:53<10:49,  1.36s/it] 78%|███████▊  | 1521/1953 [34:35<09:47,  1.36s/it] 78%|███████▊  | 1521/1953 [34:53<09:47,  1.36s/it] 80%|████████  | 1566/1953 [35:35<08:44,  1.36s/it] 80%|████████  | 1566/1953 [35:53<08:44,  1.36s/it] 82%|████████▏ | 1611/1953 [36:36<07:42,  1.35s/it] 82%|████████▏ | 1611/1953 [36:53<07:42,  1.35s/it] 85%|████████▍ | 1656/1953 [37:37<06:41,  1.35s/it] 85%|████████▍ | 1656/1953 [37:53<06:41,  1.35s/it] 87%|████████▋ | 1701/1953 [38:37<05:40,  1.35s/it] 87%|████████▋ | 1701/1953 [38:53<05:40,  1.35s/it] 89%|████████▉ | 1746/1953 [39:38<04:39,  1.35s/it] 89%|████████▉ | 1746/1953 [39:53<04:39,  1.35s/it] 92%|█████████▏| 1791/1953 [40:38<03:38,  1.35s/it] 92%|█████████▏| 1791/1953 [40:53<03:38,  1.35s/it] 94%|█████████▍| 1836/1953 [41:39<02:37,  1.35s/it] 94%|█████████▍| 1836/1953 [41:53<02:37,  1.35s/it] 96%|█████████▋| 1881/1953 [42:39<01:36,  1.35s/it] 96%|█████████▋| 1881/1953 [42:53<01:36,  1.35s/it] 99%|█████████▊| 1926/1953 [43:40<00:36,  1.35s/it] 99%|█████████▊| 1926/1953 [43:53<00:36,  1.35s/it]100%|██████████| 1953/1953 [44:16<00:00,  1.36s/it]
-07/23/2024 19:46:33 - INFO - mingpt.trainer_atari - train loss: 0.967198
-target return: 0, eval return: 0
-Traceback (most recent call last):
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 212, in <module>
-    main()
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/train_atari.py", line 191, in main
-    trainer.train()
-  File "/exports/eddie/scratch/s2524927/msc-project/atari/mingpt/trainer_atari.py", line 266, in train
-    raise NotImplementedError()
-NotImplementedError
