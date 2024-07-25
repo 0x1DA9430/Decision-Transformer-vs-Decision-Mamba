@@ -1,0 +1,46 @@
+Analyzing data for game: FishingDerby
+Total steps analyzed: 5000000
+Number of trajectories: 2816
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 5000000
+Unique actions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+Number of unique actions: 18
+
+Action frequency breakdown:
+Action 0: 219823 times (4.40%)
+Action 1: 305334 times (6.11%)
+Action 2: 206903 times (4.14%)
+Action 3: 136905 times (2.74%)
+Action 4: 297811 times (5.96%)
+Action 5: 340494 times (6.81%)
+Action 6: 145211 times (2.90%)
+Action 7: 277560 times (5.55%)
+Action 8: 162944 times (3.26%)
+Action 9: 485485 times (9.71%)
+Action 10: 246644 times (4.93%)
+Action 11: 140395 times (2.81%)
+Action 12: 385301 times (7.71%)
+Action 13: 420225 times (8.40%)
+Action 14: 143705 times (2.87%)
+Action 15: 306088 times (6.12%)
+Action 16: 172759 times (3.46%)
+Action 17: 606413 times (12.13%)
+
+Action distribution entropy: 4.0254
+Max possible entropy: 4.1699
+Normalized entropy: 0.9654
+
+Reward sequence analysis:
+Average trajectory length: 1775.02
+Average total reward per trajectory: -3.23
+Maximum return: 61.00
+Average steps until first non-zero reward: 44.58
+
+Frame complexity analysis:
+entropy: 2.2025 +/- 0.0148
+edge_ratio: 0.1481 +/- 0.0025
+compression_ratio: 8.0103 +/- 0.5543
+ssim: 0.9497 +/- 0.0072
+feature_count: 23.3429 +/- 3.1123
