@@ -1,0 +1,34 @@
+Analyzing data for game: SpaceInvaders
+Total steps analyzed: 5000000
+Number of trajectories: 2746
+Visualizing a random game state:
+
+Action space analysis:
+Total actions: 5000000
+Unique actions: [0, 1, 2, 3, 4, 5]
+Number of unique actions: 6
+
+Action frequency breakdown:
+Action 0: 696811 times (13.94%)
+Action 1: 886351 times (17.73%)
+Action 2: 840796 times (16.82%)
+Action 3: 835380 times (16.71%)
+Action 4: 875366 times (17.51%)
+Action 5: 865296 times (17.31%)
+
+Action distribution entropy: 2.5806
+Max possible entropy: 2.5850
+Normalized entropy: 0.9983
+
+Reward sequence analysis:
+Average trajectory length: 1820.79
+Average total reward per trajectory: 92.96
+Maximum return: 288.00
+Average steps until first non-zero reward: 52.07
+
+Frame complexity analysis:
+entropy: 0.8417 +/- 0.0119
+edge_ratio: 0.0620 +/- 0.0010
+compression_ratio: 13.3003 +/- 0.5020
+ssim: 0.9668 +/- 0.0191
+feature_count: 65.8470 +/- 4.6871
