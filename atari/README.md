@@ -177,7 +177,6 @@ qsub 10_dt_atari_zaxxon.sh
 
 qsub 10_dm_atari_mspacman.sh
 qsub 10_dt_atari_mspacman.sh
-
 qsub 10_dm_atari_spaceinvaders.sh
 qsub 10_dt_atari_spaceinvaders.sh
 ```
