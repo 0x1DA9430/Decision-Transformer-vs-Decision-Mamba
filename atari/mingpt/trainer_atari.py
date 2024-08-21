@@ -261,8 +261,6 @@ class Trainer:
                     eval_return, eval_time = self.get_returns(170)  # 5*max return in training data
                 elif self.config.game == 'Jamesbond':
                     eval_return, eval_time = self.get_returns(110)  # 5*max return in training data
-                elif self.config.game == 'MontezumaRevenge':
-                    eval_return, eval_time = self.get_returns(0)    # the max return is 0 in training data
                 elif self.config.game == 'MsPacman':
                     eval_return, eval_time = self.get_returns(2350) # 5*max return in training data
                 elif self.config.game == 'SpaceInvaders':
