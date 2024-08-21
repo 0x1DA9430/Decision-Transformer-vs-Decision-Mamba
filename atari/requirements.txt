@@ -9,4 +9,8 @@ atari-py==0.2.9
 ale-py
 einops
 git+https://github.com/google/dopamine.git
-wandb
+shap
+matplotlib
+scikit-learn
+seaborn
+pandas
