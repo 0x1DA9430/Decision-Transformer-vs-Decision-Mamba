@@ -4,7 +4,7 @@
 #$ -N dm_50_breakout
 #$ -cwd
 
-#$ -l h_rt=18:00:00
+#$ -l h_rt=10:00:00
 
 # Request one GPU in the gpu queue:
 #$ -q gpu
@@ -32,4 +32,4 @@ DATA_DIR=./data/data_atari/
 OUT_DIR=./output/context_50_rtg_5max/atari_breakout_eddie/
 
 EXP_Q=dmamba_breakout
-for seed in 231 312; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
+for seed in 312; do python train_atari.py --game 'Breakout' --data_dir_prefix $DATA_DIR --context_length 50 --token_mixer 'mamba' --output $OUT_DIR --experiment $EXP_Q --seed $seed; done
