@@ -49,20 +49,28 @@ pip install --upgrade charset_normalizer
 
 ### Download dqn_replay
 
-Create a directory for dataset and download the datasets using [gsutil](https://cloud.google.com/storage/docs/gsutil_install#install) (you may install gsutil first).
+Create a directory for dataset 
 
 ```bash
-mkdir [DIRECTORY] # create a directory for the dataset
+mkdir [DIRECTORY]
+```
+> or use the existing directory /data/data_atari
+
+Download the datasets using [gsutil](https://cloud.google.com/storage/docs/gsutil_install#install) (you may install gsutil first).
+
+
+```bash
 gsutil -m cp -R gs://atari-replay-datasets/dqn/[GAME_NAME] [DIRECTORY]
 ```
 
 e.g.
 
 ```bash
-gsutil -m cp -R gs://atari-replay-datasets/dqn/Breakout /msc-project/atari/data/data_atari
+gsutil -m cp -R gs://atari-replay-datasets/dqn/Breakout ./msc-project/atari/data/data_atari
 ```
 
-### Download ROMS (optional, as the ROMS are already included in the repository)
+### Download ROMS 
+**(Optional, as the ROMS are already included in the repository)**
 
 ```bash
 wget http://www.atarimania.com/roms/Roms.rar
@@ -77,7 +85,7 @@ python -m atari_py.import_roms ROMS
 
 ## Run a Minimal Experiment
 
-### Template
+#### Command Template
 
 ```bash
 python train_atari.py \
@@ -228,7 +236,7 @@ e.g.
 python analyze_atari_data.py --game Breakout 
 ```
 
-### Use action fusion for Hero/KungFuMaster
+### Use action fusion for game Hero/KungFuMaster
 
 add `--use_action_fusion` as flag at the end of the command
 
