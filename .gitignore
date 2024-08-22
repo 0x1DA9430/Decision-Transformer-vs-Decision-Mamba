@@ -14,3 +14,6 @@ __pycache__/
 *.cpt
 
 test_experiment*/
+
+# ignore the logs
+*.log

@@ -1,9 +1,9 @@
 # Transformer vs. Mamba: Analysing the Complexity of Sequential Decision-Making in Atari Games Environments
 
+>This project is based on previous work: [Decision Transformer (DT)](https://github.com/kzl/decision-transformer) and [Decision Mamba (DM)](https://github.com/Toshihiro-Ota/decision-mamba).
+
 Author: Ke Yan
 Email: s2524927@ed.ac.uk (university); yank.fitzgerald@gmail.com (personal)
-
-## Project Overview
 
 
 ## Dependencies
@@ -76,8 +76,6 @@ gsutil -m cp -R gs://atari-replay-datasets/dqn/Breakout ./msc-project/atari/data
 ```
 
 ### Download ROMS 
-**(Optional, as the ROMS are already included in the repository)**
-
 ```bash
 wget http://www.atarimania.com/roms/Roms.rar
 unrar x Roms.rar
@@ -131,17 +129,9 @@ python train_atari.py \
         --seed 123
 ```
 
-### Run game complexity analysis
+## Run a Standard Experiment
 
-```bash
-python analyze_atari_data.py --game [GAME NAME] 
-```
-
-e.g.
-
-```bash
-python analyze_atari_data.py --game Breakout 
-```
+- `run.sh` is a script to run the standard experiments for Breakout, with 3 random seeds, context length 10.
 
 ### Use action fusion for game Hero/KungFuMaster
 
@@ -167,3 +157,32 @@ python train_atari.py \
         --seed 123 \
         --use_action_fusion
 ```
+
+
+## Run complexity analysis for the games in the dataset
+
+Random sampling the data for analysis:
+
+```bash
+python dataset_analyze_rand.py --game [GAME NAME] 
+```
+
+Only using the last 1% of the data for analysis:
+
+```bash
+python dataset_analyze_last_1p.py --game [GAME NAME] 
+```
+
+## Analyze the outptus
+
+- **Calculate the Normalized Scores**
+
+  - `atari/output_analyze/analyse_output.ipynb`
+
+- **Visualize the Results**
+
+  - `atari/output_analyze/plot_output.ipynb`
+
+- **Random Forest Regression, Correlation Analysis**
+
+  - `atari/output_analyze/regression_analysis.ipynb`
