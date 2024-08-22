@@ -326,14 +326,10 @@ class Trainer:
                 
                 action = sampled_action.cpu().numpy()[0,-1]
 
-                # print("using action fusion: %s" % self.use_action_fusion)
-                # print("action before: ", action)
-
-                """ Reverse mapping """
-                # # Reverse map the action if using action fusion
+                # Reverse mapping (used in action reduction, discarded)
+                # # Reverse map the action if using action reduction
                 # if self.use_action_fusion:
                 #     action = self.reverse_map_action(action)
-            
                 # print("action after: ", action)
 
                 actions += [sampled_action]
@@ -414,7 +410,7 @@ class Env():
         self.state_buffer = deque([], maxlen=args.history_length)
         self.training = True  # Consistent with model training mode
     
-    """simple fusion"""
+    """simple action fusion"""
     def _create_fused_action_map(self, game):
         if game.lower() == 'hero':
             return {
@@ -444,7 +440,7 @@ class Env():
         else:
             return None  # No reverse mapping for other games
 
-    """fuse according to last 1%"""
+    """frequency-based action fusion (fuse according to last 1%)"""
     # def _create_fused_action_map(self, game):
     #     if game.lower() == 'hero':
     #         return {
@@ -500,31 +496,6 @@ class Env():
         self.state_buffer.append(observation)
         self.lives = self.ale.lives()
         return torch.stack(list(self.state_buffer), 0)
-
-    # def step(self, action):
-    #     # Repeat action 4 times, max pool over last 2 frames
-    #     frame_buffer = torch.zeros(2, 84, 84, device=self.device)
-    #     reward, done = 0, False
-    #     for t in range(4):
-    #         reward += self.ale.act(self.actions.get(action))
-    #         if t == 2:
-    #             frame_buffer[0] = self._get_state()
-    #         elif t == 3:
-    #             frame_buffer[1] = self._get_state()
-    #         done = self.ale.game_over()
-    #         if done:
-    #             break
-    #     observation = frame_buffer.max(0)[0]
-    #     self.state_buffer.append(observation)
-    #     # Detect loss of life as terminal in training mode
-    #     if self.training:
-    #         lives = self.ale.lives()
-    #         if lives < self.lives and lives > 0:  # Lives > 0 for Q*bert
-    #             self.life_termination = not done  # Only set flag when not truly done
-    #             done = True
-    #         self.lives = lives
-    #     # Return state, reward, done
-    #     return torch.stack(list(self.state_buffer), 0), reward, done
     
     def step(self, action):
         # Repeat actions 4 times, max pool over last 2 frames

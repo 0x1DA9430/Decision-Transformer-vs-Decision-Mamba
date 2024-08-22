@@ -41,7 +41,7 @@ parser.add_argument('--n_layer', type=int, default=6,
 parser.add_argument('--n_embd', type=int, default=128,
                     help='Embedding dim of tokens (default: 128)')
 parser.add_argument('--token_mixer', type=str, default='mamba',
-                    help='Choose one of "attn", "conv", "conv-attn", "mamba-min" or "mamba" (default: "mamba")')
+                    help='Choose one of "attn", "conv", "conv-attn", or "mamba" (default: "mamba")')
 # Model-specific parameters
 parser.add_argument('--n_head', type=int, default=8,
                     help='Number of heads for "attn" (default: 8)')
@@ -124,20 +124,6 @@ def main():
         args.use_action_fusion,
     )
 
-    # obss, actions, returns, done_idxs, rtgs, timesteps = create_dataset(args.num_buffers,
-    #                                                                     args.num_steps,
-    #                                                                     args.game,
-    #                                                                     args.data_dir_prefix,
-    #                                                                     args.trajectories_per_buffer,
-    #                                                                     args.use_action_fusion,
-    #                                                                     )
-    
-    # print('*'*50)
-    # print('Dataset:')
-    # print(obss[0].shape)
-    # print(actions.shape, actions[0:10])
-    # print(rtgs.shape)
-    # print('*'*50)
 
     train_dataset = StateActionReturnDataset(obss,
                                             args.context_length*3, # block_size

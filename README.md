@@ -1,5 +1,11 @@
 # Transformer vs. Mamba: Analysing the Complexity of Sequential Decision-Making in Atari Games Environments
 
+Author: Ke Yan
+Email: s2524927@ed.ac.uk (university); yank.fitzgerald@gmail.com (personal)
+
+## Project Overview
+
+
 ## Dependencies
 
 ```bash
@@ -94,7 +100,7 @@ python train_atari.py \
         --context_length 5 \
         --n_layer 3 \
         --n_embd 8 \
-        --token_mixer '[mamba or attn]' \
+        --token_mixer '[mamba for DM / attn for DT]' \
         --epochs 2 \
         --batch_size 64 \
         --num_steps 2 \
@@ -122,107 +128,8 @@ python train_atari.py \
         --trajectories_per_buffer 5 \
         --output ./output/ \
         --experiment test_experiment \
-        --seed 123 \
+        --seed 123
 ```
-
-<!-- or
-
-```bash
-python train_atari.py --game 'Hero' --data_dir_prefix ./data/data_atari/ --context_length 10 --token_mixer 'mamba' --output ./output/ --experiment test_experiment --seed 123 --num_steps 5000 --trajectories_per_buffer 10 --use_action_fusion > ./output/test_experiment.log 2>&1
-``` -->
-
-<!-- ### Job submission to Eddie cluster
-
-Experiments for context length 30
-
-```bash
-qsub dm_atari_breakout.sh
-qsub dt_atari_breakout.sh
-qsub dm_atari_qbert.sh
-qsub dt_atari_qbert.sh
-
-qsub dm_atari_hero.sh
-qsub dt_atari_hero.sh
-qsub dm_atari_kungfumaster.sh
-qsub dt_atari_kungfumaster.sh
-
-qsub dm_atari_seaquest.sh
-qsub dt_atari_seaquest.sh
-qsub dm_atari_pong.sh
-qsub dt_atari_pong.sh
-```
-
-Experiments for context length 10
-
-```bash
-qsub 10_dm_atari_breakout.sh
-qsub 10_dt_atari_breakout.sh
-qsub 10_dm_atari_qbert.sh
-qsub 10_dt_atari_qbert.sh
-
-qsub 10_dm_atari_hero.sh
-qsub 10_dt_atari_hero.sh
-qsub 10_dm_atari_kungfumaster.sh
-qsub 10_dt_atari_kungfumaster.sh
-
-qsub 10_dm_atari_seaquest.sh
-qsub 10_dt_atari_seaquest.sh
-qsub 10_dm_atari_pong.sh
-qsub 10_dt_atari_pong.sh
-
-qsub 10_dm_atari_roadrunner.sh
-qsub 10_dt_atari_roadrunner.sh
-qsub 10_dm_atari_alien.sh
-qsub 10_dt_atari_alien.sh
-
-qsub 10_dm_atari_battlezone.sh
-qsub 10_dt_atari_battlezone.sh
-qsub 10_dm_atari_bankheist.sh
-qsub 10_dt_atari_bankheist.sh
-
-qsub 10_dm_atari_fishingderby.sh
-qsub 10_dt_atari_fishingderby.sh
-qsub 10_dm_atari_zaxxon.sh
-qsub 10_dt_atari_zaxxon.sh
-
-qsub 10_dm_atari_mspacman.sh
-qsub 10_dt_atari_mspacman.sh
-qsub 10_dm_atari_spaceinvaders.sh
-qsub 10_dt_atari_spaceinvaders.sh
-```
-
-Experiments for context length 50
-
-```bash
-qsub 50_dm_atari_breakout.sh
-qsub 50_dt_atari_breakout.sh
-qsub 50_dm_atari_qbert.sh
-qsub 50_dt_atari_qbert.sh
-
-qsub 50_dm_atari_hero.sh
-qsub 50_dt_atari_hero.sh
-qsub 50_dm_atari_kungfumaster.sh
-qsub 50_dt_atari_kungfumaster.sh
-
-qsub 50_dm_atari_seaquest.sh
-qsub 50_dt_atari_seaquest.sh
-qsub 50_dm_atari_pong.sh
-qsub 50_dt_atari_pong.sh
-```
-
-Experiments for context length 100
-
-```bash
-qsub 100_dm_atari_breakout.sh
-qsub 100_dt_atari_breakout.sh
-qsub 100_dm_atari_qbert.sh
-qsub 100_dt_atari_qbert.sh
-
-qsub 100_dm_atari_hero.sh
-qsub 100_dt_atari_hero.sh
-qsub 100_dm_atari_kungfumaster.sh
-qsub 100_dt_atari_kungfumaster.sh
-``` -->
 
 ### Run game complexity analysis
 
