@@ -4,7 +4,7 @@ from torch.utils.data import Dataset
 from data_process_atari.fixed_replay_buffer import FixedReplayBuffer
 from tqdm import tqdm
 
-"""simple fusion"""
+"""simple action fusion"""
 def create_action_fusion_mapping(game):
     if game == 'Hero':
         return {
@@ -47,7 +47,7 @@ def create_action_fusion_mapping(game):
     else:
         return None # No fusion for other games
 
-"""fuse according to last 1%"""
+"""Frequency-based action fusion (fuse according to last 1%)"""
 # def create_action_fusion_mapping(game):
 #     if game == 'Hero':
 #         return {
@@ -90,7 +90,10 @@ def create_action_fusion_mapping(game):
 #     else:
 #         return None  # No fusion for other games
 
-"""Probs of each action, used for reverse mapping when action reduction is enabled"""
+"""
+Probs of each action, used for reverse mapping when action reduction is enabled 
+(not in use, as we did not report action reduction in paper)
+""" 
 def get_action_probs(game):
     if game == 'Hero':
         return {
