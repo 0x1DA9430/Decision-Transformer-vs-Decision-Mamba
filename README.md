@@ -1,4 +1,4 @@
-# Transformer vs. Mamba: Analysing the Complexity of Sequential Decision-Making in Atari Games Environments
+# Decision Transformer vs. Decision Mamba: Analysing the Complexity of Sequential Decision Making in Atari Games
 
 >This project is based on previous work: [Decision Transformer (DT)](https://github.com/kzl/decision-transformer) and [Decision Mamba (DM)](https://github.com/Toshihiro-Ota/decision-mamba).
 
