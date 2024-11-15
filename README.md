@@ -51,7 +51,7 @@ pip install causal-conv1d --no-cache-dir
 pip install --upgrade charset_normalizer
 ```
 
-## Download dataset
+## Dataset
 
 ### Download dqn_replay
 
@@ -75,7 +75,7 @@ e.g.
 gsutil -m cp -R gs://atari-replay-datasets/dqn/Breakout ./msc-project/atari/data/data_atari
 ```
 
-### Download ROMS 
+### Download game ROMS 
 ```bash
 wget http://www.atarimania.com/roms/Roms.rar
 unrar x Roms.rar
@@ -133,9 +133,9 @@ python train_atari.py \
 
 - `run.sh` is a script to run the standard experiments for Breakout, with 3 random seeds, context length 10.
 
-### Use action fusion for game Hero/KungFuMaster
+### Use action fusion for the game Hero/KungFuMaster
 
-add `--use_action_fusion` as flag at the end of the command
+add `--use_action_fusion` as the flag at the end of the command
 
 e.g.
 
@@ -167,13 +167,13 @@ Random sampling the data for analysis:
 python dataset_analyze_rand.py --game [GAME NAME] 
 ```
 
-Only using the last 1% of the data for analysis:
+Only use the last 1% of the data for analysis:
 
 ```bash
 python dataset_analyze_last_1p.py --game [GAME NAME] 
 ```
 
-## Analyze the outptus
+## Analyze the outputs
 
 - **Calculate the Normalized Scores**
 
