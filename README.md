@@ -3,8 +3,12 @@
 >This project is based on previous work: [Decision Transformer (DT)](https://github.com/kzl/decision-transformer) and [Decision Mamba (DM)](https://github.com/Toshihiro-Ota/decision-mamba).
 
 Author: Ke Yan
-Email: s2524927@ed.ac.uk (university); yank.fitzgerald@gmail.com (personal)
+Email: yank.fitzgerald@gmail.com (personal); s2524927@ed.ac.uk (university)
+Read the [paper](https://github.com/0x1DA9430/Decision-Transformer-vs-Decision-Mamba/blob/32130d22013176c54e8bbd72f63868a1aa506aec/Decision%20Transformer%20vs.%20Decision%20Mamba%20Analysing%20the%20Complexity%20of%20Sequential%20Decision%20Making%20in%20Atari%20Games.pdf)
 
+## Abstract
+
+This work analyses the disparity in performance between Decision Transformer (DT) and Decision Mamba (DM) in sequence modelling reinforcement learning tasks for different Atari games. The study first observed that DM generally outperformed DT in the games Breakout and Qbert, while DT performed better in more complicated games, such as Hero and Kung Fu Master. To understand these differences, we expanded the number of games to 12 and performed a comprehensive analysis of game characteristics, including action space complexity, visual complexity, average trajectory length, and average steps to the first non-zero reward. In order to further analyse the key factors that impact the disparity in performance between DT and DM, we employ various approaches, including quantifying visual complexity, random forest regression, correlation analysis, and action space simplification strategies. The results indicate that the performance gap between DT and DM is affected by the complex interaction of multiple factors, with the complexity of the action space and visual complexity (particularly evaluated by compression ratio) being the primary determining factors. DM performs well in environments with simple action and visual elements, while DT shows an advantage in games with higher action and visual complexity. Our findings contribute to a deeper understanding of how the game characteristics affect the performance difference in sequential modelling reinforcement learning, potentially guiding the development of future model design and applications for diverse and complex environments.
 
 ## Dependencies
 
