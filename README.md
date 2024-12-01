@@ -3,7 +3,7 @@
 >This project is based on previous work: [Decision Transformer (DT)](https://github.com/kzl/decision-transformer) and [Decision Mamba (DM)](https://github.com/Toshihiro-Ota/decision-mamba).
 
 Author: Ke Yan\
-Email: yank.fitzgerald@gmail.com (personal); s2524927@ed.ac.uk (university)\
+Email: yank.fitzgerald@gmail.com (personal); k.yan-9@sms.ed.ac.uk (university)\
 Read the [paper](https://github.com/0x1DA9430/Decision-Transformer-vs-Decision-Mamba/blob/32130d22013176c54e8bbd72f63868a1aa506aec/Decision%20Transformer%20vs.%20Decision%20Mamba%20Analysing%20the%20Complexity%20of%20Sequential%20Decision%20Making%20in%20Atari%20Games.pdf)
 
 ## Abstract
