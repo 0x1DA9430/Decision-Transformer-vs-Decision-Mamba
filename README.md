@@ -8,7 +8,7 @@ This work analyses the disparity in performance between [Decision Transformer (D
 <img src="https://github.com/0x1DA9430/0x1DA9430/blob/b06d18df56253d8c6bf138c44fa797c5bad1b2ec/assert/dt_dm_arc.png" width="500" height="auto" />
 </p>
 <p align="center">
-The Decision Transformer (Left) and Decision Mamba (Right).$N$ represents normalization layers, activation function $\sigma$ stands for GELU (Gaussian Error Linear Unit), and $+$ are addition operations for skip connections.
+The Decision Transformer (Left) and Decision Mamba (Right). $N$ represents normalization layers, activation function $\sigma$ stands for GELU (Gaussian Error Linear Unit), and $+$ are addition operations for skip connections.
 </p>
 
 
